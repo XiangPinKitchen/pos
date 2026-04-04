@@ -416,14 +416,15 @@
       background: var(--accent-light);
       border-radius: 5px; padding: 1px 5px; font-weight: 500;
     }
-    .open-list { display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto; }
+    .open-list { display: flex; flex-direction: column; gap: 8px; }
     .open-item { background: var(--surface2); border-radius: 11px; padding: 10px 14px; }
     .open-phone { font-size: 11px; color: var(--text3); margin-bottom: 3px; }
     .open-text { font-size: 13px; color: var(--text); line-height: 1.6; }
     .divider { height: 0.5px; background: var(--border); margin: 1.5rem 0; }
     .no-data { font-size: 14px; color: var(--text3); text-align: center; padding: 2rem 0; }
     /* ── TABLE ── */
-    .tbl-wrap { overflow-x: auto; border-radius: 12px; border: 0.5px solid var(--border); }
+    .tbl-wrap { overflow-x: auto; overflow-y: auto; max-height: 520px; border-radius: 12px; border: 0.5px solid var(--border); }
+    .resp-table thead th { position: sticky; top: 0; z-index: 2; }
     .resp-table { width: 100%; font-size: 12px; border-collapse: collapse; }
     .resp-table th {
       text-align: left; padding: 10px 12px;
