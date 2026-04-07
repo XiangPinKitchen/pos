@@ -99,7 +99,6 @@ button { touch-action:manipulation; }
 .opt-toggle button.sel { background:#1a2455; color:white; font-weight:700; }
 .note-input { width:100%; border:1.5px solid #e0e0e0; border-radius:8px; padding:8px 10px; font-size:13px; font-family:'Noto Sans TC',sans-serif; color:#333; resize:none; margin-top:4px; }
 .note-input:focus { outline:none; border-color:#1a2455; }
-.input-error { border-color:#c4390a !important; box-shadow:0 0 0 2px rgba(196,57,10,0.2); }
 .cart-summary { padding:10px 16px; background:#f9f9f9; border-top:1px solid #eee; }
 .summary-total { display:flex; justify-content:space-between; font-size:18px; font-weight:700; color:#1a2455; margin-top:8px; }
 .checkout-btn { flex-shrink:0; margin:12px 16px 20px; background:#1a2455; color:white; border:none; border-radius:12px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; width:calc(100% - 32px); font-family:'Noto Sans TC',sans-serif; }
@@ -266,22 +265,13 @@ button { touch-action:manipulation; }
           </div>
         </div>
         <div style="margin-top:8px">
-          <div style="font-size:13px;color:#666;margin-bottom:6px;">👤 客人資訊 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
-          <div style="display:flex;gap:8px;margin-bottom:8px;">
-            <input class="note-input" id="customer-name" placeholder="姓氏（如：王）" style="margin-top:0;flex:1;" oninput="this.classList.remove('input-error')" />
-            <div class="opt-toggle" style="flex-shrink:0;">
-              <button class="sel" id="title-mr" onclick="selTitle('先生',this)">先生</button>
-              <button id="title-ms" onclick="selTitle('小姐',this)">小姐</button>
-            </div>
-            <input class="note-input" id="customer-phone" placeholder="電話（10碼）" type="tel" maxlength="10" style="margin-top:0;flex:1;" oninput="this.classList.remove('input-error')" />
-          </div>
           <div style="font-size:13px;color:#666;margin-bottom:6px;">🛍 取餐方式 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
           <div class="opt-toggle" style="margin-bottom:8px;width:100%;">
             <button class="sel" onclick="selPickup('takeout',this)" style="flex:1;">外帶自取 9折</button>
             <button onclick="selPickup('delivery',this)" style="flex:1;">外送</button>
           </div>
           <div id="delivery-hint" style="display:none;background:#fff0f0;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;margin-bottom:8px;line-height:1.8;">
-            平日（週一至週五），3公里內，滿600元以上即可外送。<br>
+            3公里內／滿600元以上即可外送。（請先洽詢店家）<br>
             <span style="color:#c4390a;font-weight:700;">*請於備註欄內填入外送地址</span>
           </div>
           <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（過敏、口味、外送地址...）</div>
@@ -292,6 +282,7 @@ button { touch-action:manipulation; }
     <div class="cart-summary">
       <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>總數量</span><span id="sum-qty">0 項</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>小計</span><span id="sum-sub">$0</span></div>
+      <div id="sum-disc" style="display:none;justify-content:space-between;font-size:13px;color:#c4390a;margin-bottom:4px;"><span>外帶自取 9折</span><span id="sum-disc-val"></span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$0</span></div>
     </div>
     <button class="checkout-btn" onclick="placeOrder()">確認下單</button>
@@ -844,6 +835,16 @@ function renderCartItems(){
     if(typeof val==='object'){
       const item=menu.find(i=>i.id===val.itemId);
       const unitPrice=item.price+val.extraPrice;
+      // 組合備註顯示（含各加購金額）
+      let notesDisplay='';
+      if(val.notes){
+        const noteArr=val.notes.split('、');
+        const parts=noteArr.map(n=>{
+          const ex=item.extras&&item.extras.find(e=>e.label===n);
+          return ex&&ex.price>0?`${n} +$${ex.price}`:n;
+        });
+        notesDisplay=`<div style="font-size:11px;color:#888;">${parts.join('、')}</div>`;
+      }
       return `<div class="cart-item">
         <div class="qty-control">
           <button class="qty-btn minus" onclick="changeCartQtyKey('${key}',-1)">−</button>
@@ -852,7 +853,7 @@ function renderCartItems(){
         </div>
         <div style="flex:1">
           <div class="cart-item-name">${item.emoji} ${item.name}</div>
-          ${val.notes?`<div style="font-size:11px;color:#888;">${val.notes}</div>`:''}
+          ${notesDisplay}
         </div>
         <span class="cart-item-price">$${unitPrice*val.qty}</span>
       </div>`;
@@ -886,14 +887,6 @@ function changeCartQtyKey(key, delta){
   updateSummary();
 }
 
-let customerTitle = '先生';
-
-function selTitle(val, btn){
-  customerTitle = val;
-  document.getElementById('title-mr').classList.toggle('sel', val==='先生');
-  document.getElementById('title-ms').classList.toggle('sel', val==='小姐');
-}
-
 function selOpt(key,val,btn){
   opts[key]=val;
   const parent=btn.parentElement;
@@ -916,6 +909,13 @@ function updateSummary(){
   const qty=Object.values(cart).reduce((s,v)=>s+(typeof v==='object'?v.qty:v),0);
   document.getElementById('sum-qty').textContent=qty+' 項';
   document.getElementById('sum-sub').textContent='$'+sub;
+  const discEl=document.getElementById('sum-disc');
+  if(opts.pickup==='takeout'&&sub>0){
+    discEl.style.display='flex';
+    document.getElementById('sum-disc-val').textContent='-$'+(sub-total);
+  } else {
+    discEl.style.display='none';
+  }
   document.getElementById('sum-total').textContent='$'+total;
   const bp=document.getElementById('bottom-price');
   if(bp) bp.textContent='$'+total;
@@ -923,20 +923,7 @@ function updateSummary(){
 
 function placeOrder(){
   if(Object.keys(cart).length===0) return;
-  const nameEl=document.getElementById('customer-name');
-  const phoneEl=document.getElementById('customer-phone');
-  const name=nameEl.value.trim();
-  const phone=phoneEl.value.trim();
 
-  nameEl.classList.remove('input-error');
-  phoneEl.classList.remove('input-error');
-
-  let hasError=false;
-  if(!name){ nameEl.classList.add('input-error'); nameEl.focus(); hasError=true; }
-  if(phone.length!==10){ phoneEl.classList.add('input-error'); if(!hasError) phoneEl.focus(); hasError=true; }
-  if(hasError) return;
-
-  const title=customerTitle;
   const items=buildItems();
   const sub=calcSub();
   const total=calcTotal();
@@ -946,7 +933,6 @@ function placeOrder(){
   const note=document.getElementById('order-note').value.trim();
 
   document.getElementById('confirm-items').innerHTML=
-    `<div><b>👤 ${name}${title}　📱 ${phone}</b></div>`+
     `<div>🛍 ${pickupLabel}</div><br>`+
     items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`+
       (i.notes?`<br>　<span style="color:#888;font-size:12px;">└ ${i.notes}</span>`:'')).join('<br>')+
@@ -969,19 +955,27 @@ function buildItems(){
   });
 }
 
+function genOrderId(now){
+  const dateKey=`orderSeq_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+  const seq=(parseInt(localStorage.getItem(dateKey)||'0')+1);
+  localStorage.setItem(dateKey, seq);
+  const d=`${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+  const t=`${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+  return `${d}-${t}-${String(seq).padStart(2,'0')}`;
+}
+
 function submitOrder(){
   document.getElementById('confirm-overlay').classList.remove('open');
-  const name=document.getElementById('customer-name').value.trim();
-  const title=customerTitle;
-  const phone=document.getElementById('customer-phone').value.trim();
   const note=document.getElementById('order-note').value.trim();
   const items=buildItems();
+  const sub=calcSub();
   const total=calcTotal();
   const totalQty=items.reduce((s,i)=>s+i.qty,0);
   const cutlery=opts.cutlery==='yes'?'需要':'不需要';
   const receipt=opts.receipt==='yes'?'需要':'不需要';
   const now=new Date();
-  const timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  const timeStr=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const orderId=genOrderId(now);
 
   const itemLines=[];
   items.forEach(i=>{
@@ -997,8 +991,7 @@ function submitOrder(){
   const msgText=[
     '🍱 香品小食堂｜新訂單通知',
     '─────────────',
-    `👤 客戶：${name}${title}`,
-    `📱 電話：${phone}`,
+    `💡 訂單編號：${orderId}`,
     `⏰ 訂餐時間：${timeStr}`,
     `🛍 取餐方式：${pickupLabel}`,
     '─────────────',
@@ -1009,14 +1002,12 @@ function submitOrder(){
     '─────────────',
     `🥢 免洗餐具：${cutlery}`,
     `🧾 收據：${receipt}`,
-    `💡 備註：${note||'無'}`,
+    `💬 備註：${note||'無'}`,
   ].join('\n');
 
   cart={};
   updateBadge(); updateBottomBar(); closeCart();
   document.getElementById('order-note').value='';
-  document.getElementById('customer-name').value='';
-  document.getElementById('customer-phone').value='';
 
   if(!liff.isInClient()){
     alert('請於 LINE App 內開啟');
