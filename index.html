@@ -559,15 +559,16 @@ function showPage(id){
   document.getElementById('page-order').style.display='none';
   document.getElementById('page-admin-login').style.display='none';
   document.getElementById('admin-wrap').classList.remove('active');
-  // 進後台時隱藏公休遮罩，離開後台時恢復
   const overlay=document.getElementById('closed-overlay');
   if(id==='admin-wrap'){
     overlay.style.display='none';
     document.getElementById('admin-wrap').classList.add('active');
+  } else if(id==='page-admin-login'){
+    overlay.style.display='none';
+    document.getElementById('page-admin-login').style.display='flex';
   } else {
     if(isClosed) overlay.style.display='flex';
-    const el=document.getElementById(id);
-    el.style.display=(id==='page-admin-login'?'flex':'block');
+    document.getElementById(id).style.display='block';
   }
 }
 
