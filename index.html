@@ -17,7 +17,6 @@ button { touch-action:manipulation; }
 /* ── HEADER ── */
 .header { background:#1a2455; color:white; padding:14px 16px 10px; position:sticky; top:0; z-index:100; }
 .header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-.logo-area { display:flex; align-items:center; gap:8px; }
 .logo-area { display:flex; align-items:center; gap:10px; }
 .shop-name { font-size:18px; font-weight:700; letter-spacing:1px; }
 .cart-btn { position:relative; background:rgba(255,255,255,0.15); border:none; border-radius:20px; padding:6px 14px; color:white; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:6px; font-family:'Noto Sans TC',sans-serif; }
@@ -163,6 +162,13 @@ button { touch-action:manipulation; }
 .announce-save-btn { background:#1a2455; color:white; border:none; border-radius:8px; padding:10px 24px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; margin-top:10px; }
 .section-label { font-size:13px; font-weight:700; color:#888; margin:16px 0 8px; text-transform:uppercase; letter-spacing:0.5px; }
 
+/* ── CLOSED OVERLAY ── */
+.closed-overlay { display:none; position:fixed; inset:0; background:rgba(20,20,20,0.92); z-index:150; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px; }
+.closed-overlay.open { display:flex; }
+.closed-icon { font-size:64px; margin-bottom:16px; }
+.closed-title { font-size:24px; font-weight:700; color:white; margin-bottom:10px; }
+.closed-msg { font-size:15px; color:rgba(255,255,255,0.7); line-height:1.8; }
+
 /* Admin nav link */
 .admin-link { text-align:center; padding:16px; }
 .admin-link a { font-size:13px; color:#888; text-decoration:none; }
@@ -292,6 +298,13 @@ button { touch-action:manipulation; }
   </div>
 </div>
 
+<!-- 公休遮罩 -->
+<div class="closed-overlay" id="closed-overlay">
+  <div class="closed-icon">🔒</div>
+  <div class="closed-title">今日公休</div>
+  <div class="closed-msg" id="closed-msg">感謝您的光臨，今日店休。<br>請於營業日再前來訂餐，謝謝！</div>
+</div>
+
 <!-- 公告彈窗 -->
 <div class="popup-overlay" id="popup-overlay">
   <div class="popup-card">
@@ -370,6 +383,14 @@ button { touch-action:manipulation; }
 
   <!-- Settings -->
   <div class="admin-content" id="tab-settings" style="padding:14px;">
+    <div class="section-label">營業狀態</div>
+    <div class="announce-edit-card" style="display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:14px;font-weight:700;color:#1a2455;" id="closed-status-text">目前：營業中 ✅</div>
+        <div style="font-size:12px;color:#888;margin-top:2px;">開啟後客人將無法點餐</div>
+      </div>
+      <button id="closed-toggle-btn" onclick="toggleClosed()" style="padding:8px 18px;border-radius:10px;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;background:#e6f9ee;color:#1a7a3e;">設為公休</button>
+    </div>
     <div class="section-label">頂部跑馬燈公告</div>
     <div class="announce-edit-card">
       <textarea class="announce-textarea" rows="2" id="announce-input"></textarea>
@@ -524,6 +545,7 @@ let selCat = '全部';
 const DEFAULT_ANNOUNCE = '📢 今日特餐：麻醬麵 $65，限量供應！外帶九折優惠中';
 let announceText = localStorage.getItem('announceText') || DEFAULT_ANNOUNCE;
 let popupText = localStorage.getItem('popupText') || DEFAULT_ANNOUNCE;
+let isClosed = localStorage.getItem('isClosed') === 'true';
 let adminPass = '233009';
 let editingItemId = null;
 
@@ -534,9 +556,13 @@ function showPage(id){
   document.getElementById('page-order').style.display='none';
   document.getElementById('page-admin-login').style.display='none';
   document.getElementById('admin-wrap').classList.remove('active');
+  // 進後台時隱藏公休遮罩，離開後台時恢復
+  const overlay=document.getElementById('closed-overlay');
   if(id==='admin-wrap'){
+    overlay.style.display='none';
     document.getElementById('admin-wrap').classList.add('active');
   } else {
+    if(isClosed) overlay.style.display='flex';
     const el=document.getElementById(id);
     el.style.display=(id==='page-admin-login'?'flex':'block');
   }
@@ -1084,6 +1110,29 @@ function savePrice(){
 // ══════════════════════════════
 //  SETTINGS
 // ══════════════════════════════
+function toggleClosed(){
+  isClosed=!isClosed;
+  localStorage.setItem('isClosed', isClosed);
+  updateClosedUI();
+}
+
+function updateClosedUI(){
+  document.getElementById('closed-overlay').classList.toggle('open', isClosed);
+  const statusText=document.getElementById('closed-status-text');
+  const btn=document.getElementById('closed-toggle-btn');
+  if(isClosed){
+    statusText.textContent='目前：公休中 🔒';
+    btn.textContent='恢復營業';
+    btn.style.background='#ffe8e8';
+    btn.style.color='#c4390a';
+  } else {
+    statusText.textContent='目前：營業中 ✅';
+    btn.textContent='設為公休';
+    btn.style.background='#e6f9ee';
+    btn.style.color='#1a7a3e';
+  }
+}
+
 function saveAnnounce(){
   announceText=document.getElementById('announce-input').value;
   localStorage.setItem('announceText', announceText);
@@ -1117,8 +1166,11 @@ renderMenu();
 // 同步頂部公告列
 document.getElementById('announce-bar').textContent=announceText;
 
-// 顯示彈窗公告
-if(popupText){
+// 公休狀態
+updateClosedUI();
+
+// 顯示彈窗公告（公休時不顯示公告）
+if(popupText && !isClosed){
   document.getElementById('popup-body').textContent=popupText;
   document.getElementById('popup-overlay').classList.add('open');
 }
