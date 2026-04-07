@@ -259,16 +259,32 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
       <div style="margin-top:8px">
         <div style="font-size:13px;color:#666;margin-bottom:6px;">👤 客人資訊 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
         <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <input class="note-input" id="customer-name" placeholder="姓氏（如：王）" style="margin-top:0;" oninput="this.classList.remove('input-error')" />
-          <input class="note-input" id="customer-phone" placeholder="電話（10碼）" type="tel" maxlength="10" style="margin-top:0;" oninput="this.classList.remove('input-error')" />
+          <input class="note-input" id="customer-name" placeholder="姓氏（如：王）" style="margin-top:0;flex:1;" oninput="this.classList.remove('input-error')" />
+          <select class="note-input" id="customer-title" style="margin-top:0;width:80px;cursor:pointer;">
+            <option value="先生">先生</option>
+            <option value="小姐">小姐</option>
+          </select>
+          <input class="note-input" id="customer-phone" placeholder="電話（10碼）" type="tel" maxlength="10" style="margin-top:0;flex:1;" oninput="this.classList.remove('input-error')" />
         </div>
-        <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（過敏、口味調整...）</div>
-        <textarea class="note-input" rows="2" placeholder="例：不要香菜、少辣..." id="order-note"></textarea>
+
+        <div style="font-size:13px;color:#666;margin-bottom:6px;">🛍 取餐方式 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
+        <div class="opt-toggle" style="margin-bottom:8px;width:100%;">
+          <button class="sel" onclick="selPickup('takeout',this)" style="flex:1;">外帶自取 9折</button>
+          <button onclick="selPickup('delivery',this)" style="flex:1;">外送</button>
+        </div>
+        <div id="delivery-hint" style="display:none;background:#fff0f0;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;margin-bottom:8px;line-height:1.8;">
+          平日（週一至週五），3公里內，滿600元以上即可外送。<br>
+          <span style="color:#c4390a;font-weight:700;">*請於備註欄內填入外送地址</span>
+        </div>
+
+        <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（過敏、口味、外送地址...）</div>
+        <textarea class="note-input" rows="2" placeholder="例：不要香菜、少辣 / 外送地址：..." id="order-note"></textarea>
       </div>
     </div>
     <div class="cart-summary">
       <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>總數量</span><span id="sum-qty">0 項</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>小計</span><span id="sum-sub">$0</span></div>
+      <div id="sum-disc" style="display:none;justify-content:space-between;font-size:13px;color:#c4390a;margin-bottom:4px;"><span>外帶9折</span><span></span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$0</span></div>
     </div>
     <button class="checkout-btn" onclick="placeOrder()">確認下單</button>
@@ -390,7 +406,12 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
     <div class="options-header" id="options-header"></div>
     <div class="options-body" id="options-body"></div>
-    <div style="padding:12px 16px 24px;">
+    <div style="padding:12px 16px 8px;display:flex;align-items:center;justify-content:center;gap:16px;">
+      <button class="qty-btn minus" onclick="changeQtyModal(-1)">−</button>
+      <span id="modal-qty" style="font-size:20px;font-weight:700;color:#1a2455;min-width:28px;text-align:center;">1</span>
+      <button class="qty-btn" onclick="changeQtyModal(1)">+</button>
+    </div>
+    <div style="padding:0 16px 24px;">
       <button class="checkout-btn" style="margin:0;width:100%;" onclick="confirmAddToCart()">加入購物車</button>
     </div>
   </div>
@@ -497,7 +518,7 @@ let menu = [
 ];
 
 let cart = {};
-let opts = {cutlery:'no', receipt:'no'};
+let opts = {cutlery:'no', receipt:'no', pickup:'takeout'};
 let selCat = '全部';
 let announceText = '📢 今日特餐：麻醬麵 $65，限量供應！外帶九折優惠中';
 let popupText = '📢 今日特餐：麻醬麵 $65，限量供應！外帶九折優惠中';
@@ -610,6 +631,7 @@ function renderItem(item){
 let pendingItem = null;
 let pendingExtras = {};
 let pendingSauce = null;
+let pendingQty = 1;
 
 function changeQty(id,delta){
   if(delta > 0){
@@ -630,6 +652,7 @@ function changeQty(id,delta){
 function openOptionsModal(item){
   pendingItem = item;
   pendingExtras = {};
+  pendingQty = 1;
   pendingSauce = item.sauce && item.sauce.length>0 ? item.sauce[0] : null;
 
   document.getElementById('options-header').innerHTML = `
@@ -638,7 +661,6 @@ function openOptionsModal(item){
   `;
 
   let body = '';
-
   if(item.extras && item.extras.length>0){
     body += '<div class="options-section"><div class="options-section-title">加購選項</div>';
     item.extras.forEach((ex,i)=>{
@@ -650,7 +672,6 @@ function openOptionsModal(item){
     });
     body += '</div>';
   }
-
   if(item.sauce && item.sauce.length>0){
     body += '<div class="options-section" style="padding-bottom:14px;"><div class="options-section-title">醬料選擇</div><div class="sauce-btns">';
     item.sauce.forEach((s,i)=>{
@@ -661,6 +682,7 @@ function openOptionsModal(item){
 
   document.getElementById('options-body').innerHTML = body;
   document.getElementById('options-overlay').classList.add('open');
+  updateQtyDisplay();
 }
 
 function toggleExtra(i){
@@ -671,6 +693,15 @@ function selSauce(s, btn){
   pendingSauce = s;
   btn.closest('.sauce-btns').querySelectorAll('.sauce-btn').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
+}
+
+function changeQtyModal(delta){
+  pendingQty = Math.max(1, pendingQty + delta);
+  updateQtyDisplay();
+}
+
+function updateQtyDisplay(){
+  document.getElementById('modal-qty').textContent = pendingQty;
 }
 
 function optionsOverlayClick(e){
@@ -706,7 +737,7 @@ function confirmAddToCart(){
   // Store as cart entry with note
   const key = id + (notes.length>0 ? '__'+notes.join('_') : '');
   if(!cart[key]) cart[key] = {itemId:id, qty:0, notes:notes.join('、'), extraPrice};
-  cart[key].qty += 1;
+  cart[key].qty += pendingQty;
 
   closeOptionsModal();
   renderMenu();
@@ -743,7 +774,8 @@ function calcSub(){
 }
 
 function calcTotal(){
-  return calcSub();
+  const sub=calcSub();
+  return opts.pickup==='takeout' ? Math.round(sub*0.9) : sub;
 }
 
 // ══════════════════════════════
@@ -829,14 +861,27 @@ function selOpt(key,val,btn){
   updateSummary();
 }
 
+function selPickup(val,btn){
+  opts.pickup=val;
+  btn.closest('.opt-toggle').querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('delivery-hint').style.display=(val==='delivery'?'block':'none');
+  updateSummary();
+}
+
 function updateSummary(){
   const sub=calcSub();
+  const total=calcTotal();
   const qty=Object.values(cart).reduce((s,v)=>s+(typeof v==='object'?v.qty:v),0);
   document.getElementById('sum-qty').textContent=qty+' 項';
   document.getElementById('sum-sub').textContent='$'+sub;
-  document.getElementById('sum-total').textContent='$'+sub;
+  const discEl=document.getElementById('sum-disc');
+  if(opts.pickup==='takeout'&&sub>0){
+    discEl.style.display='flex'; discEl.querySelector('span:last-child').textContent='-$'+(sub-total);
+  } else { discEl.style.display='none'; }
+  document.getElementById('sum-total').textContent='$'+total;
   const bp=document.getElementById('bottom-price');
-  if(bp) bp.textContent='$'+sub;
+  if(bp) bp.textContent='$'+total;
 }
 
 function placeOrder(){
@@ -846,7 +891,6 @@ function placeOrder(){
   const name=nameEl.value.trim();
   const phone=phoneEl.value.trim();
 
-  // 重設錯誤狀態
   nameEl.classList.remove('input-error');
   phoneEl.classList.remove('input-error');
 
@@ -855,17 +899,22 @@ function placeOrder(){
   if(phone.length!==10){ phoneEl.classList.add('input-error'); if(!hasError) phoneEl.focus(); hasError=true; }
   if(hasError) return;
 
+  const title=document.getElementById('customer-title').value;
   const items=buildItems();
-  const total=calcSub();
+  const sub=calcSub();
+  const total=calcTotal();
   const cutlery=opts.cutlery==='yes'?'需要':'不需要';
   const receipt=opts.receipt==='yes'?'需要':'不需要';
+  const pickupLabel={takeout:'外帶自取（9折）',delivery:'外送'}[opts.pickup];
   const note=document.getElementById('order-note').value.trim();
 
   document.getElementById('confirm-items').innerHTML=
-    `<div><b>👤 ${name}　📞 ${phone}</b></div><br>`+
+    `<div><b>👤 ${name}${title}　📱 ${phone}</b></div>`+
+    `<div>🛍 ${pickupLabel}</div><br>`+
     items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`+
-      (i.notes?`<br>　<span style="color:#888;font-size:12px;">(${i.notes})</span>`:'')).join('<br>')+
-    `<br><br>免洗餐具：${cutlery}　收據：${receipt}`+
+      (i.notes?`<br>　<span style="color:#888;font-size:12px;">└ ${i.notes}</span>`:'')).join('<br>')+
+    (opts.pickup==='takeout'?`<br><span style="color:#c4390a;font-size:12px;">小計$${sub} × 9折 = $${total}</span>`:'')+
+    `<br><br>餐具：${cutlery}　收據：${receipt}`+
     (note?`<br>備註：${note}`:'');
   document.getElementById('confirm-total').textContent=`合計 $${total}（共 ${items.reduce((s,i)=>s+i.qty,0)} 項）`;
   document.getElementById('confirm-overlay').classList.add('open');
@@ -886,38 +935,43 @@ function buildItems(){
 function submitOrder(){
   document.getElementById('confirm-overlay').classList.remove('open');
   const name=document.getElementById('customer-name').value.trim();
+  const title=document.getElementById('customer-title').value;
   const phone=document.getElementById('customer-phone').value.trim();
   const note=document.getElementById('order-note').value.trim();
   const items=buildItems();
-  const total=calcSub();
+  const sub=calcSub();
+  const total=calcTotal();
   const totalQty=items.reduce((s,i)=>s+i.qty,0);
   const cutlery=opts.cutlery==='yes'?'需要':'不需要';
   const receipt=opts.receipt==='yes'?'需要':'不需要';
+  const pickupLabel={takeout:'外帶自取（9折）',delivery:'外送'}[opts.pickup];
   const now=new Date();
   const timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
 
   const itemLines=[];
   items.forEach(i=>{
-    // 主行：品名 數量 金額
-    const price=i.price*i.qty;
-    itemLines.push(`${i.emoji} ${i.name} ×${i.qty}　　　$${price}`);
-    // 備選/醬料備註縮排
-    if(i.notes) itemLines.push(`　 (${i.notes})`);
+    itemLines.push(`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`);
+    if(i.notes) itemLines.push(`     └ ${i.notes}`);
   });
 
+  const discLine=opts.pickup==='takeout'?[`💸 外帶9折：$${sub} → $${total}`]:[];
+
   const msgText=[
-    '🍱 香品小食堂｜新訂單通知',
-    `👤 客戶：${name}`,
-    `📱 電話：${phone}`,
-    `⏰ 時間：${timeStr}`,
-    '═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═',
+    '━━━━━━━━━━━━━━━━━',
+    '🍱 香品小食堂 新訂單',
+    '━━━━━━━━━━━━━━━━━',
+    `👤 ${name}${title}　📱 ${phone}`,
+    `⏰ ${timeStr}　🛍 ${pickupLabel}`,
+    '─────────────────',
+    '【品項】',
     ...itemLines,
-    '═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═',
-    `📦 總數量：${totalQty} 項`,
-    `🔴 總計金額：$${total}`,
-    `🥢 免洗餐具：${cutlery}`,
-    `🧾 收據：${receipt}`,
-    `💡 備註：${note||'無'}`,
+    '─────────────────',
+    ...discLine,
+    `📦 數量：${totalQty} 項　💰 合計：$${total}`,
+    '─────────────────',
+    `🥢 餐具：${cutlery}　🧾 收據：${receipt}`,
+    `💬 備註：${note||'無'}`,
+    '━━━━━━━━━━━━━━━━━',
   ].join('\n');
 
   cart={};
