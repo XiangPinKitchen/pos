@@ -959,9 +959,8 @@ function genOrderId(now){
   const dateKey=`orderSeq_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
   const seq=(parseInt(localStorage.getItem(dateKey)||'0')+1);
   localStorage.setItem(dateKey, seq);
-  const d=`${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-  const t=`${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
-  return `${d}-${t}-${String(seq).padStart(2,'0')}`;
+  const mmdd=`${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+  return `${mmdd}-${String(seq).padStart(2,'0')}`;
 }
 
 function submitOrder(){
