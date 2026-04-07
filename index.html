@@ -939,39 +939,36 @@ function submitOrder(){
   const phone=document.getElementById('customer-phone').value.trim();
   const note=document.getElementById('order-note').value.trim();
   const items=buildItems();
-  const sub=calcSub();
   const total=calcTotal();
   const totalQty=items.reduce((s,i)=>s+i.qty,0);
   const cutlery=opts.cutlery==='yes'?'需要':'不需要';
   const receipt=opts.receipt==='yes'?'需要':'不需要';
-  const pickupLabel={takeout:'外帶自取（9折）',delivery:'外送'}[opts.pickup];
   const now=new Date();
   const timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
 
   const itemLines=[];
   items.forEach(i=>{
-    itemLines.push(`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`);
-    if(i.notes) itemLines.push(`     └ ${i.notes}`);
+    itemLines.push(`${i.emoji} ${i.name} ×${i.qty}  $${i.price*i.qty}`);
+    if(i.notes) itemLines.push(`  └ ${i.notes}`);
   });
 
-  const discLine=opts.pickup==='takeout'?[`💸 外帶9折：$${sub} → $${total}`]:[];
+  const pickupLine=opts.pickup==='takeout'?'🛍️ 外帶自取 (9折)':'🛵 外送';
 
   const msgText=[
-    '━━━━━━━━━━━━━━━━━',
-    '🍱 香品小食堂 新訂單',
-    '━━━━━━━━━━━━━━━━━',
-    `👤 ${name}${title}　📱 ${phone}`,
-    `⏰ ${timeStr}　🛍 ${pickupLabel}`,
-    '─────────────────',
-    '【品項】',
+    '🍱 香品小食堂｜新訂單通知',
+    '────────────────',
+    `👤 ${name}${title}`,
+    `📞 ${phone}`,
+    `⏰ ${timeStr}`,
+    pickupLine,
+    '────────────────',
     ...itemLines,
-    '─────────────────',
-    ...discLine,
-    `📦 數量：${totalQty} 項　💰 合計：$${total}`,
-    '─────────────────',
-    `🥢 餐具：${cutlery}　🧾 收據：${receipt}`,
+    '',
+    `💰 合計：$${total}（共 ${totalQty} 項）`,
+    '────────────────',
+    `🥢 餐具：${cutlery}`,
+    `🧾 收據：${receipt}`,
     `💬 備註：${note||'無'}`,
-    '━━━━━━━━━━━━━━━━━',
   ].join('\n');
 
   cart={};
