@@ -521,8 +521,9 @@ let menu = [
 let cart = {};
 let opts = {cutlery:'no', receipt:'no', pickup:'takeout'};
 let selCat = '全部';
-let announceText = '📢 今日特餐：麻醬麵 $65，限量供應！外帶九折優惠中';
-let popupText = '📢 今日特餐：麻醬麵 $65，限量供應！外帶九折優惠中';
+const DEFAULT_ANNOUNCE = '📢 今日特餐：麻醬麵 $65，限量供應！外帶九折優惠中';
+let announceText = localStorage.getItem('announceText') || DEFAULT_ANNOUNCE;
+let popupText = localStorage.getItem('popupText') || DEFAULT_ANNOUNCE;
 let adminPass = '233009';
 let editingItemId = null;
 
@@ -953,7 +954,10 @@ function submitOrder(){
     if(i.notes) itemLines.push(`     └ ${i.notes}`);
   });
 
-  const pickupLabel=opts.pickup==='takeout'?'外帶自取':'外送';
+  const pickupLabel=opts.pickup==='takeout'?'外帶自取（9折）':'外送';
+  const totalLine=opts.pickup==='takeout'&&sub!==total
+    ?`💰 合計：$${total}（原價 $${sub}）`
+    :`💰 合計：$${total}`;
 
   const msgText=[
     '🍱 香品小食堂｜新訂單通知',
@@ -965,7 +969,8 @@ function submitOrder(){
     '─────────────',
     ...itemLines,
     '',
-    `💰 合計：$${total}（共 ${totalQty} 項）`,
+    `📦 共 ${totalQty} 項`,
+    totalLine,
     '─────────────',
     `🥢 免洗餐具：${cutlery}`,
     `🧾 收據：${receipt}`,
@@ -1081,12 +1086,14 @@ function savePrice(){
 // ══════════════════════════════
 function saveAnnounce(){
   announceText=document.getElementById('announce-input').value;
+  localStorage.setItem('announceText', announceText);
   document.getElementById('announce-bar').textContent=announceText;
   alert('頂部公告已更新！');
 }
 
 function savePopup(){
   popupText=document.getElementById('popup-input').value;
+  localStorage.setItem('popupText', popupText);
   document.getElementById('popup-body').textContent=popupText;
   alert('彈窗公告已更新！');
 }
@@ -1107,7 +1114,10 @@ const LIFF_ID = '2009693763-bOg2whDg';
 renderTabs();
 renderMenu();
 
-// 顯示公告彈窗
+// 同步頂部公告列
+document.getElementById('announce-bar').textContent=announceText;
+
+// 顯示彈窗公告
 if(popupText){
   document.getElementById('popup-body').textContent=popupText;
   document.getElementById('popup-overlay').classList.add('open');
