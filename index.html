@@ -14,6 +14,7 @@ button { touch-action:manipulation; }
 /* ── LAYOUT ── */
 .app { display:flex; justify-content:center; }
 .phone-wrap { width:100%; max-width:420px; min-height:100vh; background:#f5f0e8; position:relative; }
+
 /* ── HEADER ── */
 .header { background:#1a2455; color:white; padding:14px 16px 10px; position:sticky; top:0; z-index:100; }
 .header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
@@ -38,19 +39,28 @@ button { touch-action:manipulation; }
 .menu-list { padding:0 10px 120px; display:flex; flex-direction:column; gap:8px; }
 .menu-item { background:white; border-radius:12px; display:flex; align-items:center; padding:10px 12px; gap:12px; border:1.5px solid transparent; }
 .menu-item.popular { border-color:#e8a020; }
-.menu-item.unavailable { opacity:0.45; }
+.menu-item.soldout { opacity:0.5; }
 .item-emoji { width:56px; height:56px; border-radius:10px; background:#f5f0e8; display:flex; align-items:center; justify-content:center; font-size:30px; flex-shrink:0; }
 .item-info { flex:1; }
 .item-name-row { display:flex; align-items:center; gap:6px; margin-bottom:2px; flex-wrap:wrap; }
 .item-name { font-size:15px; font-weight:700; color:#1a2455; }
 .popular-tag { background:#fff3d0; color:#b87800; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
 .sold-tag { background:#ffe8e8; color:#c4390a; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
+.new-tag { background:#e0f0ff; color:#1060cc; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
 .item-price { font-size:16px; font-weight:700; color:#c4390a; }
 .add-btn { width:32px; height:32px; border-radius:50%; background:#1a2455; border:none; color:white; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Noto Sans TC',sans-serif; }
+.sold-btn { width:32px; height:32px; border-radius:50%; background:#ccc; border:none; color:white; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; cursor:not-allowed; }
 .qty-control { display:flex; align-items:center; gap:6px; }
 .qty-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:'Noto Sans TC',sans-serif; }
 .qty-btn.minus { color:#c4390a; border-color:#c4390a; }
 .qty-num { font-size:16px; font-weight:700; color:#1a2455; min-width:20px; text-align:center; }
+
+/* ── CLOSED OVERLAY ── */
+.closed-overlay { display:none; position:fixed; inset:0; background:rgba(20,20,20,0.92); z-index:150; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px; }
+.closed-overlay.open { display:flex; }
+.closed-icon { font-size:64px; margin-bottom:16px; }
+.closed-title { font-size:24px; font-weight:700; color:white; margin-bottom:10px; }
+.closed-msg { font-size:15px; color:rgba(255,255,255,0.7); line-height:1.8; }
 
 /* ── BOTTOM BAR ── */
 .bottom-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:420px; background:white; border-top:1px solid #e0e0e0; padding:8px 14px 14px; z-index:50; display:none; align-items:center; justify-content:space-between; }
@@ -99,85 +109,9 @@ button { touch-action:manipulation; }
 .opt-toggle button.sel { background:#1a2455; color:white; font-weight:700; }
 .note-input { width:100%; border:1.5px solid #e0e0e0; border-radius:8px; padding:8px 10px; font-size:13px; font-family:'Noto Sans TC',sans-serif; color:#333; resize:none; margin-top:4px; }
 .note-input:focus { outline:none; border-color:#1a2455; }
-.cart-summary { padding:10px 16px; background:#f9f9f9; border-top:1px solid #eee; }
+.cart-summary { padding:10px 16px; background:#f9f9f9; border-top:1px solid #eee; flex-shrink:0; }
 .summary-total { display:flex; justify-content:space-between; font-size:18px; font-weight:700; color:#1a2455; margin-top:8px; }
 .checkout-btn { flex-shrink:0; margin:12px 16px 20px; background:#1a2455; color:white; border:none; border-radius:12px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; width:calc(100% - 32px); font-family:'Noto Sans TC',sans-serif; }
-
-/* ══════════════════════════════
-   ADMIN PANEL
-══════════════════════════════ */
-.login-card { background:white; border-radius:20px; padding:36px 28px; width:90%; max-width:340px; text-align:center; }
-.login-logo { font-size:48px; margin-bottom:8px; }
-.login-title { font-size:20px; font-weight:700; color:#1a2455; margin-bottom:4px; }
-.login-sub { font-size:13px; color:#888; margin-bottom:24px; }
-.login-input { width:100%; border:1.5px solid #ddd; border-radius:10px; padding:10px 14px; font-size:15px; font-family:'Noto Sans TC',sans-serif; margin-bottom:12px; }
-.login-input:focus { outline:none; border-color:#1a2455; }
-.login-btn { width:100%; background:#1a2455; color:white; border:none; border-radius:10px; padding:12px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-
-/* Admin layout */
-.admin-wrap { display:none; min-height:100vh; background:#f0ede6; }
-.admin-wrap.active { display:block; }
-.admin-header { background:#1a2455; color:white; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
-.admin-title { font-size:17px; font-weight:700; }
-.admin-back-btn { background:rgba(255,255,255,0.15); border:none; color:white; border-radius:8px; padding:6px 14px; font-size:13px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-
-/* Admin tabs */
-.admin-tabs { display:flex; background:#1a2455; padding:0 16px 12px; gap:8px; }
-.admin-tab { flex:1; padding:8px 4px; border:none; border-radius:10px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-.admin-tab.active { background:#e8a020; color:white; }
-.admin-tab:not(.active) { background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.8); }
-
-.admin-content { padding:14px; display:none; }
-.admin-content.active { display:block; }
-
-/* Menu admin */
-.menu-admin-item { background:white; border-radius:12px; padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; gap:12px; }
-.menu-admin-emoji { font-size:28px; width:44px; text-align:center; flex-shrink:0; }
-.menu-admin-info { flex:1; }
-.menu-admin-name { font-size:14px; font-weight:700; color:#1a2455; }
-.menu-admin-price { font-size:13px; color:#c4390a; font-weight:700; }
-.menu-admin-actions { display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
-.toggle-popular { padding:4px 10px; border-radius:8px; border:none; font-size:12px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; color:#888; }
-.toggle-popular.on { background:#fff3d0; color:#b87800; }
-.toggle-avail { padding:4px 10px; border-radius:8px; border:none; font-size:12px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-.toggle-avail.on { background:#e6f9ee; color:#1a7a3e; }
-.toggle-avail.off { background:#ffe8e8; color:#c4390a; }
-.edit-price-btn { padding:4px 10px; border-radius:8px; border:1.5px solid #1a2455; font-size:12px; color:#1a2455; background:white; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-
-/* Edit price modal */
-.edit-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:400; align-items:center; justify-content:center; }
-.edit-overlay.open { display:flex; }
-.edit-card { background:white; border-radius:16px; padding:24px 20px; width:80%; max-width:280px; }
-.edit-title { font-size:16px; font-weight:700; color:#1a2455; margin-bottom:16px; }
-.edit-input { width:100%; border:1.5px solid #ddd; border-radius:8px; padding:10px 14px; font-size:16px; font-family:'Noto Sans TC',sans-serif; margin-bottom:14px; }
-.edit-input:focus { outline:none; border-color:#1a2455; }
-.edit-btns { display:flex; gap:8px; }
-.edit-save { flex:1; background:#1a2455; color:white; border:none; border-radius:8px; padding:10px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-.edit-cancel-btn { flex:1; background:#f0ede6; color:#555; border:none; border-radius:8px; padding:10px; font-size:14px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-
-/* Announce edit */
-.announce-edit-card { background:white; border-radius:12px; padding:16px; margin-bottom:12px; }
-.announce-textarea { width:100%; border:1.5px solid #ddd; border-radius:8px; padding:10px; font-size:14px; font-family:'Noto Sans TC',sans-serif; resize:none; }
-.announce-textarea:focus { outline:none; border-color:#1a2455; }
-.announce-save-btn { background:#1a2455; color:white; border:none; border-radius:8px; padding:10px 24px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; margin-top:10px; }
-.section-label { font-size:13px; font-weight:700; color:#888; margin:16px 0 8px; text-transform:uppercase; letter-spacing:0.5px; }
-
-/* ── CLOSED OVERLAY ── */
-.closed-overlay { display:none; position:fixed; inset:0; background:rgba(20,20,20,0.92); z-index:150; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px; }
-.closed-overlay.open { display:flex; }
-.closed-icon { font-size:64px; margin-bottom:16px; }
-.closed-title { font-size:24px; font-weight:700; color:white; margin-bottom:10px; }
-.closed-msg { font-size:15px; color:rgba(255,255,255,0.7); line-height:1.8; }
-
-/* Admin nav link */
-.admin-link { text-align:center; padding:16px; }
-.admin-link a { font-size:13px; color:#888; text-decoration:none; }
-
-/* Add item */
-.add-item-card { background:white; border-radius:12px; padding:14px 16px; margin-bottom:8px; }
-.add-item-row { display:flex; gap:8px; margin-bottom:8px; }
-.add-item-input { flex:1; border:1.5px solid #ddd; border-radius:8px; padding:8px 10px; font-size:14px; font-family:'Noto Sans TC',sans-serif; }
-.add-item-input:focus { outline:none; border-color:#1a2455; }
 
 /* ── POPUP MODAL ── */
 .popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:center; justify-content:center; }
@@ -203,10 +137,7 @@ button { touch-action:manipulation; }
 <body>
 <div class="app">
 
-<!-- ══════════════════════
-     CUSTOMER ORDERING PAGE
-══════════════════════ -->
-<div class="phone-wrap" id="page-order" style="display:block;">
+<div class="phone-wrap" id="page-order">
 
   <div class="header">
     <div class="header-top">
@@ -222,8 +153,7 @@ button { touch-action:manipulation; }
     <div class="cat-tabs" id="cat-tabs"></div>
   </div>
 
-  <div class="announce" id="announce-bar">🧧 外帶自取享 9 折優惠！ 祝您用餐愉快。</div>
-
+  <div class="announce" id="announce-bar"></div>
   <div id="menu-content"></div>
 
   <div class="bottom-bar" id="bottom-bar">
@@ -231,10 +161,39 @@ button { touch-action:manipulation; }
     <button class="bottom-order-btn" onclick="openCart()">查看訂單</button>
   </div>
 
-  <div class="admin-link"><a href="#" onclick="showAdminLogin()">⚙️ 後台管理</a></div>
 </div>
 
-<!-- Cart Sheet -->
+<!-- 公休遮罩 -->
+<div class="closed-overlay" id="closed-overlay">
+  <div class="closed-icon">🔒</div>
+  <div class="closed-title">目前休息中</div>
+  <div class="closed-msg">感謝您的光臨，目前非營業時間。<br>請於營業時段再來訂餐，謝謝！</div>
+</div>
+
+<!-- 公告彈窗 -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="popup-icon">📢</div>
+    <div class="popup-title">店家公告</div>
+    <div class="popup-body" id="popup-body"></div>
+    <button class="popup-close" onclick="document.getElementById('popup-overlay').classList.remove('open')">我知道了</button>
+  </div>
+</div>
+
+<!-- 確認下單視窗 -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-card">
+    <div class="confirm-title">確認訂單</div>
+    <div class="confirm-items" id="confirm-items"></div>
+    <div class="confirm-total" id="confirm-total"></div>
+    <div class="confirm-btns">
+      <button class="confirm-cancel" onclick="document.getElementById('confirm-overlay').classList.remove('open')">再看看</button>
+      <button class="confirm-ok" onclick="submitOrder()">確認送出 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- 購物車 -->
 <div class="cart-overlay" id="cart-overlay" onclick="overlayClick(event)">
   <div class="cart-sheet" onclick="event.stopPropagation()">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
@@ -275,7 +234,7 @@ button { touch-action:manipulation; }
             <span style="color:#c4390a;font-weight:700;">*請於備註欄內填入外送地址</span>
           </div>
           <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（過敏、口味、外送地址...）</div>
-          <textarea class="note-input" rows="2" placeholder="例：不要香菜、少辣 / 外送地址：..." id="order-note"></textarea>
+          <textarea class="note-input" rows="2" id="order-note" placeholder="例：不要香菜、少辣 / 外送地址：..."></textarea>
         </div>
       </div>
     </div>
@@ -289,134 +248,7 @@ button { touch-action:manipulation; }
   </div>
 </div>
 
-<!-- 公休遮罩 -->
-<div class="closed-overlay" id="closed-overlay">
-  <div class="closed-icon">🔒</div>
-  <div class="closed-title">今日公休</div>
-  <div class="closed-msg" id="closed-msg">感謝您的光臨，今日店休。<br>請於營業日再前來訂餐，謝謝！</div>
-  <div style="margin-top:40px;">
-    <a href="#" onclick="showAdminLogin()" style="font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;">⚙️ 後台管理</a>
-  </div>
-</div>
-
-<!-- 公告彈窗 -->
-<div class="popup-overlay" id="popup-overlay">
-  <div class="popup-card">
-    <div class="popup-icon">📢</div>
-    <div class="popup-title">店家公告</div>
-    <div class="popup-body" id="popup-body"></div>
-    <button class="popup-close" onclick="document.getElementById('popup-overlay').classList.remove('open')">我知道了</button>
-  </div>
-</div>
-
-<!-- 確認下單視窗 -->
-<div class="confirm-overlay" id="confirm-overlay">
-  <div class="confirm-card">
-    <div class="confirm-title">確認訂單</div>
-    <div class="confirm-items" id="confirm-items"></div>
-    <div class="confirm-total" id="confirm-total"></div>
-    <div class="confirm-btns">
-      <button class="confirm-cancel" onclick="document.getElementById('confirm-overlay').classList.remove('open')">再看看</button>
-      <button class="confirm-ok" onclick="submitOrder()">確認送出 🚀</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════
-     ADMIN LOGIN
-══════════════════════ -->
-<div id="page-admin-login" style="min-height:100vh;background:#1a2455;display:none;align-items:center;justify-content:center;">
-  <div class="login-card">
-    <div class="login-logo">🔐</div>
-    <div class="login-title">後台管理</div>
-    <div class="login-sub">香品小食堂</div>
-    <input class="login-input" type="text" id="login-user" placeholder="帳號" />
-    <input class="login-input" type="password" id="login-pass" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()" />
-    <button class="login-btn" onclick="doLogin()">登入</button>
-
-    <div style="margin-top:12px"><a href="#" onclick="showPage('page-order')" style="font-size:13px;color:#aaa;text-decoration:none;">← 返回點餐</a></div>
-  </div>
-</div>
-
-<!-- ══════════════════════
-     ADMIN PANEL
-══════════════════════ -->
-<div class="admin-wrap" id="admin-wrap">
-  <div class="admin-header">
-    <span class="admin-title">⚙️ 後台管理</span>
-    <button class="admin-back-btn" onclick="adminLogout()">登出</button>
-  </div>
-  <div class="admin-tabs">
-    <button class="admin-tab active" onclick="switchAdminTab('menu',this)">🍜 菜單</button>
-    <button class="admin-tab" onclick="switchAdminTab('settings',this)">🔧 設定</button>
-  </div>
-
-  <!-- Menu management -->
-  <div class="admin-content active" id="tab-menu" style="padding:14px;">
-    <!-- 新增品項 -->
-    <div class="add-item-card">
-      <div class="section-label" style="margin-top:0;">新增品項</div>
-      <div class="add-item-row">
-        <input class="add-item-input" id="new-name" placeholder="品項名稱" />
-        <input class="add-item-input" id="new-price" type="number" placeholder="價格" style="width:90px;" />
-      </div>
-      <div class="add-item-row">
-        <select class="add-item-input" id="new-cat">
-          <option value="">選擇分類</option>
-          <option>炒飯</option><option>炒麵</option><option>炒烏龍麵</option>
-          <option>烏龍湯麵</option><option>粥品</option><option>熱炒類</option>
-          <option>時蔬類</option><option>酥炸類</option><option>湯品</option>
-        </select>
-        <input class="add-item-input" id="new-emoji" placeholder="Emoji" style="width:80px;" />
-      </div>
-      <button class="announce-save-btn" style="width:100%;margin-top:4px;" onclick="addMenuItem()">＋ 新增品項</button>
-    </div>
-    <div class="section-label">現有品項</div>
-    <div id="admin-menu-list"></div>
-  </div>
-
-  <!-- Settings -->
-  <div class="admin-content" id="tab-settings" style="padding:14px;">
-    <div class="section-label">營業狀態</div>
-    <div class="announce-edit-card" style="display:flex;align-items:center;justify-content:space-between;">
-      <div>
-        <div style="font-size:14px;font-weight:700;color:#1a2455;" id="closed-status-text">目前：營業中 ✅</div>
-        <div style="font-size:12px;color:#888;margin-top:2px;">開啟後客人將無法點餐</div>
-      </div>
-      <button id="closed-toggle-btn" onclick="toggleClosed()" style="padding:8px 18px;border-radius:10px;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;background:#e6f9ee;color:#1a7a3e;">設為公休</button>
-    </div>
-    <div class="section-label">頂部跑馬燈公告</div>
-    <div class="announce-edit-card">
-      <textarea class="announce-textarea" rows="2" id="announce-input"></textarea>
-      <button class="announce-save-btn" onclick="saveAnnounce()">儲存</button>
-    </div>
-    <div class="section-label">開啟彈窗公告</div>
-    <div class="announce-edit-card">
-      <textarea class="announce-textarea" rows="4" id="popup-input"></textarea>
-      <button class="announce-save-btn" onclick="savePopup()">儲存</button>
-    </div>
-    <div class="section-label">帳號設定</div>
-    <div class="announce-edit-card">
-      <div style="font-size:13px;color:#888;margin-bottom:8px;">修改後台密碼</div>
-      <input class="login-input" type="password" id="new-pass" placeholder="新密碼" style="margin-bottom:8px;" />
-      <button class="announce-save-btn" onclick="changePass()">更新密碼</button>
-    </div>
-  </div>
-</div>
-
-<!-- Edit Price Modal -->
-<div class="edit-overlay" id="edit-overlay">
-  <div class="edit-card">
-    <div class="edit-title" id="edit-item-name">修改價格</div>
-    <input class="edit-input" type="number" id="edit-price-input" />
-    <div class="edit-btns">
-      <button class="edit-cancel-btn" onclick="closeEditModal()">取消</button>
-      <button class="edit-save" onclick="savePrice()">儲存</button>
-    </div>
-  </div>
-</div>
-
-<!-- Options Modal -->
+<!-- 加購選項 Modal -->
 <div class="options-overlay" id="options-overlay" onclick="optionsOverlayClick(event)">
   <div class="options-sheet">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
@@ -436,154 +268,185 @@ button { touch-action:manipulation; }
 </div><!-- .app -->
 
 <script>
-// ══════════════════════════════
-//  DATA
-// ══════════════════════════════
-let menu = [
-  // 炒飯
-  {id:1,  cat:'炒飯', name:'香腸炒飯',     price:105, emoji:'🍚', popular:false, available:true, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:2,  cat:'炒飯', name:'豬肉炒飯',     price:105, emoji:'🍚', popular:false, available:true, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:3,  cat:'炒飯', name:'牛肉炒飯',     price:110, emoji:'🍚', popular:false, available:true, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:4,  cat:'炒飯', name:'羊肉炒飯',     price:110, emoji:'🍚', popular:false, available:true, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:5,  cat:'炒飯', name:'蝦仁炒飯',     price:115, emoji:'🍚', popular:false, available:true, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:6,  cat:'炒飯', name:'鮭魚炒飯',     price:160, emoji:'🍚', popular:false, available:true, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:7,  cat:'炒飯', name:'咖哩豬肉炒飯', price:115, emoji:'🍚', popular:false, available:true, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:8,  cat:'炒飯', name:'咖哩牛肉炒飯', price:120, emoji:'🍚', popular:false, available:true, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:9,  cat:'炒飯', name:'咖哩羊肉炒飯', price:120, emoji:'🍚', popular:false, available:true, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  // 炒麵
-  {id:10, cat:'炒麵', name:'豬肉炒麵',     price:105, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:11, cat:'炒麵', name:'牛肉炒麵',     price:110, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:12, cat:'炒麵', name:'羊肉炒麵',     price:110, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:13, cat:'炒麵', name:'海鮮炒麵',     price:125, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:14, cat:'炒麵', name:'咖哩豬肉炒麵', price:115, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:15, cat:'炒麵', name:'咖哩牛肉炒麵', price:120, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:16, cat:'炒麵', name:'咖哩羊肉炒麵', price:120, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:17, cat:'炒麵', name:'咖哩海鮮炒麵', price:135, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  // 炒烏龍麵
-  {id:18, cat:'炒烏龍麵', name:'豬肉炒烏龍麵',     price:105, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:19, cat:'炒烏龍麵', name:'牛肉炒烏龍麵',     price:110, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:20, cat:'炒烏龍麵', name:'羊肉炒烏龍麵',     price:110, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:21, cat:'炒烏龍麵', name:'海鮮炒烏龍麵',     price:125, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:22, cat:'炒烏龍麵', name:'咖哩豬肉炒烏龍麵', price:115, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:23, cat:'炒烏龍麵', name:'咖哩牛肉炒烏龍麵', price:120, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:24, cat:'炒烏龍麵', name:'咖哩羊肉炒烏龍麵', price:120, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:25, cat:'炒烏龍麵', name:'咖哩海鮮炒烏龍麵', price:135, emoji:'🍝', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  // 烏龍湯麵
-  {id:26, cat:'烏龍湯麵', name:'沙茶豬肉烏龍湯麵', price:110, emoji:'🍜', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:27, cat:'烏龍湯麵', name:'沙茶牛肉烏龍湯麵', price:115, emoji:'🍜', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:28, cat:'烏龍湯麵', name:'沙茶羊肉烏龍湯麵', price:115, emoji:'🍜', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:29, cat:'烏龍湯麵', name:'海鮮烏龍湯麵',     price:130, emoji:'🍜', popular:false, available:true, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[]},
-  // 粥品
-  {id:30, cat:'粥品', name:'玉米瘦肉粥', price:105, emoji:'🥣', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:31, cat:'粥品', name:'滑蛋牛肉粥', price:110, emoji:'🥣', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:32, cat:'粥品', name:'皮蛋瘦肉粥', price:115, emoji:'🥣', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:33, cat:'粥品', name:'海鮮總匯粥', price:120, emoji:'🥣', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:34, cat:'粥品', name:'虱目魚肚粥', price:135, emoji:'🥣', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  // 熱炒類
-  {id:100, cat:'熱炒類', name:'白飯',       price:20,  emoji:'🍚', popular:false, available:true, extras:[], sauce:[]},
-  {id:35,  cat:'熱炒類', name:'塔香烘蛋',   price:135, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:36,  cat:'熱炒類', name:'青蔥烘蛋',   price:135, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:37,  cat:'熱炒類', name:'菜脯蛋',     price:135, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:38,  cat:'熱炒類', name:'蚵仔煎蛋',   price:160, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:39,  cat:'熱炒類', name:'番茄炒蛋',   price:180, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:40,  cat:'熱炒類', name:'麻婆豆腐 🌶️', price:180, emoji:'🍳', popular:false, available:true, extras:[], sauce:[]},
-  {id:41,  cat:'熱炒類', name:'豆豉鮮蚵',   price:180, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:42,  cat:'熱炒類', name:'豆豉排骨',   price:195, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:43,  cat:'熱炒類', name:'蠔油雞丁',   price:180, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:44,  cat:'熱炒類', name:'宮保雞丁 🌶️', price:180, emoji:'🍳', popular:false, available:true, extras:[], sauce:[]},
-  {id:45,  cat:'熱炒類', name:'宮保中卷 🌶️', price:180, emoji:'🍳', popular:false, available:true, extras:[], sauce:[]},
-  {id:46,  cat:'熱炒類', name:'熱炒豬肉',   price:180, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:47,  cat:'熱炒類', name:'熱炒牛肉',   price:190, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:48,  cat:'熱炒類', name:'熱炒羊肉',   price:190, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:49,  cat:'熱炒類', name:'蒜泥五花肉', price:185, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:50,  cat:'熱炒類', name:'炒蛤蜊',     price:185, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:51,  cat:'熱炒類', name:'炒海瓜子',   price:185, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:52,  cat:'熱炒類', name:'滑蛋牛肉',   price:190, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:53,  cat:'熱炒類', name:'滑蛋蝦仁',   price:190, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:54,  cat:'熱炒類', name:'川燙中卷',   price:195, emoji:'🍳', popular:false, available:true, extras:[], sauce:["醬油芥末","蒜蓉醬"]},
-  {id:55,  cat:'熱炒類', name:'白灼蝦',     price:195, emoji:'🍳', popular:false, available:true, extras:[], sauce:[]},
-  {id:56,  cat:'熱炒類', name:'糖醋雞丁',   price:185, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:57,  cat:'熱炒類', name:'糖醋排骨',   price:195, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:58,  cat:'熱炒類', name:'糖醋蝦球',   price:195, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:59,  cat:'熱炒類', name:'金沙豆腐',   price:190, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:60,  cat:'熱炒類', name:'金沙中卷',   price:210, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:61,  cat:'熱炒類', name:'金沙蝦球',   price:210, emoji:'🍳', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  // 時蔬類
-  {id:62, cat:'時蔬類', name:'炒菠菜',     price:110, emoji:'🥬', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:63, cat:'時蔬類', name:'炒地瓜葉',   price:110, emoji:'🥬', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:64, cat:'時蔬類', name:'炒空心菜',   price:110, emoji:'🥬', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:65, cat:'時蔬類', name:'炒高麗菜',   price:110, emoji:'🥬', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:66, cat:'時蔬類', name:'肉絲水蓮',   price:150, emoji:'🥬', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:67, cat:'時蔬類', name:'地瓜葉皮蛋', price:150, emoji:'🥬', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  // 酥炸類
-  {id:68, cat:'酥炸類', name:'招牌黃金豆腐', price:170, emoji:'🟡', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:69, cat:'酥炸類', name:'招牌紅糟鰻',   price:190, emoji:'🟡', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:70, cat:'酥炸類', name:'鹽酥鮮蚵',     price:190, emoji:'🟡', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:71, cat:'酥炸類', name:'月亮蝦餅',     price:190, emoji:'🟡', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:72, cat:'酥炸類', name:'椒鹽排骨',     price:190, emoji:'🟡', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:73, cat:'酥炸類', name:'鹽酥蝦',       price:190, emoji:'🟡', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:74, cat:'酥炸類', name:'椒鹽中卷',     price:200, emoji:'🟡', popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]},
-  {id:75, cat:'酥炸類', name:'鳳梨蝦球',     price:200, emoji:'🟡', popular:false, available:true, extras:[], sauce:[]},
-  // 湯品
-  {id:76, cat:'湯品', name:'紫菜蛋花湯', price:50, emoji:'🥣', popular:false, available:true, extras:[], sauce:[]},
-  {id:77, cat:'湯品', name:'貢丸湯',     price:55, emoji:'🥣', popular:false, available:true, extras:[], sauce:[]},
-  {id:78, cat:'湯品', name:'魚丸湯',     price:55, emoji:'🥣', popular:false, available:true, extras:[], sauce:[]},
-  {id:79, cat:'湯品', name:'番茄蛋花湯', price:65, emoji:'🥣', popular:false, available:true, extras:[], sauce:[]},
-  {id:80, cat:'湯品', name:'薑絲蛤蜊湯', price:65, emoji:'🥣', popular:false, available:true, extras:[], sauce:[]},
-  {id:81, cat:'湯品', name:'薑絲鮮蚵湯', price:70, emoji:'🥣', popular:false, available:true, extras:[], sauce:[]},
+// ╔══════════════════════════════════════════════╗
+// ║  ★ 營運參數區塊 — 每次修改這裡即可更新網頁  ║
+// ╚══════════════════════════════════════════════╝
+const STORE_CONFIG = {
+  // 營業狀態：true = 營業中，false = 休息中（客人無法點餐）
+  isOpen: true,
+
+  // 頂部跑馬燈公告
+  announcementText: '🧧 外帶自取享 9 折優惠！ 祝您用餐愉快。',
+
+  // 開啟彈窗公告（留空字串 '' 則不顯示彈窗）
+  popupText: '🍱 歡迎蒞臨香品小食堂｜⏳ 餐點現點現做，請耐心等候｜📞 量多建議提前預約以節省時間｜🛵 外送需求請先洽詢店家。',
+
+  // 備註欄預設提示文字
+  defaultNote: '例：口味調整、其他需求 / 外送地址：...',
+};
+
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║  ★ 餐點管理區塊                                                            ║
+// ║                                                                              ║
+// ║  【每個欄位說明】                                                            ║
+// ║  id        → 品項編號，每道菜都不能重複，新增時用比 200 大的數字            ║
+// ║  cat       → 所屬分類，必須與上方分類名稱完全一致（例：'炒飯'）             ║
+// ║  name      → 菜名（會顯示在菜單上）                                         ║
+// ║  price     → 售價（數字，不要加 $ 符號）                                    ║
+// ║  emoji     → 菜單左側的圖示（可從手機或網路複製 Emoji）                     ║
+// ║  popular   → true = 顯示「熱銷」金色標籤，並在卡片加上金框                 ║
+// ║  isSoldOut → true = 顯示「已售完」紅色標籤，無法加入購物車                 ║
+// ║  isNew     → true = 顯示「新品」藍色標籤                                    ║
+// ║  isHidden  → true = 此品項完全不出現在菜單（暫時下架用）                   ║
+// ║  extras    → 加購選項彈窗（結帳前讓客人勾選）                               ║
+// ║              格式：[{label:'選項名稱', price:加價金額}]                      ║
+// ║              免費的選項 price 填 0，不需要加購選項則填 []                    ║
+// ║  sauce     → 醬料選擇彈窗（單選）                                           ║
+// ║              格式：['選項A', '選項B']，不需要則填 []                         ║
+// ║                                                                              ║
+// ║  【新增品項步驟】                                                            ║
+// ║  1. 找到要新增的分類區塊（例：// ── 熱炒類 ──）                             ║
+// ║  2. 在該區塊最後一行的結尾逗號後，按 Enter 新增一行                         ║
+// ║  3. 複製下方範本，貼上後修改各欄位內容                                      ║
+// ║  4. id 必須是全檔唯一的數字，建議從 201 開始往上加                          ║
+// ║  5. 存檔後修改頂部 VER 日期，重新上傳即完成                                 ║
+// ║                                                                              ║
+// ║  【新增品項範本 — 複製這行貼到對應分類最後面】                              ║
+// ║  { id:201, cat:'熱炒類', name:'新菜名', price:180, emoji:'🍳',              ║
+// ║    popular:false, isSoldOut:false, isNew:true, isHidden:false,              ║
+// ║    extras:[{label:'加辣🌶️',price:0}], sauce:[] },                           ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+const MENU_DATA = [
+  // ┌─────────────────────────────────────────────────────────────────────┐
+  // │ 炒飯                                                                │
+  // │ 新增炒飯品項 → 在最後一道（咖哩羊肉炒飯）後面加一行               │
+  // └─────────────────────────────────────────────────────────────────────┘
+  //   id    分類      菜名               售價   圖示   熱銷?          售完?          新品?         下架?          加購選項                                              醬料
+  { id:1,  cat:'炒飯', name:'香腸炒飯',     price:105, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:2,  cat:'炒飯', name:'豬肉炒飯',     price:105, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:3,  cat:'炒飯', name:'牛肉炒飯',     price:110, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:4,  cat:'炒飯', name:'羊肉炒飯',     price:110, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:5,  cat:'炒飯', name:'蝦仁炒飯',     price:115, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:6,  cat:'炒飯', name:'鮭魚炒飯',     price:160, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:7,  cat:'炒飯', name:'咖哩豬肉炒飯', price:115, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:8,  cat:'炒飯', name:'咖哩牛肉炒飯', price:120, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:9,  cat:'炒飯', name:'咖哩羊肉炒飯', price:120, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  // ┌─────────────────────────────────────────────────────────────────────┐
+  // │ 炒麵                                                                │
+  // │ 新增炒麵品項 → 在最後一道（咖哩海鮮炒麵）後面加一行               │
+  // └─────────────────────────────────────────────────────────────────────┘
+  { id:10, cat:'炒麵', name:'豬肉炒麵',     price:105, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:11, cat:'炒麵', name:'牛肉炒麵',     price:110, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:12, cat:'炒麵', name:'羊肉炒麵',     price:110, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:13, cat:'炒麵', name:'海鮮炒麵',     price:125, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:14, cat:'炒麵', name:'咖哩豬肉炒麵', price:115, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:15, cat:'炒麵', name:'咖哩牛肉炒麵', price:120, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:16, cat:'炒麵', name:'咖哩羊肉炒麵', price:120, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:17, cat:'炒麵', name:'咖哩海鮮炒麵', price:135, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  // ┌─────────────────────────────────────────────────────────────────────┐
+  // │ 炒烏龍麵                                                            │
+  // │ 新增品項 → 在最後一道（咖哩海鮮炒烏龍麵）後面加一行               │
+  // └─────────────────────────────────────────────────────────────────────┘
+  { id:18, cat:'炒烏龍麵', name:'豬肉炒烏龍麵',     price:105, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:19, cat:'炒烏龍麵', name:'牛肉炒烏龍麵',     price:110, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:20, cat:'炒烏龍麵', name:'羊肉炒烏龍麵',     price:110, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:21, cat:'炒烏龍麵', name:'海鮮炒烏龍麵',     price:125, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:22, cat:'炒烏龍麵', name:'咖哩豬肉炒烏龍麵', price:115, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:23, cat:'炒烏龍麵', name:'咖哩牛肉炒烏龍麵', price:120, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:24, cat:'炒烏龍麵', name:'咖哩羊肉炒烏龍麵', price:120, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:25, cat:'炒烏龍麵', name:'咖哩海鮮炒烏龍麵', price:135, emoji:'🍝', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  // ┌─────────────────────────────────────────────────────────────────────┐
+  // │ 烏龍湯麵                                                            │
+  // │ 新增品項 → 在最後一道（海鮮烏龍湯麵）後面加一行                   │
+  // └─────────────────────────────────────────────────────────────────────┘
+  { id:26, cat:'烏龍湯麵', name:'沙茶豬肉烏龍湯麵', price:110, emoji:'🍜', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:27, cat:'烏龍湯麵', name:'沙茶牛肉烏龍湯麵', price:115, emoji:'🍜', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:28, cat:'烏龍湯麵', name:'沙茶羊肉烏龍湯麵', price:115, emoji:'🍜', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:29, cat:'烏龍湯麵', name:'海鮮烏龍湯麵',     price:130, emoji:'🍜', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  // ┌─────────────────────────────────────────────────────────────────────┐
+  // │ 粥品                                                                │
+  // │ 新增品項 → 在最後一道（虱目魚肚粥）後面加一行                     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  { id:30, cat:'粥品', name:'玉米瘦肉粥', price:105, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:31, cat:'粥品', name:'滑蛋牛肉粥', price:110, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:32, cat:'粥品', name:'皮蛋瘦肉粥', price:115, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:33, cat:'粥品', name:'海鮮總匯粥', price:120, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:34, cat:'粥品', name:'虱目魚肚粥', price:135, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  // ┌─────────────────────────────────────────────────────────────────────┐
+  // │ 熱炒類                                                              │
+  // │ 新增品項 → 在最後一道（金沙蝦球）後面加一行                       │
+  // └─────────────────────────────────────────────────────────────────────┘
+  { id:100, cat:'熱炒類', name:'白飯',         price:20,  emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:35,  cat:'熱炒類', name:'塔香烘蛋',     price:135, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:36,  cat:'熱炒類', name:'青蔥烘蛋',     price:135, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:37,  cat:'熱炒類', name:'菜脯蛋',       price:135, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:38,  cat:'熱炒類', name:'蚵仔煎蛋',     price:160, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:39,  cat:'熱炒類', name:'番茄炒蛋',     price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:40,  cat:'熱炒類', name:'麻婆豆腐 🌶️',  price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:41,  cat:'熱炒類', name:'豆豉鮮蚵',     price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:42,  cat:'熱炒類', name:'豆豉排骨',     price:195, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:43,  cat:'熱炒類', name:'蠔油雞丁',     price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:44,  cat:'熱炒類', name:'宮保雞丁 🌶️',  price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:45,  cat:'熱炒類', name:'宮保中卷 🌶️',  price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:46,  cat:'熱炒類', name:'熱炒豬肉',     price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:47,  cat:'熱炒類', name:'熱炒牛肉',     price:190, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:48,  cat:'熱炒類', name:'熱炒羊肉',     price:190, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:49,  cat:'熱炒類', name:'蒜泥五花肉',   price:185, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:50,  cat:'熱炒類', name:'炒蛤蜊',       price:185, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:51,  cat:'熱炒類', name:'炒海瓜子',     price:185, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:52,  cat:'熱炒類', name:'滑蛋牛肉',     price:190, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:53,  cat:'熱炒類', name:'滑蛋蝦仁',     price:190, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:54,  cat:'熱炒類', name:'川燙中卷',     price:195, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:['醬油芥末','蒜蓉醬'] }, // sauce 有值 → 結帳前讓客人選醬料
+  { id:55,  cat:'熱炒類', name:'白灼蝦',       price:195, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:56,  cat:'熱炒類', name:'糖醋雞丁',     price:185, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:57,  cat:'熱炒類', name:'糖醋排骨',     price:195, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:58,  cat:'熱炒類', name:'糖醋蝦球',     price:195, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:59,  cat:'熱炒類', name:'金沙豆腐',     price:190, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:60,  cat:'熱炒類', name:'金沙中卷',     price:210, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:61,  cat:'熱炒類', name:'金沙蝦球',     price:210, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  // ┌─────────────────────────────────────────────────────────────────────┐
+  // │ 時蔬類                                                              │
+  // │ 新增品項 → 在最後一道（地瓜葉皮蛋）後面加一行                     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  { id:62, cat:'時蔬類', name:'炒菠菜',     price:110, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:63, cat:'時蔬類', name:'炒地瓜葉',   price:110, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:64, cat:'時蔬類', name:'炒空心菜',   price:110, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:65, cat:'時蔬類', name:'炒高麗菜',   price:110, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:66, cat:'時蔬類', name:'肉絲水蓮',   price:150, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:67, cat:'時蔬類', name:'地瓜葉皮蛋', price:150, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  // ┌─────────────────────────────────────────────────────────────────────┐
+  // │ 酥炸類                                                              │
+  // │ 新增品項 → 在最後一道（鳳梨蝦球）後面加一行                       │
+  // └─────────────────────────────────────────────────────────────────────┘
+  { id:68, cat:'酥炸類', name:'招牌黃金豆腐', price:170, emoji:'🟡', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:69, cat:'酥炸類', name:'招牌紅糟鰻',   price:190, emoji:'🟡', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:70, cat:'酥炸類', name:'鹽酥鮮蚵',     price:190, emoji:'🟡', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:71, cat:'酥炸類', name:'月亮蝦餅',     price:190, emoji:'🟡', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:72, cat:'酥炸類', name:'椒鹽排骨',     price:190, emoji:'🟡', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:73, cat:'酥炸類', name:'鹽酥蝦',       price:190, emoji:'🟡', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:74, cat:'酥炸類', name:'椒鹽中卷',     price:200, emoji:'🟡', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:75, cat:'酥炸類', name:'鳳梨蝦球',     price:200, emoji:'🟡', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  // ┌─────────────────────────────────────────────────────────────────────┐
+  // │ 湯品                                                                │
+  // │ 新增品項 → 在最後一道（薑絲鮮蚵湯）後面加一行                     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  { id:76, cat:'湯品', name:'紫菜蛋花湯', price:50, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:77, cat:'湯品', name:'貢丸湯',     price:55, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:78, cat:'湯品', name:'魚丸湯',     price:55, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:79, cat:'湯品', name:'番茄蛋花湯', price:65, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:80, cat:'湯品', name:'薑絲蛤蜊湯', price:65, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:81, cat:'湯品', name:'薑絲鮮蚵湯', price:70, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
 ];
+
+// ══════════════════════════════
+//  執行時狀態（請勿修改）
+// ══════════════════════════════
+// 過濾掉 isHidden 的品項，建立實際菜單
+const menu = MENU_DATA.filter(i => !i.isHidden);
 
 let cart = {};
 let opts = {cutlery:'no', receipt:'no', pickup:'takeout'};
 let selCat = '全部';
-const DEFAULT_ANNOUNCE = '🧧 外帶自取享 9 折優惠！ 祝您用餐愉快。';
-const DEFAULT_POPUP = '🍱 歡迎蒞臨香品小食堂！ ｜ ⏳ 餐點現點現做，請耐心等候 ｜ 📞 量多建議提前預約以節省時間 ｜ 🛵 外送需求請先洽詢店家。';
-let announceText = localStorage.getItem('announceText') || DEFAULT_ANNOUNCE;
-let popupText = localStorage.getItem('popupText') || DEFAULT_POPUP;
-let isClosed = localStorage.getItem('isClosed') === 'true';
-let adminPass = '233009';
-let editingItemId = null;
-
-// ══════════════════════════════
-//  PAGE ROUTING
-// ══════════════════════════════
-function showPage(id){
-  document.getElementById('page-order').style.display='none';
-  document.getElementById('page-admin-login').style.display='none';
-  document.getElementById('admin-wrap').classList.remove('active');
-  const overlay=document.getElementById('closed-overlay');
-  if(id==='admin-wrap'){
-    overlay.style.display='none';
-    document.getElementById('admin-wrap').classList.add('active');
-  } else if(id==='page-admin-login'){
-    overlay.style.display='none';
-    document.getElementById('page-admin-login').style.display='flex';
-  } else {
-    if(isClosed) overlay.style.display='flex';
-    document.getElementById(id).style.display='block';
-  }
-}
-
-function showAdminLogin(){ showPage('page-admin-login'); }
-
-function doLogin(){
-  const u=document.getElementById('login-user').value;
-  const p=document.getElementById('login-pass').value;
-  if(u==='233009'&&p===adminPass){
-    showPage('admin-wrap');
-    renderAdminMenu();
-    document.getElementById('announce-input').value=announceText;
-    document.getElementById('popup-input').value=popupText;
-  } else {
-    alert('帳號或密碼錯誤！');
-  }
-}
-
-function adminLogout(){
-  document.getElementById('login-user').value='';
-  document.getElementById('login-pass').value='';
-  showPage('page-order');
-}
 
 // ══════════════════════════════
 //  CUSTOMER MENU
@@ -599,7 +462,7 @@ function renderTabs(){
 function selCategory(c){ selCat=c; renderTabs(); renderMenu(); }
 
 function renderMenu(){
-  const items=selCat==='全部'?menu:menu.filter(i=>i.cat===selCat);
+  const items=(selCat==='全部'?menu:menu.filter(i=>i.cat===selCat));
   const byCat={};
   items.forEach(i=>{ if(!byCat[i.cat]) byCat[i.cat]=[]; byCat[i.cat].push(i); });
   let html='<div class="menu-list">';
@@ -612,12 +475,9 @@ function renderMenu(){
   } else {
     ALL_CATS.filter(c=>c!=='全部').forEach(cat=>{
       const catItems=byCat[cat]||[];
+      if(catItems.length===0) return;
       html+=`<div class="section-title">${cat}</div>`;
-      if(catItems.length===0){
-        html+='<div style="padding:8px 14px 4px;font-size:13px;color:#bbb;">尚無品項</div>';
-      } else {
-        html+=catItems.map(renderItem).join('');
-      }
+      html+=catItems.map(renderItem).join('');
     });
   }
   html+='</div>';
@@ -627,8 +487,8 @@ function renderMenu(){
 function renderItem(item){
   const q=cart[item.id]||0;
   let ctrl='';
-  if(!item.available){
-    ctrl='<span class="sold-tag">售完</span>';
+  if(item.isSoldOut){
+    ctrl='<div class="sold-btn">✕</div>';
   } else if(q>0){
     ctrl=`<div class="qty-control">
       <button class="qty-btn minus" onclick="changeQty(${item.id},-1)">−</button>
@@ -638,17 +498,18 @@ function renderItem(item){
   } else {
     ctrl=`<button class="add-btn" onclick="changeQty(${item.id},1)">+</button>`;
   }
-  return `<div class="menu-item${item.popular?' popular':''}${!item.available?' unavailable':''}">
+  return `<div class="menu-item${item.popular?' popular':''}${item.isSoldOut?' soldout':''}">
     <div class="item-emoji">${item.emoji}</div>
     <div class="item-info">
       <div class="item-name-row">
         <span class="item-name">${item.name}</span>
         ${item.popular?'<span class="popular-tag">熱銷</span>':''}
-        ${!item.available?'<span class="sold-tag">售完</span>':''}
+        ${item.isNew?'<span class="new-tag">新品</span>':''}
+        ${item.isSoldOut?'<span class="sold-tag">已售完</span>':''}
       </div>
       <div class="item-price">$${item.price}</div>
     </div>
-    ${item.available?ctrl:''}
+    ${ctrl}
   </div>`;
 }
 
@@ -658,6 +519,7 @@ let pendingSauce = null;
 let pendingQty = 1;
 
 function changeQty(id,delta){
+  if(item_isSoldOut(id)) return;
   if(delta > 0){
     const item = menu.find(i=>i.id===id);
     if(item && ((item.extras && item.extras.length>0) || (item.sauce && item.sauce.length>0))){
@@ -671,6 +533,11 @@ function changeQty(id,delta){
   renderMenu();
   updateBadge();
   updateBottomBar();
+}
+
+function item_isSoldOut(id){
+  const item=menu.find(i=>i.id===id);
+  return item ? item.isSoldOut : false;
 }
 
 function openOptionsModal(item){
@@ -709,9 +576,7 @@ function openOptionsModal(item){
   updateQtyDisplay();
 }
 
-function toggleExtra(i){
-  pendingExtras[i] = document.getElementById('ex-'+i).checked;
-}
+function toggleExtra(i){ pendingExtras[i] = document.getElementById('ex-'+i).checked; }
 
 function selSauce(s, btn){
   pendingSauce = s;
@@ -719,50 +584,26 @@ function selSauce(s, btn){
   btn.classList.add('sel');
 }
 
-function changeQtyModal(delta){
-  pendingQty = Math.max(1, pendingQty + delta);
-  updateQtyDisplay();
-}
-
-function updateQtyDisplay(){
-  document.getElementById('modal-qty').textContent = pendingQty;
-}
-
-function optionsOverlayClick(e){
-  if(e.target===document.getElementById('options-overlay')) closeOptionsModal();
-}
-
-function closeOptionsModal(){
-  document.getElementById('options-overlay').classList.remove('open');
-  pendingItem = null;
-}
+function changeQtyModal(delta){ pendingQty = Math.max(1, pendingQty + delta); updateQtyDisplay(); }
+function updateQtyDisplay(){ document.getElementById('modal-qty').textContent = pendingQty; }
+function optionsOverlayClick(e){ if(e.target===document.getElementById('options-overlay')) closeOptionsModal(); }
+function closeOptionsModal(){ document.getElementById('options-overlay').classList.remove('open'); pendingItem = null; }
 
 function confirmAddToCart(){
   if(!pendingItem) return;
   const id = pendingItem.id;
-
-  // Build note from selections
   let notes = [];
   if(pendingItem.extras){
-    pendingItem.extras.forEach((ex,i)=>{
-      if(pendingExtras[i]) notes.push(ex.label);
-    });
+    pendingItem.extras.forEach((ex,i)=>{ if(pendingExtras[i]) notes.push(ex.label); });
   }
   if(pendingSauce) notes.push(pendingSauce);
-
-  // Extra price
   let extraPrice = 0;
   if(pendingItem.extras){
-    pendingItem.extras.forEach((ex,i)=>{
-      if(pendingExtras[i]) extraPrice += ex.price;
-    });
+    pendingItem.extras.forEach((ex,i)=>{ if(pendingExtras[i]) extraPrice += ex.price; });
   }
-
-  // Store as cart entry with note
   const key = id + (notes.length>0 ? '__'+notes.join('_') : '');
   if(!cart[key]) cart[key] = {itemId:id, qty:0, notes:notes.join('、'), extraPrice};
   cart[key].qty += pendingQty;
-
   closeOptionsModal();
   renderMenu();
   updateBadge();
@@ -779,10 +620,8 @@ function updateBadge(){
 function updateBottomBar(){
   const sub=calcSub();
   const bar=document.getElementById('bottom-bar');
-  if(sub>0){
-    bar.style.display='flex';
-    document.getElementById('bottom-price').textContent='$'+calcTotal();
-  } else { bar.style.display='none'; }
+  if(sub>0){ bar.style.display='flex'; document.getElementById('bottom-price').textContent='$'+calcTotal(); }
+  else { bar.style.display='none'; }
 }
 
 function calcSub(){
@@ -805,16 +644,8 @@ function calcTotal(){
 // ══════════════════════════════
 //  CART
 // ══════════════════════════════
-function openCart(){
-  renderCartItems();
-  updateSummary();
-  document.getElementById('cart-overlay').classList.add('open');
-}
-
-function overlayClick(e){
-  if(e.target===document.getElementById('cart-overlay')) closeCart();
-}
-
+function openCart(){ renderCartItems(); updateSummary(); document.getElementById('cart-overlay').classList.add('open'); }
+function overlayClick(e){ if(e.target===document.getElementById('cart-overlay')) closeCart(); }
 function closeCart(){ document.getElementById('cart-overlay').classList.remove('open'); }
 
 function clearCart(){
@@ -826,16 +657,12 @@ function clearCart(){
 function renderCartItems(){
   const el=document.getElementById('cart-items');
   const keys=Object.keys(cart);
-  if(keys.length===0){
-    el.innerHTML='<div class="empty-cart">🍜<br>還沒有選任何品項</div>';
-    return;
-  }
+  if(keys.length===0){ el.innerHTML='<div class="empty-cart">🍜<br>還沒有選任何品項</div>'; return; }
   el.innerHTML=keys.map(key=>{
     const val=cart[key];
     if(typeof val==='object'){
       const item=menu.find(i=>i.id===val.itemId);
       const unitPrice=item.price+val.extraPrice;
-      // 組合備註顯示（含各加購金額）
       let notesDisplay='';
       if(val.notes){
         const noteArr=val.notes.split('、');
@@ -881,16 +708,12 @@ function changeCartQtyKey(key, delta){
     const next = val + delta;
     if(next <= 0) delete cart[key]; else cart[key] = next;
   }
-  renderCartItems();
-  updateBadge();
-  updateBottomBar();
-  updateSummary();
+  renderCartItems(); updateBadge(); updateBottomBar(); updateSummary();
 }
 
 function selOpt(key,val,btn){
   opts[key]=val;
-  const parent=btn.parentElement;
-  parent.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
   updateSummary();
 }
@@ -913,9 +736,7 @@ function updateSummary(){
   if(opts.pickup==='takeout'&&sub>0){
     discEl.style.display='flex';
     document.getElementById('sum-disc-val').textContent='-$'+(sub-total);
-  } else {
-    discEl.style.display='none';
-  }
+  } else { discEl.style.display='none'; }
   document.getElementById('sum-total').textContent='$'+total;
   const bp=document.getElementById('bottom-price');
   if(bp) bp.textContent='$'+total;
@@ -923,7 +744,6 @@ function updateSummary(){
 
 function placeOrder(){
   if(Object.keys(cart).length===0) return;
-
   const items=buildItems();
   const sub=calcSub();
   const total=calcTotal();
@@ -955,12 +775,13 @@ function buildItems(){
   });
 }
 
+let _orderSeqDate = '';
+let _orderSeq = 0;
 function genOrderId(now){
-  const dateKey=`orderSeq_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-  const seq=(parseInt(localStorage.getItem(dateKey)||'0')+1);
-  localStorage.setItem(dateKey, seq);
   const mmdd=`${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-  return `${mmdd}-${String(seq).padStart(2,'0')}`;
+  if(_orderSeqDate !== mmdd){ _orderSeqDate=mmdd; _orderSeq=0; }
+  _orderSeq++;
+  return `${mmdd}-${String(_orderSeq).padStart(2,'0')}`;
 }
 
 function submitOrder(){
@@ -1008,150 +829,10 @@ function submitOrder(){
   updateBadge(); updateBottomBar(); closeCart();
   document.getElementById('order-note').value='';
 
-  if(!liff.isInClient()){
-    alert('請於 LINE App 內開啟');
-    return;
-  }
+  if(!liff.isInClient()){ alert('請於 LINE App 內開啟'); return; }
   liff.sendMessages([{type:'text', text:msgText}])
     .then(()=>{ liff.closeWindow(); })
-    .catch(err=>{
-      console.error('sendMessages error:', err);
-      alert('訊息傳送失敗，請重試。');
-    });
-}
-
-// ══════════════════════════════
-//  ADMIN TABS
-// ══════════════════════════════
-function switchAdminTab(tab,btn){
-  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  if(tab==='menu') renderAdminMenu();
-}
-
-// ══════════════════════════════
-//  ADMIN MENU
-// ══════════════════════════════
-function renderAdminMenu(){
-  document.getElementById('admin-menu-list').innerHTML=menu.map(item=>`
-    <div class="menu-admin-item">
-      <div class="menu-admin-emoji">${item.emoji}</div>
-      <div class="menu-admin-info">
-        <div class="menu-admin-name">${item.name}</div>
-        <div class="menu-admin-price">$${item.price}</div>
-      </div>
-      <div class="menu-admin-actions">
-        <button class="toggle-popular ${item.popular?'on':''}" onclick="togglePopular(${item.id})" title="熱銷推薦">
-          ${item.popular?'⭐ 熱銷':'☆ 熱銷'}
-        </button>
-        <button class="toggle-avail ${item.available?'on':'off'}" onclick="toggleAvail(${item.id})">
-          ${item.available?'✓ 供應中':'✕ 售完'}
-        </button>
-        <button class="edit-price-btn" onclick="openEditModal(${item.id})">改價格</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function togglePopular(id){
-  const item=menu.find(i=>i.id===id);
-  if(item){ item.popular=!item.popular; renderAdminMenu(); renderMenu(); }
-}
-
-function toggleAvail(id){
-  const item=menu.find(i=>i.id===id);
-  if(item){ item.available=!item.available; renderAdminMenu(); renderMenu(); }
-}
-
-let nextId = 200;
-function addMenuItem(){
-  const name=document.getElementById('new-name').value.trim();
-  const price=parseInt(document.getElementById('new-price').value);
-  const cat=document.getElementById('new-cat').value;
-  const emoji=document.getElementById('new-emoji').value.trim()||'🍽️';
-  if(!name){ alert('請輸入品項名稱'); return; }
-  if(!cat){ alert('請選擇分類'); return; }
-  if(isNaN(price)||price<0){ alert('請輸入有效價格'); return; }
-  menu.push({id:nextId++, cat, name, price, emoji, popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]});
-  document.getElementById('new-name').value='';
-  document.getElementById('new-price').value='';
-  document.getElementById('new-emoji').value='';
-  document.getElementById('new-cat').value='';
-  renderAdminMenu();
-  renderMenu();
-}
-
-function openEditModal(id){
-  editingItemId=id;
-  const item=menu.find(i=>i.id===id);
-  document.getElementById('edit-item-name').textContent='修改：'+item.name;
-  document.getElementById('edit-price-input').value=item.price;
-  document.getElementById('edit-overlay').classList.add('open');
-}
-
-function closeEditModal(){
-  document.getElementById('edit-overlay').classList.remove('open');
-  editingItemId=null;
-}
-
-function savePrice(){
-  const newPrice=parseInt(document.getElementById('edit-price-input').value);
-  if(isNaN(newPrice)||newPrice<0){ alert('請輸入有效價格'); return; }
-  const item=menu.find(i=>i.id===editingItemId);
-  if(item){ item.price=newPrice; }
-  closeEditModal();
-  renderAdminMenu();
-  renderMenu();
-}
-
-// ══════════════════════════════
-//  SETTINGS
-// ══════════════════════════════
-function toggleClosed(){
-  isClosed=!isClosed;
-  localStorage.setItem('isClosed', isClosed);
-  updateClosedUI();
-}
-
-function updateClosedUI(){
-  document.getElementById('closed-overlay').classList.toggle('open', isClosed);
-  const statusText=document.getElementById('closed-status-text');
-  const btn=document.getElementById('closed-toggle-btn');
-  if(isClosed){
-    statusText.textContent='目前：公休中 🔒';
-    btn.textContent='恢復營業';
-    btn.style.background='#ffe8e8';
-    btn.style.color='#c4390a';
-  } else {
-    statusText.textContent='目前：營業中 ✅';
-    btn.textContent='設為公休';
-    btn.style.background='#e6f9ee';
-    btn.style.color='#1a7a3e';
-  }
-}
-
-function saveAnnounce(){
-  announceText=document.getElementById('announce-input').value;
-  localStorage.setItem('announceText', announceText);
-  document.getElementById('announce-bar').textContent=announceText;
-  alert('頂部公告已更新！');
-}
-
-function savePopup(){
-  popupText=document.getElementById('popup-input').value;
-  localStorage.setItem('popupText', popupText);
-  document.getElementById('popup-body').textContent=popupText;
-  alert('彈窗公告已更新！');
-}
-
-function changePass(){
-  const np=document.getElementById('new-pass').value;
-  if(!np){ alert('請輸入新密碼'); return; }
-  adminPass=np;
-  document.getElementById('new-pass').value='';
-  alert('密碼已更新！');
+    .catch(err=>{ console.error('sendMessages error:', err); alert('訊息傳送失敗，請重試。'); });
 }
 
 // ══════════════════════════════
@@ -1159,18 +840,25 @@ function changePass(){
 // ══════════════════════════════
 const LIFF_ID = '2009693763-bOg2whDg';
 
+// ★ 防快取：每次上傳後請更新 VER（格式：YYYYMMDD），確保所有客人看到最新版本
+(function(){
+  const VER = '20250407';
+  const url = new URL(location.href);
+  if(url.searchParams.get('v') !== VER){
+    url.searchParams.set('v', VER);
+    location.replace(url.toString());
+  }
+})();
+
 renderTabs();
 renderMenu();
+document.getElementById('announce-bar').textContent = STORE_CONFIG.announcementText;
+document.getElementById('order-note').placeholder = STORE_CONFIG.defaultNote;
 
-// 同步頂部公告列
-document.getElementById('announce-bar').textContent=announceText;
-
-// 公休狀態
-updateClosedUI();
-
-// 顯示彈窗公告（公休時不顯示公告）
-if(popupText && !isClosed){
-  document.getElementById('popup-body').textContent=popupText;
+if(!STORE_CONFIG.isOpen){
+  document.getElementById('closed-overlay').classList.add('open');
+} else if(STORE_CONFIG.popupText){
+  document.getElementById('popup-body').textContent = STORE_CONFIG.popupText;
   document.getElementById('popup-overlay').classList.add('open');
 }
 
