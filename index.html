@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>香品小食堂 點餐系統</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100vh; }
@@ -47,7 +48,6 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
 .item-name { font-size:15px; font-weight:700; color:#1a2455; }
 .popular-tag { background:#fff3d0; color:#b87800; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
 .sold-tag { background:#ffe8e8; color:#c4390a; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
-.item-desc { font-size:11px; color:#888; margin-bottom:4px; line-height:1.4; }
 .item-price { font-size:16px; font-weight:700; color:#c4390a; }
 .add-btn { width:32px; height:32px; border-radius:50%; background:#1a2455; border:none; color:white; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Noto Sans TC',sans-serif; }
 .qty-control { display:flex; align-items:center; gap:6px; }
@@ -77,11 +77,6 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
 .sauce-btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
 .sauce-btn { padding:7px 18px; border-radius:20px; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:14px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; transition:all 0.15s; }
 .sauce-btn.sel { background:#1a2455; color:white; font-weight:700; }
-
-.bottom-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:420px; background:white; border-top:1px solid #e0e0e0; padding:8px 14px 14px; z-index:50; display:none; align-items:center; justify-content:space-between; }
-.bottom-total { font-size:13px; color:#666; }
-.bottom-total span { font-size:18px; font-weight:700; color:#c4390a; }
-.bottom-order-btn { background:#1a2455; color:white; border:none; border-radius:10px; padding:10px 20px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
 
 /* ── CART SHEET ── */
 .cart-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:flex-end; flex-direction:column; align-items:center; }
@@ -147,31 +142,6 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
 .admin-content { padding:14px; display:none; }
 .admin-content.active { display:block; }
 
-/* Stat cards */
-.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
-.stat-card { background:white; border-radius:12px; padding:14px; }
-.stat-label { font-size:12px; color:#888; margin-bottom:4px; }
-.stat-value { font-size:22px; font-weight:700; color:#1a2455; }
-/* Order list (admin) */
-.order-card { background:white; border-radius:12px; padding:14px; margin-bottom:10px; }
-.order-card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
-.order-num { font-size:15px; font-weight:700; color:#1a2455; }
-.order-time { font-size:12px; color:#aaa; }
-.order-status { font-size:12px; font-weight:700; padding:3px 10px; border-radius:10px; }
-.status-pending { background:#fff3d0; color:#b87800; }
-.status-done { background:#e6f9ee; color:#1a7a3e; }
-.status-cancel { background:#ffe8e8; color:#c4390a; }
-.order-items-list { font-size:13px; color:#555; margin-bottom:8px; line-height:1.8; }
-.order-footer { display:flex; align-items:center; justify-content:space-between; border-top:1px solid #f0f0f0; padding-top:8px; }
-.order-total { font-size:15px; font-weight:700; color:#c4390a; }
-.order-tags { display:flex; gap:6px; flex-wrap:wrap; }
-.order-tag { font-size:11px; background:#f0ede6; color:#666; padding:2px 8px; border-radius:6px; }
-.order-actions { display:flex; gap:6px; margin-top:10px; }
-.order-btn { flex:1; padding:7px 0; border:none; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-.btn-done { background:#1a7a3e; color:white; }
-.btn-cancel { background:#ffe8e8; color:#c4390a; }
-.no-orders { text-align:center; padding:30px; color:#aaa; font-size:14px; }
-
 /* Menu admin */
 .menu-admin-item { background:white; border-radius:12px; padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; gap:12px; }
 .menu-admin-emoji { font-size:28px; width:44px; text-align:center; flex-shrink:0; }
@@ -179,6 +149,8 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
 .menu-admin-name { font-size:14px; font-weight:700; color:#1a2455; }
 .menu-admin-price { font-size:13px; color:#c4390a; font-weight:700; }
 .menu-admin-actions { display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
+.toggle-popular { padding:4px 10px; border-radius:8px; border:none; font-size:12px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; color:#888; }
+.toggle-popular.on { background:#fff3d0; color:#b87800; }
 .toggle-avail { padding:4px 10px; border-radius:8px; border:none; font-size:12px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
 .toggle-avail.on { background:#e6f9ee; color:#1a7a3e; }
 .toggle-avail.off { background:#ffe8e8; color:#c4390a; }
@@ -205,6 +177,12 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
 /* Admin nav link */
 .admin-link { text-align:center; padding:16px; }
 .admin-link a { font-size:13px; color:#888; text-decoration:none; }
+
+/* Add item */
+.add-item-card { background:white; border-radius:12px; padding:14px 16px; margin-bottom:8px; }
+.add-item-row { display:flex; gap:8px; margin-bottom:8px; }
+.add-item-input { flex:1; border:1.5px solid #ddd; border-radius:8px; padding:8px 10px; font-size:14px; font-family:'Noto Sans TC',sans-serif; }
+.add-item-input:focus { outline:none; border-color:#1a2455; }
 </style>
 </head>
 <body>
@@ -253,7 +231,7 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
 
 <!-- Cart Sheet -->
 <div class="cart-overlay" id="cart-overlay" onclick="overlayClick(event)">
-  <div class="cart-sheet" id="cart-sheet">
+  <div class="cart-sheet">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
     <div class="cart-header">
       <span class="cart-title">我的訂單</span>
@@ -293,12 +271,11 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
   </div>
 </div>
 
-<!-- Success Modal -->
+<!-- Success Modal（非 LINE 環境備用）-->
 <div class="success-overlay" id="success-overlay">
   <div class="success-card">
     <div class="success-icon">🎉</div>
     <div class="success-title">下單成功！</div>
-    <div class="success-num" id="order-num">訂單號碼：#0001</div>
     <div style="font-size:13px;color:#888;margin-bottom:20px">請稍候，我們正在為您準備</div>
     <button class="success-close" onclick="closeSuccess()">好的，謝謝</button>
   </div>
@@ -329,31 +306,31 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
     <button class="admin-back-btn" onclick="adminLogout()">登出</button>
   </div>
   <div class="admin-tabs">
-    <button class="admin-tab active" onclick="switchAdminTab('dashboard',this)">📊 概覽</button>
-    <button class="admin-tab" onclick="switchAdminTab('orders',this)">📋 訂單</button>
-    <button class="admin-tab" onclick="switchAdminTab('menu',this)">🍜 菜單</button>
+    <button class="admin-tab active" onclick="switchAdminTab('menu',this)">🍜 菜單</button>
     <button class="admin-tab" onclick="switchAdminTab('settings',this)">🔧 設定</button>
   </div>
 
-  <!-- Dashboard -->
-  <div class="admin-content active" id="tab-dashboard" style="padding:14px;">
-    <div class="stat-grid" id="stat-grid"></div>
-    <div class="section-label">今日訂單</div>
-    <div id="today-orders"></div>
-  </div>
-
-  <!-- Orders -->
-  <div class="admin-content" id="tab-orders" style="padding:14px;">
-    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
-      <button class="admin-tab active" style="flex:none;padding:6px 14px;" onclick="filterOrders('all',this)">全部</button>
-      <button class="admin-tab" style="flex:none;padding:6px 14px;" onclick="filterOrders('pending',this)">待處理</button>
-      <button class="admin-tab" style="flex:none;padding:6px 14px;" onclick="filterOrders('done',this)">已完成</button>
-    </div>
-    <div id="orders-list"></div>
-  </div>
-
   <!-- Menu management -->
-  <div class="admin-content" id="tab-menu" style="padding:14px;">
+  <div class="admin-content active" id="tab-menu" style="padding:14px;">
+    <!-- 新增品項 -->
+    <div class="add-item-card">
+      <div class="section-label" style="margin-top:0;">新增品項</div>
+      <div class="add-item-row">
+        <input class="add-item-input" id="new-name" placeholder="品項名稱" />
+        <input class="add-item-input" id="new-price" type="number" placeholder="價格" style="width:90px;" />
+      </div>
+      <div class="add-item-row">
+        <select class="add-item-input" id="new-cat">
+          <option value="">選擇分類</option>
+          <option>炒飯</option><option>炒麵</option><option>炒烏龍麵</option>
+          <option>烏龍湯麵</option><option>粥品</option><option>熱炒類</option>
+          <option>時蔬類</option><option>酥炸類</option><option>湯品</option>
+        </select>
+        <input class="add-item-input" id="new-emoji" placeholder="Emoji" style="width:80px;" />
+      </div>
+      <button class="announce-save-btn" style="width:100%;margin-top:4px;" onclick="addMenuItem()">＋ 新增品項</button>
+    </div>
+    <div class="section-label">現有品項</div>
     <div id="admin-menu-list"></div>
   </div>
 
@@ -385,10 +362,9 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
   </div>
 </div>
 
-
 <!-- Options Modal -->
 <div class="options-overlay" id="options-overlay" onclick="optionsOverlayClick(event)">
-  <div class="options-sheet" id="options-sheet">
+  <div class="options-sheet">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
     <div class="options-header" id="options-header"></div>
     <div class="options-body" id="options-body"></div>
@@ -498,14 +474,11 @@ let menu = [
   {id:81, cat:'湯品', name:'薑絲鮮蚵湯', price:70, emoji:'🥣', popular:false, available:true, extras:[], sauce:[]},
 ];
 
-let orders = [];
 let cart = {};
-let opts = {pay:'cash', cutlery:'no', receipt:'no'};
-let orderCount = 0;
+let opts = {cutlery:'no', receipt:'no'};
 let selCat = '全部';
 let announceText = '📢 今日特餐：麻醬麵 $65，限量供應！外帶九折優惠中';
-let adminPass = '1234';
-let orderFilter = 'all';
+let adminPass = '233009';
 let editingItemId = null;
 
 // ══════════════════════════════
@@ -533,10 +506,8 @@ function showAdminLogin(){ showPage('page-admin-login'); }
 function doLogin(){
   const u=document.getElementById('login-user').value;
   const p=document.getElementById('login-pass').value;
-  if(u==='admin'&&p===adminPass){
+  if(u==='233009'&&p===adminPass){
     showPage('admin-wrap');
-    renderAdminDashboard();
-    renderAdminOrders();
     renderAdminMenu();
     document.getElementById('announce-input').value=announceText;
   } else {
@@ -611,7 +582,6 @@ function renderItem(item){
         ${item.popular?'<span class="popular-tag">熱銷</span>':''}
         ${!item.available?'<span class="sold-tag">售完</span>':''}
       </div>
-      ${item.desc?`<div class="item-desc">${item.desc}</div>`:''}
       <div class="item-price">$${item.price}</div>
     </div>
     ${item.available?ctrl:''}
@@ -852,8 +822,6 @@ function updateSummary(){
 
 function placeOrder(){
   if(Object.keys(cart).length===0) return;
-  orderCount++;
-  const num=String(orderCount).padStart(4,'0');
   const items=Object.entries(cart).map(([key,val])=>{
     if(typeof val==='object'){
       const item=menu.find(i=>i.id===val.itemId);
@@ -865,19 +833,40 @@ function placeOrder(){
   });
   const now=new Date();
   const timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-  orders.unshift({
-    id:orderCount, num, items,
-    total:calcSub(),
-    opts:{pay:opts.pay, cutlery:opts.cutlery, receipt:opts.receipt},
-    note:document.getElementById('order-note').value,
-    time:timeStr,
-    status:'pending'
-  });
-  document.getElementById('order-num').textContent='訂單號碼：#'+num;
+  const note=document.getElementById('order-note').value;
+  const total=calcSub();
+  const cutlery=opts.cutlery==='yes'?'需要':'不需要';
+  const receipt=opts.receipt==='yes'?'需要':'不需要';
+
+  const lines=[
+    '【香品小食堂 點餐】',
+    `時間：${timeStr}`,
+    '────────────────',
+    ...items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`),
+    '────────────────',
+    `合計：$${total}`,
+    `免洗餐具：${cutlery}`,
+    `收據：${receipt}`,
+    ...(note?[`備註：${note}`]:[]),
+  ];
+  const msgText=lines.join('\n');
+
   cart={};
   updateBadge(); updateBottomBar(); closeCart();
   document.getElementById('order-note').value='';
-  document.getElementById('success-overlay').classList.add('open');
+
+  const inLine = typeof liff !== 'undefined' && liff.isInClient && liff.isInClient();
+  if(inLine){
+    liff.sendMessages([{type:'text', text:msgText}])
+      .then(()=>{ alert('訂單已送出！'); liff.closeWindow(); })
+      .catch(err=>{
+        console.error('sendMessages error:', err);
+        alert('訊息傳送失敗，請截圖後手動傳送。');
+        document.getElementById('success-overlay').classList.add('open');
+      });
+  } else {
+    window.location.href='https://line.me/R/share?text='+encodeURIComponent(msgText);
+  }
 }
 
 function closeSuccess(){
@@ -893,84 +882,7 @@ function switchAdminTab(tab,btn){
   btn.classList.add('active');
   document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
-  if(tab==='dashboard') renderAdminDashboard();
-  if(tab==='orders') renderAdminOrders();
   if(tab==='menu') renderAdminMenu();
-}
-
-// ══════════════════════════════
-//  ADMIN DASHBOARD
-// ══════════════════════════════
-function renderAdminDashboard(){
-  const total=orders.reduce((s,o)=>s+o.total,0);
-  const done=orders.filter(o=>o.status==='done').length;
-  const pending=orders.filter(o=>o.status==='pending').length;
-  document.getElementById('stat-grid').innerHTML=`
-    <div class="stat-card"><div class="stat-label">今日營業額</div><div class="stat-value">$${total}</div></div>
-    <div class="stat-card"><div class="stat-label">訂單總數</div><div class="stat-value">${orders.length}</div></div>
-    <div class="stat-card"><div class="stat-label">待處理</div><div class="stat-value" style="color:#b87800">${pending}</div></div>
-    <div class="stat-card"><div class="stat-label">已完成</div><div class="stat-value" style="color:#1a7a3e">${done}</div></div>
-  `;
-  const todayEl=document.getElementById('today-orders');
-  if(orders.length===0){
-    todayEl.innerHTML='<div class="no-orders">📭 尚無訂單</div>';
-  } else {
-    todayEl.innerHTML=orders.slice(0,5).map(renderOrderCard).join('');
-  }
-}
-
-// ══════════════════════════════
-//  ADMIN ORDERS
-// ══════════════════════════════
-function filterOrders(f,btn){
-  orderFilter=f;
-  document.querySelectorAll('#tab-orders .admin-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderAdminOrders();
-}
-
-function renderAdminOrders(){
-  const list=document.getElementById('orders-list');
-  const filtered=orderFilter==='all'?orders:orders.filter(o=>o.status===orderFilter);
-  if(filtered.length===0){
-    list.innerHTML='<div class="no-orders">📭 沒有符合的訂單</div>';
-    return;
-  }
-  list.innerHTML=filtered.map(renderOrderCard).join('');
-}
-
-function renderOrderCard(o){
-  const statusMap={pending:{cls:'status-pending',txt:'待處理'},done:{cls:'status-done',txt:'已完成'},cancel:{cls:'status-cancel',txt:'已取消'}};
-  const s=statusMap[o.status];
-  const payMap={cash:'現金',line:'Line Pay'};
-  const actions=o.status==='pending'
-    ?`<div class="order-actions">
-        <button class="order-btn btn-done" onclick="updateOrderStatus(${o.id},'done')">✓ 完成出餐</button>
-        <button class="order-btn btn-cancel" onclick="updateOrderStatus(${o.id},'cancel')">✕ 取消訂單</button>
-       </div>`:'';
-  return `<div class="order-card" id="order-card-${o.id}">
-    <div class="order-card-header">
-      <span class="order-num">#${o.num}</span>
-      <span class="order-time">${o.time}</span>
-      <span class="order-status ${s.cls}">${s.txt}</span>
-    </div>
-    <div class="order-items-list">${o.items.map(i=>`${i.emoji} ${i.name} ×${i.qty}`).join('　')}</div>
-    ${o.note?`<div style="font-size:12px;color:#888;margin-bottom:6px;">📝 ${o.note}</div>`:''}
-    <div class="order-footer">
-      <span class="order-total">$${o.total}</span>
-      <div class="order-tags">
-        <span class="order-tag">${payMap[o.opts.pay]}</span>
-        ${o.opts.cutlery==='yes'?'<span class="order-tag">需餐具</span>':''}
-        ${o.opts.receipt==='yes'?'<span class="order-tag">需收據</span>':''}
-      </div>
-    </div>
-    ${actions}
-  </div>`;
-}
-
-function updateOrderStatus(id,status){
-  const o=orders.find(o=>o.id===id);
-  if(o){ o.status=status; renderAdminOrders(); renderAdminDashboard(); }
 }
 
 // ══════════════════════════════
@@ -985,6 +897,9 @@ function renderAdminMenu(){
         <div class="menu-admin-price">$${item.price}</div>
       </div>
       <div class="menu-admin-actions">
+        <button class="toggle-popular ${item.popular?'on':''}" onclick="togglePopular(${item.id})" title="熱銷推薦">
+          ${item.popular?'⭐ 熱銷':'☆ 熱銷'}
+        </button>
         <button class="toggle-avail ${item.available?'on':'off'}" onclick="toggleAvail(${item.id})">
           ${item.available?'✓ 供應中':'✕ 售完'}
         </button>
@@ -994,9 +909,32 @@ function renderAdminMenu(){
   `).join('');
 }
 
+function togglePopular(id){
+  const item=menu.find(i=>i.id===id);
+  if(item){ item.popular=!item.popular; renderAdminMenu(); renderMenu(); }
+}
+
 function toggleAvail(id){
   const item=menu.find(i=>i.id===id);
   if(item){ item.available=!item.available; renderAdminMenu(); renderMenu(); }
+}
+
+let nextId = 200;
+function addMenuItem(){
+  const name=document.getElementById('new-name').value.trim();
+  const price=parseInt(document.getElementById('new-price').value);
+  const cat=document.getElementById('new-cat').value;
+  const emoji=document.getElementById('new-emoji').value.trim()||'🍽️';
+  if(!name){ alert('請輸入品項名稱'); return; }
+  if(!cat){ alert('請選擇分類'); return; }
+  if(isNaN(price)||price<0){ alert('請輸入有效價格'); return; }
+  menu.push({id:nextId++, cat, name, price, emoji, popular:false, available:true, extras:[{label:"加辣🌶️",price:0}], sauce:[]});
+  document.getElementById('new-name').value='';
+  document.getElementById('new-price').value='';
+  document.getElementById('new-emoji').value='';
+  document.getElementById('new-cat').value='';
+  renderAdminMenu();
+  renderMenu();
 }
 
 function openEditModal(id){
@@ -1042,9 +980,14 @@ function changePass(){
 // ══════════════════════════════
 //  INIT
 // ══════════════════════════════
+const LIFF_ID = '2009693763-bOg2whDg';
+
+// 先渲染頁面，LIFF 初始化在背景進行，不阻擋 UI
 renderTabs();
 renderMenu();
+
+liff.init({ liffId: LIFF_ID })
+  .catch(err => console.warn('LIFF init failed (non-LINE env):', err));
 </script>
 </body>
 </html>
-
