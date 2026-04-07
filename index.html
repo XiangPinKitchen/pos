@@ -81,15 +81,16 @@ button { touch-action:manipulation; }
 .cart-sheet { background:white; border-radius:20px 20px 0 0; max-height:92vh; display:flex; flex-direction:column; width:100%; max-width:420px; overflow:hidden; }
 .cart-handle { text-align:center; padding:10px; }
 .cart-handle-bar { width:40px; height:4px; background:#ddd; border-radius:2px; display:inline-block; }
-.cart-header { padding:0 16px 12px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee; }
+.cart-header { padding:0 16px 12px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee; flex-shrink:0; }
 .cart-title { font-size:18px; font-weight:700; color:#1a2455; }
 .clear-btn { font-size:13px; color:#c4390a; background:none; border:none; cursor:pointer; padding:4px 8px; font-family:'Noto Sans TC',sans-serif; }
-.cart-items { overflow-y:auto; padding:10px 16px; max-height:28vh; }
+.cart-body { overflow-y:auto; flex:1; }
+.cart-items { padding:10px 16px; }
 .cart-item { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #f0f0f0; }
 .cart-item-name { flex:1; font-size:14px; font-weight:500; color:#1a2455; }
 .cart-item-price { font-size:14px; font-weight:700; color:#c4390a; min-width:52px; text-align:right; }
 .empty-cart { text-align:center; padding:30px; color:#aaa; font-size:14px; }
-.cart-options { padding:12px 16px; border-top:1px solid #eee; overflow-y:auto; max-height:36vh; flex-shrink:0; }
+.cart-options { padding:12px 16px 8px; border-top:1px solid #eee; }
 .opt-title { font-size:13px; font-weight:700; color:#555; margin-bottom:10px; }
 .opt-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
 .opt-label { font-size:14px; color:#333; }
@@ -222,7 +223,7 @@ button { touch-action:manipulation; }
     <div class="cat-tabs" id="cat-tabs"></div>
   </div>
 
-  <div class="announce" id="announce-bar">📢 今日特餐：麻醬麵 $65，限量供應！外帶九折優惠中</div>
+  <div class="announce" id="announce-bar">🧧 外帶自取享 9 折優惠！ 祝您用餐愉快。</div>
 
   <div id="menu-content"></div>
 
@@ -242,56 +243,55 @@ button { touch-action:manipulation; }
       <span class="cart-title">我的訂單</span>
       <button class="clear-btn" onclick="clearCart()">清空</button>
     </div>
-    <div class="cart-items" id="cart-items"></div>
-    <div class="cart-options">
-      <div class="opt-title">訂單選項</div>
-      <div class="opt-row">
-        <span class="opt-label">💴 付款方式</span>
-        <span style="font-size:14px;font-weight:700;color:#1a2455;">現金</span>
-      </div>
-      <div class="opt-row">
-        <span class="opt-label">🥢 免洗餐具</span>
-        <div class="opt-toggle">
-          <button onclick="selOpt('cutlery','yes',this)">需要</button>
-          <button class="sel" onclick="selOpt('cutlery','no',this)">不需要</button>
+    <div class="cart-body">
+      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-options">
+        <div class="opt-title">訂單選項</div>
+        <div class="opt-row">
+          <span class="opt-label">💴 付款方式</span>
+          <span style="font-size:14px;font-weight:700;color:#1a2455;">現金</span>
         </div>
-      </div>
-      <div class="opt-row">
-        <span class="opt-label">🧾 收據</span>
-        <div class="opt-toggle">
-          <button onclick="selOpt('receipt','yes',this)">需要</button>
-          <button class="sel" onclick="selOpt('receipt','no',this)">不需要</button>
+        <div class="opt-row">
+          <span class="opt-label">🥢 免洗餐具</span>
+          <div class="opt-toggle">
+            <button onclick="selOpt('cutlery','yes',this)">需要</button>
+            <button class="sel" onclick="selOpt('cutlery','no',this)">不需要</button>
+          </div>
         </div>
-      </div>
-      <div style="margin-top:8px">
-        <div style="font-size:13px;color:#666;margin-bottom:6px;">👤 客人資訊 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
-        <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <input class="note-input" id="customer-name" placeholder="姓氏（如：王）" style="margin-top:0;flex:1;" oninput="this.classList.remove('input-error')" />
-          <select class="note-input" id="customer-title" style="margin-top:0;width:80px;cursor:pointer;">
-            <option value="先生">先生</option>
-            <option value="小姐">小姐</option>
-          </select>
-          <input class="note-input" id="customer-phone" placeholder="電話（10碼）" type="tel" maxlength="10" style="margin-top:0;flex:1;" oninput="this.classList.remove('input-error')" />
+        <div class="opt-row">
+          <span class="opt-label">🧾 收據</span>
+          <div class="opt-toggle">
+            <button onclick="selOpt('receipt','yes',this)">需要</button>
+            <button class="sel" onclick="selOpt('receipt','no',this)">不需要</button>
+          </div>
         </div>
-
-        <div style="font-size:13px;color:#666;margin-bottom:6px;">🛍 取餐方式 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
-        <div class="opt-toggle" style="margin-bottom:8px;width:100%;">
-          <button class="sel" onclick="selPickup('takeout',this)" style="flex:1;">外帶自取 9折</button>
-          <button onclick="selPickup('delivery',this)" style="flex:1;">外送</button>
+        <div style="margin-top:8px">
+          <div style="font-size:13px;color:#666;margin-bottom:6px;">👤 客人資訊 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
+          <div style="display:flex;gap:8px;margin-bottom:8px;">
+            <input class="note-input" id="customer-name" placeholder="姓氏（如：王）" style="margin-top:0;flex:1;" oninput="this.classList.remove('input-error')" />
+            <div class="opt-toggle" style="flex-shrink:0;">
+              <button class="sel" id="title-mr" onclick="selTitle('先生',this)">先生</button>
+              <button id="title-ms" onclick="selTitle('小姐',this)">小姐</button>
+            </div>
+            <input class="note-input" id="customer-phone" placeholder="電話（10碼）" type="tel" maxlength="10" style="margin-top:0;flex:1;" oninput="this.classList.remove('input-error')" />
+          </div>
+          <div style="font-size:13px;color:#666;margin-bottom:6px;">🛍 取餐方式 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
+          <div class="opt-toggle" style="margin-bottom:8px;width:100%;">
+            <button class="sel" onclick="selPickup('takeout',this)" style="flex:1;">外帶自取 9折</button>
+            <button onclick="selPickup('delivery',this)" style="flex:1;">外送</button>
+          </div>
+          <div id="delivery-hint" style="display:none;background:#fff0f0;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;margin-bottom:8px;line-height:1.8;">
+            平日（週一至週五），3公里內，滿600元以上即可外送。<br>
+            <span style="color:#c4390a;font-weight:700;">*請於備註欄內填入外送地址</span>
+          </div>
+          <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（過敏、口味、外送地址...）</div>
+          <textarea class="note-input" rows="2" placeholder="例：不要香菜、少辣 / 外送地址：..." id="order-note"></textarea>
         </div>
-        <div id="delivery-hint" style="display:none;background:#fff0f0;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;margin-bottom:8px;line-height:1.8;">
-          平日（週一至週五），3公里內，滿600元以上即可外送。<br>
-          <span style="color:#c4390a;font-weight:700;">*請於備註欄內填入外送地址</span>
-        </div>
-
-        <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（過敏、口味、外送地址...）</div>
-        <textarea class="note-input" rows="2" placeholder="例：不要香菜、少辣 / 外送地址：..." id="order-note"></textarea>
       </div>
     </div>
     <div class="cart-summary">
       <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>總數量</span><span id="sum-qty">0 項</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>小計</span><span id="sum-sub">$0</span></div>
-      <div id="sum-disc" style="display:none;justify-content:space-between;font-size:13px;color:#c4390a;margin-bottom:4px;"><span>外帶9折</span><span></span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$0</span></div>
     </div>
     <button class="checkout-btn" onclick="placeOrder()">確認下單</button>
@@ -545,9 +545,10 @@ let menu = [
 let cart = {};
 let opts = {cutlery:'no', receipt:'no', pickup:'takeout'};
 let selCat = '全部';
-const DEFAULT_ANNOUNCE = '📢 今日特餐：麻醬麵 $65，限量供應！外帶九折優惠中';
+const DEFAULT_ANNOUNCE = '🧧 外帶自取享 9 折優惠！ 祝您用餐愉快。';
+const DEFAULT_POPUP = '🍱 歡迎蒞臨香品小食堂！ ｜ ⏳ 餐點現點現做，請耐心等候 ｜ 📞 量多建議提前預約以節省時間 ｜ 🛵 外送需求請先洽詢店家。';
 let announceText = localStorage.getItem('announceText') || DEFAULT_ANNOUNCE;
-let popupText = localStorage.getItem('popupText') || DEFAULT_ANNOUNCE;
+let popupText = localStorage.getItem('popupText') || DEFAULT_POPUP;
 let isClosed = localStorage.getItem('isClosed') === 'true';
 let adminPass = '233009';
 let editingItemId = null;
@@ -885,6 +886,14 @@ function changeCartQtyKey(key, delta){
   updateSummary();
 }
 
+let customerTitle = '先生';
+
+function selTitle(val, btn){
+  customerTitle = val;
+  document.getElementById('title-mr').classList.toggle('sel', val==='先生');
+  document.getElementById('title-ms').classList.toggle('sel', val==='小姐');
+}
+
 function selOpt(key,val,btn){
   opts[key]=val;
   const parent=btn.parentElement;
@@ -907,10 +916,6 @@ function updateSummary(){
   const qty=Object.values(cart).reduce((s,v)=>s+(typeof v==='object'?v.qty:v),0);
   document.getElementById('sum-qty').textContent=qty+' 項';
   document.getElementById('sum-sub').textContent='$'+sub;
-  const discEl=document.getElementById('sum-disc');
-  if(opts.pickup==='takeout'&&sub>0){
-    discEl.style.display='flex'; discEl.querySelector('span:last-child').textContent='-$'+(sub-total);
-  } else { discEl.style.display='none'; }
   document.getElementById('sum-total').textContent='$'+total;
   const bp=document.getElementById('bottom-price');
   if(bp) bp.textContent='$'+total;
@@ -931,7 +936,7 @@ function placeOrder(){
   if(phone.length!==10){ phoneEl.classList.add('input-error'); if(!hasError) phoneEl.focus(); hasError=true; }
   if(hasError) return;
 
-  const title=document.getElementById('customer-title').value;
+  const title=customerTitle;
   const items=buildItems();
   const sub=calcSub();
   const total=calcTotal();
@@ -967,7 +972,7 @@ function buildItems(){
 function submitOrder(){
   document.getElementById('confirm-overlay').classList.remove('open');
   const name=document.getElementById('customer-name').value.trim();
-  const title=document.getElementById('customer-title').value;
+  const title=customerTitle;
   const phone=document.getElementById('customer-phone').value.trim();
   const note=document.getElementById('order-note').value.trim();
   const items=buildItems();
