@@ -267,6 +267,7 @@ body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100
       </div>
     </div>
     <div class="cart-summary">
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>總數量</span><span id="sum-qty">0 項</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>小計</span><span id="sum-sub">$0</span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$0</span></div>
     </div>
@@ -830,6 +831,8 @@ function selOpt(key,val,btn){
 
 function updateSummary(){
   const sub=calcSub();
+  const qty=Object.values(cart).reduce((s,v)=>s+(typeof v==='object'?v.qty:v),0);
+  document.getElementById('sum-qty').textContent=qty+' 項';
   document.getElementById('sum-sub').textContent='$'+sub;
   document.getElementById('sum-total').textContent='$'+sub;
   const bp=document.getElementById('bottom-price');
@@ -860,10 +863,11 @@ function placeOrder(){
 
   document.getElementById('confirm-items').innerHTML=
     `<div><b>👤 ${name}　📞 ${phone}</b></div><br>`+
-    items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`).join('<br>')+
+    items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`+
+      (i.notes?`<br>　<span style="color:#888;font-size:12px;">(${i.notes})</span>`:'')).join('<br>')+
     `<br><br>免洗餐具：${cutlery}　收據：${receipt}`+
     (note?`<br>備註：${note}`:'');
-  document.getElementById('confirm-total').textContent=`合計 $${total}`;
+  document.getElementById('confirm-total').textContent=`合計 $${total}（共 ${items.reduce((s,i)=>s+i.qty,0)} 項）`;
   document.getElementById('confirm-overlay').classList.add('open');
 }
 
@@ -871,10 +875,10 @@ function buildItems(){
   return Object.entries(cart).map(([key,val])=>{
     if(typeof val==='object'){
       const item=menu.find(i=>i.id===val.itemId);
-      return {name:item.name+(val.notes?' ('+val.notes+')':''), qty:val.qty, price:item.price+val.extraPrice, emoji:item.emoji};
+      return {name:item.name, notes:val.notes||'', qty:val.qty, price:item.price+val.extraPrice, emoji:item.emoji};
     } else {
       const item=menu.find(i=>i.id==key);
-      return {name:item.name, qty:val, price:item.price, emoji:item.emoji};
+      return {name:item.name, notes:'', qty:val, price:item.price, emoji:item.emoji};
     }
   });
 }
@@ -884,21 +888,36 @@ function submitOrder(){
   const name=document.getElementById('customer-name').value.trim();
   const phone=document.getElementById('customer-phone').value.trim();
   const note=document.getElementById('order-note').value.trim();
+  const items=buildItems();
   const total=calcSub();
+  const totalQty=items.reduce((s,i)=>s+i.qty,0);
   const cutlery=opts.cutlery==='yes'?'需要':'不需要';
   const receipt=opts.receipt==='yes'?'需要':'不需要';
   const now=new Date();
   const timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
 
+  const itemLines=[];
+  items.forEach(i=>{
+    // 主行：品名 數量 金額
+    const price=i.price*i.qty;
+    itemLines.push(`${i.emoji} ${i.name} ×${i.qty}　　　$${price}`);
+    // 備選/醬料備註縮排
+    if(i.notes) itemLines.push(`　 (${i.notes})`);
+  });
+
   const msgText=[
-    '【香品小食堂 點餐】',
-    `👤 ${name}　📞 ${phone}　🕐 ${timeStr}`,
-    '────────────────',
-    ...buildItems().map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`),
-    '────────────────',
-    `合計：$${total}`,
-    `免洗餐具：${cutlery}　收據：${receipt}`,
-    ...(note?[`備註：${note}`]:[]),
+    '🍱 香品小食堂｜新訂單通知',
+    `👤 客戶：${name}`,
+    `📱 電話：${phone}`,
+    `⏰ 時間：${timeStr}`,
+    '═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═',
+    ...itemLines,
+    '═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═',
+    `📦 總數量：${totalQty} 項`,
+    `🔴 總計金額：$${total}`,
+    `🥢 免洗餐具：${cutlery}`,
+    `🧾 收據：${receipt}`,
+    `💡 備註：${note||'無'}`,
   ].join('\n');
 
   cart={};
