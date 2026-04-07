@@ -654,6 +654,14 @@ function clearCart(){
   renderCartItems(); updateBadge(); updateBottomBar(); updateSummary();
 }
 
+function qtyCtrl(key, qty){
+  return `<div class="qty-control">
+    <button class="qty-btn minus" onclick="changeCartQtyKey('${key}',-1)">−</button>
+    <span class="qty-num">${qty}</span>
+    <button class="qty-btn" onclick="changeCartQtyKey('${key}',1)">+</button>
+  </div>`;
+}
+
 function renderCartItems(){
   const el=document.getElementById('cart-items');
   const keys=Object.keys(cart);
@@ -665,19 +673,14 @@ function renderCartItems(){
       const unitPrice=item.price+val.extraPrice;
       let notesDisplay='';
       if(val.notes){
-        const noteArr=val.notes.split('、');
-        const parts=noteArr.map(n=>{
+        const parts=val.notes.split('、').map(n=>{
           const ex=item.extras&&item.extras.find(e=>e.label===n);
           return ex&&ex.price>0?`${n} +$${ex.price}`:n;
         });
         notesDisplay=`<div style="font-size:11px;color:#888;">${parts.join('、')}</div>`;
       }
       return `<div class="cart-item">
-        <div class="qty-control">
-          <button class="qty-btn minus" onclick="changeCartQtyKey('${key}',-1)">−</button>
-          <span class="qty-num">${val.qty}</span>
-          <button class="qty-btn" onclick="changeCartQtyKey('${key}',1)">+</button>
-        </div>
+        ${qtyCtrl(key,val.qty)}
         <div style="flex:1">
           <div class="cart-item-name">${item.emoji} ${item.name}</div>
           ${notesDisplay}
@@ -687,11 +690,7 @@ function renderCartItems(){
     } else {
       const item=menu.find(i=>i.id==key);
       return `<div class="cart-item">
-        <div class="qty-control">
-          <button class="qty-btn minus" onclick="changeCartQtyKey('${key}',-1)">−</button>
-          <span class="qty-num">${val}</span>
-          <button class="qty-btn" onclick="changeCartQtyKey('${key}',1)">+</button>
-        </div>
+        ${qtyCtrl(key,val)}
         <span class="cart-item-name">${item.emoji} ${item.name}</span>
         <span class="cart-item-price">$${item.price*val}</span>
       </div>`;
@@ -775,13 +774,11 @@ function buildItems(){
   });
 }
 
-let _orderSeqDate = '';
-let _orderSeq = 0;
 function genOrderId(now){
   const mmdd=`${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-  if(_orderSeqDate !== mmdd){ _orderSeqDate=mmdd; _orderSeq=0; }
-  _orderSeq++;
-  return `${mmdd}-${String(_orderSeq).padStart(2,'0')}`;
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const rand=Array.from({length:3},()=>chars[Math.floor(Math.random()*chars.length)]).join('');
+  return `${mmdd}-${rand}`;
 }
 
 function submitOrder(){
