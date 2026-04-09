@@ -231,8 +231,8 @@ button { touch-action:manipulation; }
             <button onclick="selPickup('delivery',this)" style="flex:1;">外送</button>
           </div>
           <div id="delivery-hint" style="display:none;background:#fff0f0;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;margin-bottom:8px;line-height:1.8;">
-            🔺3公里內/訂單金額滿$600（請先洽詢店家）<br>
-            <span style="color:#c4390a;font-weight:700;">*請於備註欄內填入外送地址</span>
+            <span id="delivery-hint-line1"></span><br>
+            <span id="delivery-hint-line2" style="color:#c4390a;font-weight:700;"></span>
           </div>
           <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（口味調整、其他需求、外送地址...）</div>
           <textarea class="note-input" rows="2" id="order-note"></textarea>
@@ -295,13 +295,29 @@ const STORE_CONFIG = {
     '',
     '💡貼心小提醒：',
     '量多請提前預約，為您保留美味並節省時間⏰',
-    '如有外送需求，請先洽詢店家安排🛵',
+    '如有外送需求，請先洽詢店家🛵',
   ],
 
   // ── 備註欄的灰色提示文字 ──────────────────────────────────────────
   // 就是客人還沒打字時，備註欄裡顯示的淡灰色文字
   // 修改方式：把單引號 ' ' 裡面的文字換掉即可
   defaultNote: '例：口味調整、其他需求 / 外送地址：...',
+
+  // ── 外送說明框文字 ────────────────────────────────────────────────
+  // 就是客人選「外送」後，出現的粉紅色說明框裡的文字
+  //
+  // 【修改方式】
+  //   • 這裡有「兩行」文字，分別對應說明框的第一行和第二行
+  //   • 直接把單引號 ' ' 裡面的內容換成你要的文字即可
+  //   • 第一行（deliveryHintLine1）：一般說明，例如距離、金額限制
+  //   • 第二行（deliveryHintLine2）：紅字警示，例如請填地址
+  //
+  // 【範例】
+  //   deliveryHintLine1: '🔺5公里內/訂單金額滿$800（請先洽詢店家）',
+  //   deliveryHintLine2: '*外送地址請填入下方備註欄',
+  //
+  deliveryHintLine1: '🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）',
+  deliveryHintLine2: '*請於下方備註欄內填入外送地址/聯絡電話',
 };
 
 // ══════════════════════════════════════════════════════════════════════
@@ -799,6 +815,8 @@ renderTabs();
 renderMenu();
 document.getElementById('announce-bar').textContent=STORE_CONFIG.announcementText;
 document.getElementById('order-note').placeholder=STORE_CONFIG.defaultNote;
+document.getElementById('delivery-hint-line1').textContent=STORE_CONFIG.deliveryHintLine1;
+document.getElementById('delivery-hint-line2').textContent=STORE_CONFIG.deliveryHintLine2;
 
 if(!STORE_CONFIG.isOpen){
   document.getElementById('closed-overlay').classList.add('open');
