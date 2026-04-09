@@ -230,11 +230,28 @@ button { touch-action:manipulation; }
             <button onclick="selPickup('delivery',this)" style="flex:1;">外送</button>
           </div>
           <div id="delivery-hint" style="display:none;background:#fff0f0;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;margin-bottom:8px;line-height:1.8;">
-            3公里內／滿600元以上即可外送。（請先洽詢店家）<br>
+            <!-- ╔══════════════════════════════════════════════════════════════╗ -->
+            <!-- ║  ★ 外送說明文字 — 改這裡！                                 ║ -->
+            <!-- ║  把下面兩行文字換成你想要的內容就好                         ║ -->
+            <!-- ║  <br> 代表換行，不要刪掉                                    ║ -->
+            <!-- ╚══════════════════════════════════════════════════════════════╝ -->
+            3公里內/訂單金額滿$600（請先洽詢店家）<br>
             <span style="color:#c4390a;font-weight:700;">*請於備註欄內填入外送地址</span>
+            <!-- ▲▲▲ 外送說明到這裡結束 ▲▲▲ -->
           </div>
+          <!-- ╔══════════════════════════════════════════════════════════════╗ -->
+          <!-- ║  ★ 備註欄標題文字 — 改這裡！                               ║ -->
+          <!-- ║  把下面 📝 後面的文字換成你要的標題文字                     ║ -->
+          <!-- ╚══════════════════════════════════════════════════════════════╝ -->
           <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（過敏、口味、外送地址...）</div>
+          <!-- ▲▲▲ 備註欄標題到這裡結束 ▲▲▲ -->
+          <!-- ╔══════════════════════════════════════════════════════════════╗ -->
+          <!-- ║  ★ 備註欄灰色提示字 (placeholder) — 有兩種改法：           ║ -->
+          <!-- ║  方法①（推薦）→ 到最上方 STORE_CONFIG 改 defaultNote      ║ -->
+          <!-- ║  方法②        → 直接改下面 placeholder=" " 裡面的文字     ║ -->
+          <!-- ╚══════════════════════════════════════════════════════════════╝ -->
           <textarea class="note-input" rows="2" id="order-note" placeholder="例：不要香菜、少辣 / 外送地址：..."></textarea>
+          <!-- ▲▲▲ 備註欄到這裡結束 ▲▲▲ -->
         </div>
       </div>
     </div>
@@ -268,18 +285,44 @@ button { touch-action:manipulation; }
 </div><!-- .app -->
 
 <script>
-// ╔══════════════════════════════════════════════╗
-// ║  ★ 營運參數區塊 — 每次修改這裡即可更新網頁  ║
-// ╚══════════════════════════════════════════════╝
+// ╔══════════════════════════════════════════════════════════════════════╗
+// ║  ★★★ 可修改區塊總覽（新手看這裡！）★★★                         ║
+// ║                                                                      ║
+// ║  本檔案有三個地方可以修改，每個地方都有清楚說明：                   ║
+// ║                                                                      ║
+// ║  【區塊 1】STORE_CONFIG（就在下面）                                 ║
+// ║     → 營業狀態、跑馬燈公告、彈窗公告、備註欄提示文字               ║
+// ║                                                                      ║
+// ║  【區塊 2】結帳畫面外送說明                                         ║
+// ║     → 在 HTML 區段搜尋「★ 外送說明文字」即可找到                   ║
+// ║     → 就是客人選「外送」後出現的粉紅色說明框                        ║
+// ║                                                                      ║
+// ║  【區塊 3】MENU_DATA（在本檔案往下捲）                              ║
+// ║     → 所有菜單品項、價格、熱銷標籤、售完狀態等                      ║
+// ║                                                                      ║
+// ║  ✅ 修改完記得：更新最下方 VER 日期，然後重新上傳！                 ║
+// ╚══════════════════════════════════════════════════════════════════════╝
+
+// ╔══════════════════════════════════════════════════════════════════════╗
+// ║  【區塊 1】營運參數 — 每次修改這裡即可更新網頁                      ║
+// ╚══════════════════════════════════════════════════════════════════════╝
 const STORE_CONFIG = {
-  // 營業狀態：true = 營業中，false = 休息中（客人無法點餐）
+
+  // ── 營業狀態 ──────────────────────────────────────────────────────
+  // true  = 營業中（客人可以正常點餐）
+  // false = 休息中（客人看到「目前休息中」的遮罩，無法點餐）
   isOpen: true,
 
-  // 頂部跑馬燈公告
+  // ── 頂部跑馬燈公告 ────────────────────────────────────────────────
+  // 修改方式：把單引號 ' ' 裡面的文字換成你要的公告即可
   announcementText: '📢外帶自取享９折優惠❗3公里內/訂單金額滿$600 即可外送🛵',
 
-  // 開啟彈窗公告 — 每行寫一條，留空陣列 [] 則不顯示彈窗
-  // ↓↓↓ 直接在這裡修改文字即可 ↓↓↓
+  // ── 開啟彈窗公告 ──────────────────────────────────────────────────
+  // 修改方式：每一行就是彈窗裡的一行文字
+  //   • 把引號 '' 裡的文字直接改掉
+  //   • 空字串 '' 代表空一行（當分隔用）
+  //   • 新增一行：在最後一行逗號後按 Enter，照格式貼上 '新文字',
+  //   • 完全不要彈窗：把中間所有行刪掉，只留 popupLines: [],
   popupLines: [
     '🍱歡迎光臨【香品小食堂🍲】',
     '堅持現點現做，完美滋味值得您耐心等待⏳',
@@ -289,7 +332,9 @@ const STORE_CONFIG = {
     '如有外送需求，請先洽詢店家安排🛵',
   ],
 
-  // 備註欄預設提示文字
+  // ── 備註欄的灰色提示文字 ──────────────────────────────────────────
+  // 就是客人還沒打字時，備註欄裡顯示的淡灰色文字
+  // 修改方式：把單引號 ' ' 裡面的文字換掉即可
   defaultNote: '例：口味調整、其他需求 / 外送地址：...',
 };
 
@@ -332,12 +377,12 @@ const MENU_DATA = [
   //   id    分類      菜名               售價   圖示   熱銷?          售完?          新品?         下架?          加購選項                                              醬料
   { id:1,  cat:'炒飯', name:'香腸炒飯',     price:105, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
   { id:2,  cat:'炒飯', name:'豬肉炒飯',     price:105, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
-  { id:3,  cat:'炒飯', name:'牛肉炒飯',     price:110, emoji:'🍚', popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:3,  cat:'炒飯', name:'牛肉炒飯',     price:110, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
   { id:4,  cat:'炒飯', name:'羊肉炒飯',     price:110, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
-  { id:5,  cat:'炒飯', name:'蝦仁炒飯',     price:115, emoji:'🍚', popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:5,  cat:'炒飯', name:'蝦仁炒飯',     price:115, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
   { id:6,  cat:'炒飯', name:'鮭魚炒飯',     price:160, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
   { id:7,  cat:'炒飯', name:'咖哩豬肉炒飯', price:115, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
-  { id:8,  cat:'炒飯', name:'咖哩牛肉炒飯', price:120, emoji:'🍚', popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:8,  cat:'炒飯', name:'咖哩牛肉炒飯', price:120, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
   { id:9,  cat:'炒飯', name:'咖哩羊肉炒飯', price:120, emoji:'🍚', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加飯',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
   // ┌─────────────────────────────────────────────────────────────────────┐
   // │ 炒麵                                                                │
@@ -370,7 +415,7 @@ const MENU_DATA = [
   { id:26, cat:'烏龍湯麵', name:'沙茶豬肉烏龍湯麵', price:110, emoji:'🍜', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
   { id:27, cat:'烏龍湯麵', name:'沙茶牛肉烏龍湯麵', price:115, emoji:'🍜', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
   { id:28, cat:'烏龍湯麵', name:'沙茶羊肉烏龍湯麵', price:115, emoji:'🍜', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
-  { id:29, cat:'烏龍湯麵', name:'海鮮烏龍湯麵',     price:130, emoji:'🍜', popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:29, cat:'烏龍湯麵', name:'海鮮烏龍湯麵',     price:130, emoji:'🍜', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加麵',price:20},{label:'加辣🌶️',price:0}], sauce:[] },
   // ┌─────────────────────────────────────────────────────────────────────┐
   // │ 粥品                                                                │
   // │ 新增品項 → 在最後一道（虱目魚肚粥）後面加一行                     │
@@ -389,7 +434,7 @@ const MENU_DATA = [
   { id:36,  cat:'熱炒類', name:'青蔥烘蛋',     price:135, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
   { id:37,  cat:'熱炒類', name:'菜脯蛋',       price:135, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
   { id:38,  cat:'熱炒類', name:'蚵仔煎蛋',     price:160, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
-  { id:39,  cat:'熱炒類', name:'番茄炒蛋',     price:180, emoji:'🍳', popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:39,  cat:'熱炒類', name:'番茄炒蛋',     price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
   { id:40,  cat:'熱炒類', name:'麻婆豆腐🌶️',  price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:41,  cat:'熱炒類', name:'豆豉鮮蚵',     price:180, emoji:'🍳', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
   { id:42,  cat:'熱炒類', name:'豆豉排骨',     price:195, emoji:'🍳', popular:false, isSoldOut:false, isNew:true, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
@@ -418,7 +463,7 @@ const MENU_DATA = [
   // └─────────────────────────────────────────────────────────────────────┘
   { id:62, cat:'時蔬類', name:'炒菠菜',     price:110, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
   { id:63, cat:'時蔬類', name:'炒地瓜葉',   price:110, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
-  { id:64, cat:'時蔬類', name:'炒空心菜',   price:110, emoji:'🥬', popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
+  { id:64, cat:'時蔬類', name:'炒空心菜',   price:110, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
   { id:65, cat:'時蔬類', name:'炒高麗菜',   price:110, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
   { id:66, cat:'時蔬類', name:'肉絲水蓮',   price:150, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
   { id:67, cat:'時蔬類', name:'地瓜葉皮蛋', price:150, emoji:'🥬', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:'加辣🌶️',price:0}], sauce:[] },
@@ -438,10 +483,10 @@ const MENU_DATA = [
   // │ 湯品                                                                │
   // │ 新增品項 → 在最後一道（薑絲鮮蚵湯）後面加一行                     │
   // └─────────────────────────────────────────────────────────────────────┘
-  { id:76, cat:'湯品', name:'紫菜蛋花湯', price:50, emoji:'🥣', popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:76, cat:'湯品', name:'紫菜蛋花湯', price:50, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:77, cat:'湯品', name:'貢丸湯',     price:55, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:78, cat:'湯品', name:'魚丸湯',     price:55, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
-  { id:79, cat:'湯品', name:'番茄蛋花湯', price:65, emoji:'🥣', popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
+  { id:79, cat:'湯品', name:'番茄蛋花湯', price:65, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:80, cat:'湯品', name:'薑絲蛤蜊湯', price:65, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:81, cat:'湯品', name:'薑絲鮮蚵湯', price:70, emoji:'🥣', popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
 ];
