@@ -19,70 +19,70 @@ button { touch-action:manipulation; }
 .header { background:#1a2455; color:white; padding:14px 16px 10px; position:sticky; top:0; z-index:100; }
 .header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
 .logo-area { display:flex; align-items:center; gap:10px; }
-.shop-name { font-size:18px; font-weight:700; letter-spacing:1px; }
-.cart-btn { position:relative; background:rgba(255,255,255,0.15); border:none; border-radius:20px; padding:6px 14px; color:white; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:6px; font-family:'Noto Sans TC',sans-serif; }
+.shop-name { font-size:20px; font-weight:700; letter-spacing:1px; }
+.cart-btn { position:relative; background:rgba(255,255,255,0.15); border:none; border-radius:20px; padding:8px 16px; color:white; cursor:pointer; font-size:16px; display:flex; align-items:center; gap:6px; font-family:'Noto Sans TC',sans-serif; }
 .cart-btn:hover { background:rgba(255,255,255,0.25); }
-.cart-badge { position:absolute; top:-4px; right:-4px; background:#e8a020; color:white; border-radius:10px; font-size:11px; font-weight:700; padding:1px 6px; min-width:18px; text-align:center; }
+.cart-badge { position:absolute; top:-4px; right:-4px; background:#e8a020; color:white; border-radius:10px; font-size:12px; font-weight:700; padding:1px 6px; min-width:20px; text-align:center; }
 .cat-tabs { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
 .cat-tabs::-webkit-scrollbar { display:none; }
-.cat-tab { flex-shrink:0; padding:4px 14px; border-radius:14px; border:none; font-size:13px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
+.cat-tab { flex-shrink:0; padding:6px 16px; border-radius:14px; border:none; font-size:14px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
 .cat-tab.active { background:#e8a020; color:white; font-weight:700; }
 .cat-tab:not(.active) { background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.85); }
 
 /* ── ANNOUNCE ── */
-.announce { background:#fef3d0; border-left:3px solid #e8a020; margin:12px 12px 0; border-radius:6px; padding:8px 12px; font-size:12px; color:#7a5200; }
+.announce { background:#fef3d0; border-left:3px solid #e8a020; margin:12px 12px 0; border-radius:6px; padding:10px 12px; font-size:14px; color:#7a5200; }
 
 /* ── SECTION TITLE ── */
-.section-title { padding:14px 14px 6px; font-size:14px; font-weight:700; color:#1a2455; }
+.section-title { padding:14px 14px 6px; font-size:16px; font-weight:700; color:#1a2455; }
 
 /* ── MENU LIST ── */
 .menu-list { padding:0 10px 120px; display:flex; flex-direction:column; gap:8px; }
-.menu-item { background:white; border-radius:12px; display:flex; align-items:center; padding:10px 12px; gap:12px; border:1.5px solid transparent; }
+.menu-item { background:white; border-radius:12px; display:flex; align-items:center; padding:12px 14px; gap:12px; border:1.5px solid transparent; }
 .menu-item.popular { border-color:#e8a020; }
 .menu-item.soldout { opacity:0.5; }
-.item-emoji { width:56px; height:56px; border-radius:10px; background:#f5f0e8; display:flex; align-items:center; justify-content:center; font-size:30px; flex-shrink:0; }
+.item-emoji { width:60px; height:60px; border-radius:10px; background:#f5f0e8; display:flex; align-items:center; justify-content:center; font-size:32px; flex-shrink:0; }
 .item-info { flex:1; }
-.item-name-row { display:flex; align-items:center; gap:6px; margin-bottom:2px; flex-wrap:wrap; }
-.item-name { font-size:15px; font-weight:700; color:#1a2455; }
-.popular-tag { background:#fff3d0; color:#b87800; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
-.sold-tag { background:#ffe8e8; color:#c4390a; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
-.new-tag { background:#e0f0ff; color:#1060cc; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
-.item-price { font-size:16px; font-weight:700; color:#c4390a; }
-.add-btn { width:32px; height:32px; border-radius:50%; background:#1a2455; border:none; color:white; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Noto Sans TC',sans-serif; }
-.sold-btn { width:32px; height:32px; border-radius:50%; background:#ccc; border:none; color:white; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; cursor:not-allowed; }
-.qty-control { display:flex; align-items:center; gap:6px; }
-.qty-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:'Noto Sans TC',sans-serif; }
+.item-name-row { display:flex; align-items:center; gap:6px; margin-bottom:4px; flex-wrap:wrap; }
+.item-name { font-size:17px; font-weight:700; color:#1a2455; }
+.popular-tag { background:#fff3d0; color:#b87800; font-size:12px; font-weight:700; padding:2px 7px; border-radius:8px; }
+.sold-tag { background:#ffe8e8; color:#c4390a; font-size:12px; font-weight:700; padding:2px 7px; border-radius:8px; }
+.new-tag { background:#e0f0ff; color:#1060cc; font-size:12px; font-weight:700; padding:2px 7px; border-radius:8px; }
+.item-price { font-size:18px; font-weight:700; color:#c4390a; }
+.add-btn { width:36px; height:36px; border-radius:50%; background:#1a2455; border:none; color:white; font-size:24px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Noto Sans TC',sans-serif; }
+.sold-btn { width:36px; height:36px; border-radius:50%; background:#ccc; border:none; color:white; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; cursor:not-allowed; }
+.qty-control { display:flex; align-items:center; gap:8px; }
+.qty-btn { width:32px; height:32px; border-radius:50%; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:'Noto Sans TC',sans-serif; }
 .qty-btn.minus { color:#c4390a; border-color:#c4390a; }
-.qty-num { font-size:16px; font-weight:700; color:#1a2455; min-width:20px; text-align:center; }
+.qty-num { font-size:18px; font-weight:700; color:#1a2455; min-width:22px; text-align:center; }
 
 /* ── CLOSED OVERLAY ── */
 .closed-overlay { display:none; position:fixed; inset:0; background:rgba(20,20,20,0.92); z-index:150; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px; }
 .closed-overlay.open { display:flex; }
 .closed-icon { font-size:64px; margin-bottom:16px; }
-.closed-title { font-size:24px; font-weight:700; color:white; margin-bottom:10px; }
-.closed-msg { font-size:15px; color:rgba(255,255,255,0.7); line-height:1.8; }
+.closed-title { font-size:26px; font-weight:700; color:white; margin-bottom:10px; }
+.closed-msg { font-size:17px; color:rgba(255,255,255,0.7); line-height:1.8; }
 
 /* ── BOTTOM BAR ── */
-.bottom-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:420px; background:white; border-top:1px solid #e0e0e0; padding:8px 14px 14px; z-index:50; display:none; align-items:center; justify-content:space-between; }
-.bottom-total { font-size:13px; color:#666; }
-.bottom-total span { font-size:18px; font-weight:700; color:#c4390a; }
-.bottom-order-btn { background:#1a2455; color:white; border:none; border-radius:10px; padding:10px 20px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
+.bottom-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:420px; background:white; border-top:1px solid #e0e0e0; padding:10px 14px 16px; z-index:50; display:none; align-items:center; justify-content:space-between; }
+.bottom-total { font-size:15px; color:#666; }
+.bottom-total span { font-size:20px; font-weight:700; color:#c4390a; }
+.bottom-order-btn { background:#1a2455; color:white; border:none; border-radius:10px; padding:12px 22px; font-size:17px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
 
 /* ── OPTIONS MODAL ── */
 .options-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:flex-end; flex-direction:column; align-items:center; }
 .options-overlay.open { display:flex; }
 .options-sheet { background:white; border-radius:20px 20px 0 0; width:100%; max-width:420px; }
 .options-header { padding:4px 16px 14px; border-bottom:1px solid #eee; }
-.options-title { font-size:17px; font-weight:700; color:#1a2455; }
-.options-price { font-size:14px; color:#c4390a; font-weight:700; margin-top:2px; }
+.options-title { font-size:19px; font-weight:700; color:#1a2455; }
+.options-price { font-size:16px; color:#c4390a; font-weight:700; margin-top:4px; }
 .options-section { padding:14px 16px 0; }
-.options-section-title { font-size:13px; font-weight:700; color:#888; margin-bottom:10px; }
-.option-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #f5f5f5; }
-.option-label { font-size:15px; color:#333; }
-.option-price-tag { font-size:13px; color:#c4390a; font-weight:700; margin-left:6px; }
-.option-checkbox { width:22px; height:22px; accent-color:#1a2455; cursor:pointer; }
+.options-section-title { font-size:15px; font-weight:700; color:#888; margin-bottom:10px; }
+.option-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid #f5f5f5; }
+.option-label { font-size:16px; color:#333; }
+.option-price-tag { font-size:14px; color:#c4390a; font-weight:700; margin-left:6px; }
+.option-checkbox { width:24px; height:24px; accent-color:#1a2455; cursor:pointer; }
 .sauce-btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
-.sauce-btn { padding:7px 18px; border-radius:20px; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:14px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; transition:all 0.15s; }
+.sauce-btn { padding:9px 20px; border-radius:20px; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:15px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; transition:all 0.15s; }
 .sauce-btn.sel { background:#1a2455; color:white; font-weight:700; }
 
 /* ── CART SHEET ── */
@@ -92,52 +92,53 @@ button { touch-action:manipulation; }
 .cart-handle { text-align:center; padding:10px; }
 .cart-handle-bar { width:40px; height:4px; background:#ddd; border-radius:2px; display:inline-block; }
 .cart-header { padding:0 16px 12px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee; flex-shrink:0; }
-.cart-title { font-size:18px; font-weight:700; color:#1a2455; }
-.clear-btn { font-size:13px; color:#c4390a; background:none; border:none; cursor:pointer; padding:4px 8px; font-family:'Noto Sans TC',sans-serif; }
+.cart-title { font-size:20px; font-weight:700; color:#1a2455; }
+.clear-btn { font-size:15px; color:#c4390a; background:none; border:none; cursor:pointer; padding:6px 10px; font-family:'Noto Sans TC',sans-serif; }
 .cart-body { overflow-y:auto; flex:1; }
 .cart-items { padding:10px 16px; }
-.cart-item { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #f0f0f0; }
-.cart-item-name { flex:1; font-size:14px; font-weight:500; color:#1a2455; }
-.cart-item-price { font-size:14px; font-weight:700; color:#c4390a; min-width:52px; text-align:right; }
-.empty-cart { text-align:center; padding:30px; color:#aaa; font-size:14px; }
+.cart-item { display:flex; align-items:center; gap:10px; padding:12px 0; border-bottom:1px solid #f0f0f0; }
+.cart-item-name { flex:1; font-size:16px; font-weight:500; color:#1a2455; }
+.cart-item-price { font-size:16px; font-weight:700; color:#c4390a; min-width:56px; text-align:right; }
+.cart-item-notes { font-size:13px; color:#888; margin-top:2px; }
+.empty-cart { text-align:center; padding:30px; color:#aaa; font-size:16px; }
 .cart-options { padding:12px 16px 8px; border-top:1px solid #eee; }
-.opt-title { font-size:13px; font-weight:700; color:#555; margin-bottom:10px; }
-.opt-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-.opt-label { font-size:14px; color:#333; }
+.opt-title { font-size:15px; font-weight:700; color:#555; margin-bottom:10px; }
+.opt-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.opt-label { font-size:16px; color:#333; }
 .opt-toggle { display:flex; border:1.5px solid #1a2455; border-radius:8px; overflow:hidden; }
-.opt-toggle button { padding:4px 12px; border:none; font-size:13px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; background:white; color:#1a2455; }
+.opt-toggle button { padding:6px 14px; border:none; font-size:15px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; background:white; color:#1a2455; }
 .opt-toggle button.sel { background:#1a2455; color:white; font-weight:700; }
-.note-input { width:100%; border:1.5px solid #e0e0e0; border-radius:8px; padding:8px 10px; font-size:13px; font-family:'Noto Sans TC',sans-serif; color:#333; resize:none; margin-top:4px; }
+.note-input { width:100%; border:1.5px solid #e0e0e0; border-radius:8px; padding:10px 12px; font-size:15px; font-family:'Noto Sans TC',sans-serif; color:#333; resize:none; margin-top:4px; }
 .note-input:focus { outline:none; border-color:#1a2455; }
 .cart-summary { padding:10px 16px; background:#f9f9f9; border-top:1px solid #eee; flex-shrink:0; }
-.summary-total { display:flex; justify-content:space-between; font-size:18px; font-weight:700; color:#1a2455; margin-top:8px; }
-.checkout-btn { flex-shrink:0; margin:12px 16px 20px; background:#1a2455; color:white; border:none; border-radius:12px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; width:calc(100% - 32px); font-family:'Noto Sans TC',sans-serif; }
+.summary-row { display:flex; justify-content:space-between; font-size:15px; color:#666; margin-bottom:4px; }
+.summary-total { display:flex; justify-content:space-between; font-size:20px; font-weight:700; color:#1a2455; margin-top:8px; }
+.checkout-btn { flex-shrink:0; margin:12px 16px 20px; background:#1a2455; color:white; border:none; border-radius:12px; padding:16px; font-size:18px; font-weight:700; cursor:pointer; width:calc(100% - 32px); font-family:'Noto Sans TC',sans-serif; }
 
 /* ── POPUP MODAL ── */
 .popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:center; justify-content:center; }
 .popup-overlay.open { display:flex; }
 .popup-card { background:white; border-radius:20px; padding:28px 22px; max-width:340px; width:88%; text-align:center; }
-.popup-icon { font-size:40px; margin-bottom:10px; }
-.popup-title { font-size:18px; font-weight:700; color:#1a2455; margin-bottom:10px; }
-.popup-body { font-size:14px; color:#555; line-height:1.9; margin-bottom:20px; text-align:left; }
-.popup-close { background:#1a2455; color:white; border:none; border-radius:10px; padding:11px 36px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
+.popup-icon { font-size:44px; margin-bottom:10px; }
+.popup-title { font-size:20px; font-weight:700; color:#1a2455; margin-bottom:10px; }
+.popup-body { font-size:16px; color:#555; line-height:2; margin-bottom:20px; text-align:left; }
+.popup-close { background:#1a2455; color:white; border:none; border-radius:10px; padding:13px 36px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
 
 /* ── CONFIRM MODAL ── */
 .confirm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:center; justify-content:center; }
 .confirm-overlay.open { display:flex; }
 .confirm-card { background:white; border-radius:20px; padding:28px 22px; max-width:340px; width:88%; }
-.confirm-title { font-size:17px; font-weight:700; color:#1a2455; margin-bottom:14px; text-align:center; }
-.confirm-items { font-size:13px; color:#555; line-height:1.9; margin-bottom:12px; max-height:200px; overflow-y:auto; }
-.confirm-total { font-size:16px; font-weight:700; color:#c4390a; text-align:right; margin-bottom:18px; }
+.confirm-title { font-size:19px; font-weight:700; color:#1a2455; margin-bottom:14px; text-align:center; }
+.confirm-items { font-size:15px; color:#555; line-height:2; margin-bottom:12px; max-height:220px; overflow-y:auto; }
+.confirm-total { font-size:18px; font-weight:700; color:#c4390a; text-align:right; margin-bottom:18px; }
 .confirm-btns { display:flex; gap:10px; }
-.confirm-cancel { flex:1; background:#f0ede6; color:#555; border:none; border-radius:10px; padding:12px; font-size:15px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-.confirm-ok { flex:2; background:#1a2455; color:white; border:none; border-radius:10px; padding:12px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
+.confirm-cancel { flex:1; background:#f0ede6; color:#555; border:none; border-radius:10px; padding:14px; font-size:16px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
+.confirm-ok { flex:2; background:#1a2455; color:white; border:none; border-radius:10px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
 </style>
 </head>
 <body>
 <div class="app">
-
-<div class="phone-wrap" id="page-order">
+<div class="phone-wrap">
 
   <div class="header">
     <div class="header-top">
@@ -194,8 +195,8 @@ button { touch-action:manipulation; }
 </div>
 
 <!-- 購物車 -->
-<div class="cart-overlay" id="cart-overlay" onclick="overlayClick(event)">
-  <div class="cart-sheet" onclick="event.stopPropagation()">
+<div class="cart-overlay" id="cart-overlay" onclick="if(event.target===this)closeCart()">
+  <div class="cart-sheet">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
     <div class="cart-header">
       <span class="cart-title">我的訂單</span>
@@ -207,7 +208,7 @@ button { touch-action:manipulation; }
         <div class="opt-title">訂單選項</div>
         <div class="opt-row">
           <span class="opt-label">💴 付款方式</span>
-          <span style="font-size:14px;font-weight:700;color:#1a2455;">現金</span>
+          <span style="font-size:16px;font-weight:700;color:#1a2455;">現金</span>
         </div>
         <div class="opt-row">
           <span class="opt-label">🥢 免洗餐具</span>
@@ -224,41 +225,24 @@ button { touch-action:manipulation; }
           </div>
         </div>
         <div style="margin-top:8px">
-          <div style="font-size:13px;color:#666;margin-bottom:6px;">🛍 取餐方式 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
+          <div style="font-size:15px;color:#666;margin-bottom:6px;">🛍 取餐方式 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
           <div class="opt-toggle" style="margin-bottom:8px;width:100%;">
             <button class="sel" onclick="selPickup('takeout',this)" style="flex:1;">外帶自取 9折</button>
             <button onclick="selPickup('delivery',this)" style="flex:1;">外送</button>
           </div>
-          <div id="delivery-hint" style="display:none;background:#fff0f0;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;margin-bottom:8px;line-height:1.8;">
-            <!-- ╔══════════════════════════════════════════════════════════════╗ -->
-            <!-- ║  ★ 外送說明文字 — 改這裡！                                 ║ -->
-            <!-- ║  把下面兩行文字換成你想要的內容就好                         ║ -->
-            <!-- ║  <br> 代表換行，不要刪掉                                    ║ -->
-            <!-- ╚══════════════════════════════════════════════════════════════╝ -->
+          <div id="delivery-hint" style="display:none;background:#fff0f0;border-radius:8px;padding:10px 12px;font-size:14px;color:#555;margin-bottom:8px;line-height:1.8;">
             🔺3公里內/訂單金額滿$600（請先洽詢店家）<br>
             <span style="color:#c4390a;font-weight:700;">*請於備註欄內填入外送地址</span>
-            <!-- ▲▲▲ 外送說明到這裡結束 ▲▲▲ -->
           </div>
-          <!-- ╔══════════════════════════════════════════════════════════════╗ -->
-          <!-- ║  ★ 備註欄標題文字 — 改這裡！                               ║ -->
-          <!-- ║  把下面 📝 後面的文字換成你要的標題文字                     ║ -->
-          <!-- ╚══════════════════════════════════════════════════════════════╝ -->
-          <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（口味調整、其他需求、外送地址...）</div>
-          <!-- ▲▲▲ 備註欄標題到這裡結束 ▲▲▲ -->
-          <!-- ╔══════════════════════════════════════════════════════════════╗ -->
-          <!-- ║  ★ 備註欄灰色提示字 (placeholder) — 有兩種改法：           ║ -->
-          <!-- ║  方法①（推薦）→ 到最上方 STORE_CONFIG 改 defaultNote      ║ -->
-          <!-- ║  方法②        → 直接改下面 placeholder=" " 裡面的文字     ║ -->
-          <!-- ╚══════════════════════════════════════════════════════════════╝ -->
-          <textarea class="note-input" rows="2" id="order-note" placeholder="例：少油少鹽、重鹹 / 外送地址：..."></textarea>
-          <!-- ▲▲▲ 備註欄到這裡結束 ▲▲▲ -->
+          <div style="font-size:15px;color:#666;margin-bottom:4px;">📝 備註（口味調整、其他需求、外送地址...）</div>
+          <textarea class="note-input" rows="2" id="order-note"></textarea>
         </div>
       </div>
     </div>
     <div class="cart-summary">
-      <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>總數量</span><span id="sum-qty">0 項</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:4px;"><span>小計</span><span id="sum-sub">$0</span></div>
-      <div id="sum-disc" style="display:none;justify-content:space-between;font-size:13px;color:#c4390a;margin-bottom:4px;"><span>外帶自取 9折</span><span id="sum-disc-val"></span></div>
+      <div class="summary-row"><span>總數量</span><span id="sum-qty">0 項</span></div>
+      <div class="summary-row"><span>小計</span><span id="sum-sub">$0</span></div>
+      <div id="sum-disc" style="display:none;justify-content:space-between;font-size:15px;color:#c4390a;margin-bottom:4px;"><span>外帶自取 9折</span><span id="sum-disc-val"></span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$0</span></div>
     </div>
     <button class="checkout-btn" onclick="placeOrder()">確認下單</button>
@@ -266,14 +250,14 @@ button { touch-action:manipulation; }
 </div>
 
 <!-- 加購選項 Modal -->
-<div class="options-overlay" id="options-overlay" onclick="optionsOverlayClick(event)">
+<div class="options-overlay" id="options-overlay" onclick="if(event.target===this)closeOptionsModal()">
   <div class="options-sheet">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
     <div class="options-header" id="options-header"></div>
     <div class="options-body" id="options-body"></div>
-    <div style="padding:12px 16px 8px;display:flex;align-items:center;justify-content:center;gap:16px;">
+    <div style="padding:12px 16px 8px;display:flex;align-items:center;justify-content:center;gap:20px;">
       <button class="qty-btn minus" onclick="changeQtyModal(-1)">−</button>
-      <span id="modal-qty" style="font-size:20px;font-weight:700;color:#1a2455;min-width:28px;text-align:center;">1</span>
+      <span id="modal-qty" style="font-size:22px;font-weight:700;color:#1a2455;min-width:30px;text-align:center;">1</span>
       <button class="qty-btn" onclick="changeQtyModal(1)">+</button>
     </div>
     <div style="padding:0 16px 24px;">
@@ -286,25 +270,7 @@ button { touch-action:manipulation; }
 
 <script>
 // ╔══════════════════════════════════════════════════════════════════════╗
-// ║  ★★★ 可修改區塊總覽（新手看這裡！）★★★                         ║
-// ║                                                                      ║
-// ║  本檔案有三個地方可以修改，每個地方都有清楚說明：                   ║
-// ║                                                                      ║
-// ║  【區塊 1】STORE_CONFIG（就在下面）                                 ║
-// ║     → 營業狀態、跑馬燈公告、彈窗公告、備註欄提示文字               ║
-// ║                                                                      ║
-// ║  【區塊 2】結帳畫面外送說明                                         ║
-// ║     → 在 HTML 區段搜尋「★ 外送說明文字」即可找到                   ║
-// ║     → 就是客人選「外送」後出現的粉紅色說明框                        ║
-// ║                                                                      ║
-// ║  【區塊 3】MENU_DATA（在本檔案往下捲）                              ║
-// ║     → 所有菜單品項、價格、熱銷標籤、售完狀態等                      ║
-// ║                                                                      ║
-// ║  ✅ 修改完記得：更新最下方 VER 日期，然後重新上傳！                 ║
-// ╚══════════════════════════════════════════════════════════════════════╝
-
-// ╔══════════════════════════════════════════════════════════════════════╗
-// ║  【區塊 1】營運參數 — 每次修改這裡即可更新網頁                      ║
+// ║  【區塊 1】營運參數                                                 ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const STORE_CONFIG = {
 
@@ -338,37 +304,11 @@ const STORE_CONFIG = {
   defaultNote: '例：口味調整、其他需求 / 外送地址：...',
 };
 
-// ╔══════════════════════════════════════════════════════════════════════════════╗
-// ║  ★ 餐點管理區塊                                                            ║
-// ║                                                                              ║
-// ║  【每個欄位說明】                                                            ║
-// ║  id        → 品項編號，每道菜都不能重複，新增時用比 200 大的數字            ║
-// ║  cat       → 所屬分類，必須與上方分類名稱完全一致（例：'炒飯'）             ║
-// ║  name      → 菜名（會顯示在菜單上）                                         ║
-// ║  price     → 售價（數字，不要加 $ 符號）                                    ║
-// ║  emoji     → 菜單左側的圖示（可從手機或網路複製 Emoji）                     ║
-// ║  popular   → true = 顯示「熱銷」金色標籤，並在卡片加上金框                 ║
-// ║  isSoldOut → true = 顯示「已售完」紅色標籤，無法加入購物車                 ║
-// ║  isNew     → true = 顯示「新品」藍色標籤                                    ║
-// ║  isHidden  → true = 此品項完全不出現在菜單（暫時下架用）                   ║
-// ║  extras    → 加購選項彈窗（結帳前讓客人勾選）                               ║
-// ║              格式：[{label:'選項名稱', price:加價金額}]                      ║
-// ║              免費的選項 price 填 0，不需要加購選項則填 []                    ║
-// ║  sauce     → 醬料選擇彈窗（單選）                                           ║
-// ║              格式：['選項A', '選項B']，不需要則填 []                         ║
-// ║                                                                              ║
-// ║  【新增品項步驟】                                                            ║
-// ║  1. 找到要新增的分類區塊（例：// ── 熱炒類 ──）                             ║
-// ║  2. 在該區塊最後一行的結尾逗號後，按 Enter 新增一行                         ║
-// ║  3. 複製下方範本，貼上後修改各欄位內容                                      ║
-// ║  4. id 必須是全檔唯一的數字，建議從 201 開始往上加                          ║
-// ║  5. 存檔後修改頂部 VER 日期，重新上傳即完成                                 ║
-// ║                                                                              ║
-// ║  【新增品項範本 — 複製這行貼到對應分類最後面】                              ║
-// ║  { id:201, cat:'熱炒類', name:'新菜名', price:180, emoji:'🍳',              ║
-// ║    popular:false, isSoldOut:false, isNew:true, isHidden:false,              ║
-// ║    extras:[{label:'加辣🌶️',price:0}], sauce:[] },                           ║
-// ╚══════════════════════════════════════════════════════════════════════════════╝
+// ╔══════════════════════════════════════════════════════════════════════╗
+// ║  【區塊 2】菜單資料                                                 ║
+// ║  extras 格式：[{label:'選項名稱', price:加價金額}]                ║
+// ║  免費選項 price 填 0；不需加購選項填 []                             ║
+// ╚══════════════════════════════════════════════════════════════════════╝
 const MENU_DATA = [
   // ┌─────────────────────────────────────────────────────────────────────┐
   // │ 炒飯                                                                │
@@ -492,22 +432,19 @@ const MENU_DATA = [
 ];
 
 // ══════════════════════════════
-//  執行時狀態（請勿修改）
+//  執行時狀態
 // ══════════════════════════════
-// 過濾掉 isHidden 的品項，建立實際菜單
 const menu = MENU_DATA.filter(i => !i.isHidden);
-
 let cart = {};
 let opts = {cutlery:'no', receipt:'no', pickup:'takeout'};
 let selCat = '全部';
-
-// ══════════════════════════════
-//  CUSTOMER MENU
-// ══════════════════════════════
 const ALL_CATS = ['全部','炒飯','炒麵','炒烏龍麵','烏龍湯麵','粥品','熱炒類','時蔬類','酥炸類','湯品'];
 
+// ══════════════════════════════
+//  菜單渲染
+// ══════════════════════════════
 function renderTabs(){
-  document.getElementById('cat-tabs').innerHTML=ALL_CATS.map(c=>
+  document.getElementById('cat-tabs').innerHTML = ALL_CATS.map(c =>
     `<button class="cat-tab${c===selCat?' active':''}" onclick="selCategory('${c}')">${c}</button>`
   ).join('');
 }
@@ -515,41 +452,39 @@ function renderTabs(){
 function selCategory(c){ selCat=c; renderTabs(); renderMenu(); }
 
 function renderMenu(){
-  const items=(selCat==='全部'?menu:menu.filter(i=>i.cat===selCat));
-  const byCat={};
+  const items = selCat==='全部' ? menu : menu.filter(i=>i.cat===selCat);
+  const byCat = {};
   items.forEach(i=>{ if(!byCat[i.cat]) byCat[i.cat]=[]; byCat[i.cat].push(i); });
-  let html='<div class="menu-list">';
-  if(selCat!=='全部'){
-    if(items.length===0){
-      html+='<div style="text-align:center;padding:40px 20px;color:#aaa;font-size:14px;">此分類尚無品項</div>';
-    } else {
-      html+=items.map(renderItem).join('');
-    }
+  let html = '<div class="menu-list">';
+  if(selCat !== '全部'){
+    html += items.length===0
+      ? '<div style="text-align:center;padding:40px 20px;color:#aaa;font-size:16px;">此分類尚無品項</div>'
+      : items.map(renderItem).join('');
   } else {
     ALL_CATS.filter(c=>c!=='全部').forEach(cat=>{
-      const catItems=byCat[cat]||[];
-      if(catItems.length===0) return;
-      html+=`<div class="section-title">${cat}</div>`;
-      html+=catItems.map(renderItem).join('');
+      const catItems = byCat[cat]||[];
+      if(!catItems.length) return;
+      html += `<div class="section-title">${cat}</div>`;
+      html += catItems.map(renderItem).join('');
     });
   }
-  html+='</div>';
-  document.getElementById('menu-content').innerHTML=html;
+  html += '</div>';
+  document.getElementById('menu-content').innerHTML = html;
 }
 
 function renderItem(item){
-  const q=cart[item.id]||0;
-  let ctrl='';
+  const q = cart[item.id]||0;
+  let ctrl = '';
   if(item.isSoldOut){
-    ctrl='<div class="sold-btn">✕</div>';
+    ctrl = '<div class="sold-btn">✕</div>';
   } else if(q>0){
-    ctrl=`<div class="qty-control">
+    ctrl = `<div class="qty-control">
       <button class="qty-btn minus" onclick="changeQty(${item.id},-1)">−</button>
       <span class="qty-num">${q}</span>
       <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
     </div>`;
   } else {
-    ctrl=`<button class="add-btn" onclick="changeQty(${item.id},1)">+</button>`;
+    ctrl = `<button class="add-btn" onclick="changeQty(${item.id},1)">+</button>`;
   }
   return `<div class="menu-item${item.popular?' popular':''}${item.isSoldOut?' soldout':''}">
     <div class="item-emoji">${item.emoji}</div>
@@ -566,101 +501,187 @@ function renderItem(item){
   </div>`;
 }
 
-let pendingItem = null;
-let pendingExtras = {};
-let pendingSauce = null;
-let pendingQty = 1;
+// ══════════════════════════════
+//  加購選項 Modal
+// ══════════════════════════════
+let pendingItem=null, pendingExtras={}, pendingSauce=null, pendingQty=1;
 
-function changeQty(id,delta){
-  if(item_isSoldOut(id)) return;
-  if(delta > 0){
-    const item = menu.find(i=>i.id===id);
-    if(item && ((item.extras && item.extras.length>0) || (item.sauce && item.sauce.length>0))){
-      openOptionsModal(item);
-      return;
-    }
+function changeQty(id, delta){
+  const item = menu.find(i=>i.id===id);
+  if(!item || item.isSoldOut) return;
+  if(delta>0 && ((item.extras&&item.extras.length)||(item.sauce&&item.sauce.length))){
+    openOptionsModal(item); return;
   }
-  const cur=cart[id]||0;
-  const next=cur+delta;
+  const next = (cart[id]||0) + delta;
   if(next<=0) delete cart[id]; else cart[id]=next;
-  renderMenu();
-  updateBadge();
-  updateBottomBar();
-}
-
-function item_isSoldOut(id){
-  const item=menu.find(i=>i.id===id);
-  return item ? item.isSoldOut : false;
+  renderMenu(); updateBadge(); updateBottomBar();
 }
 
 function openOptionsModal(item){
-  pendingItem = item;
-  pendingExtras = {};
-  pendingQty = 1;
-  pendingSauce = item.sauce && item.sauce.length>0 ? item.sauce[0] : null;
+  pendingItem=item; pendingExtras={}; pendingQty=1;
+  pendingSauce = item.sauce&&item.sauce.length ? item.sauce[0] : null;
 
-  document.getElementById('options-header').innerHTML = `
-    <div class="options-title">${item.emoji} ${item.name}</div>
-    <div class="options-price">$${item.price}</div>
-  `;
+  document.getElementById('options-header').innerHTML =
+    `<div class="options-title">${item.emoji} ${item.name}</div>
+     <div class="options-price">$${item.price}</div>`;
 
-  let body = '';
-  if(item.extras && item.extras.length>0){
+  let body='';
+  if(item.extras&&item.extras.length){
     body += '<div class="options-section"><div class="options-section-title">加購選項</div>';
     item.extras.forEach((ex,i)=>{
-      const priceTag = ex.price>0 ? `<span class="option-price-tag">+$${ex.price}</span>` : '<span class="option-price-tag" style="color:#888">免費</span>';
+      const tag = ex.price>0
+        ? `<span class="option-price-tag">+$${ex.price}</span>`
+        : '<span class="option-price-tag" style="color:#888">免費</span>';
       body += `<div class="option-row">
-        <span class="option-label">${ex.label}${priceTag}</span>
+        <span class="option-label">${ex.label}${tag}</span>
         <input type="checkbox" class="option-checkbox" id="ex-${i}" onchange="toggleExtra(${i})">
       </div>`;
     });
     body += '</div>';
   }
-  if(item.sauce && item.sauce.length>0){
+  if(item.sauce&&item.sauce.length){
     body += '<div class="options-section" style="padding-bottom:14px;"><div class="options-section-title">醬料選擇</div><div class="sauce-btns">';
     item.sauce.forEach((s,i)=>{
       body += `<button class="sauce-btn${i===0?' sel':''}" onclick="selSauce('${s}',this)">${s}</button>`;
     });
     body += '</div></div>';
   }
-
   document.getElementById('options-body').innerHTML = body;
   document.getElementById('options-overlay').classList.add('open');
-  updateQtyDisplay();
+  document.getElementById('modal-qty').textContent = pendingQty;
 }
 
 function toggleExtra(i){ pendingExtras[i] = document.getElementById('ex-'+i).checked; }
 
 function selSauce(s, btn){
-  pendingSauce = s;
+  pendingSauce=s;
   btn.closest('.sauce-btns').querySelectorAll('.sauce-btn').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
 }
 
-function changeQtyModal(delta){ pendingQty = Math.max(1, pendingQty + delta); updateQtyDisplay(); }
-function updateQtyDisplay(){ document.getElementById('modal-qty').textContent = pendingQty; }
-function optionsOverlayClick(e){ if(e.target===document.getElementById('options-overlay')) closeOptionsModal(); }
-function closeOptionsModal(){ document.getElementById('options-overlay').classList.remove('open'); pendingItem = null; }
+function changeQtyModal(delta){
+  pendingQty = Math.max(1, pendingQty+delta);
+  document.getElementById('modal-qty').textContent = pendingQty;
+}
+
+function closeOptionsModal(){
+  document.getElementById('options-overlay').classList.remove('open');
+  pendingItem=null;
+}
 
 function confirmAddToCart(){
   if(!pendingItem) return;
-  const id = pendingItem.id;
-  let notes = [];
-  if(pendingItem.extras){
-    pendingItem.extras.forEach((ex,i)=>{ if(pendingExtras[i]) notes.push(ex.label); });
-  }
+  const id=pendingItem.id;
+  const notes=[], extraPrice_arr=[];
+  pendingItem.extras&&pendingItem.extras.forEach((ex,i)=>{
+    if(pendingExtras[i]){ notes.push(ex.label); extraPrice_arr.push(ex.price); }
+  });
   if(pendingSauce) notes.push(pendingSauce);
-  let extraPrice = 0;
-  if(pendingItem.extras){
-    pendingItem.extras.forEach((ex,i)=>{ if(pendingExtras[i]) extraPrice += ex.price; });
-  }
-  const key = id + (notes.length>0 ? '__'+notes.join('_') : '');
-  if(!cart[key]) cart[key] = {itemId:id, qty:0, notes:notes.join('、'), extraPrice};
+  const extraPrice = extraPrice_arr.reduce((a,b)=>a+b,0);
+  const key = id + (notes.length ? '__'+notes.join('_') : '');
+  if(!cart[key]) cart[key]={itemId:id, qty:0, notes:notes.join('、'), extraPrice};
   cart[key].qty += pendingQty;
-  closeOptionsModal();
-  renderMenu();
-  updateBadge();
-  updateBottomBar();
+  closeOptionsModal(); renderMenu(); updateBadge(); updateBottomBar();
+}
+
+// ══════════════════════════════
+//  購物車
+// ══════════════════════════════
+function openCart(){ renderCartItems(); updateSummary(); document.getElementById('cart-overlay').classList.add('open'); }
+function closeCart(){ document.getElementById('cart-overlay').classList.remove('open'); }
+
+function clearCart(){
+  if(!Object.keys(cart).length) return;
+  cart={};
+  renderCartItems(); updateBadge(); updateBottomBar(); updateSummary();
+}
+
+function qtyCtrl(key, qty){
+  return `<div class="qty-control">
+    <button class="qty-btn minus" onclick="changeCartQty('${key}',-1)">−</button>
+    <span class="qty-num">${qty}</span>
+    <button class="qty-btn" onclick="changeCartQty('${key}',1)">+</button>
+  </div>`;
+}
+
+function renderCartItems(){
+  const el=document.getElementById('cart-items');
+  const keys=Object.keys(cart);
+  if(!keys.length){ el.innerHTML='<div class="empty-cart">🍜<br>還沒有選任何品項</div>'; return; }
+  el.innerHTML=keys.map(key=>{
+    const val=cart[key];
+    if(typeof val==='object'){
+      const item=menu.find(i=>i.id===val.itemId);
+      const unitPrice=item.price+val.extraPrice;
+      let notesHtml='';
+      if(val.notes){
+        const parts=val.notes.split('、').map(n=>{
+          const ex=item.extras&&item.extras.find(e=>e.label===n);
+          return ex&&ex.price>0?`${n} +$${ex.price}`:n;
+        });
+        notesHtml=`<div class="cart-item-notes">${parts.join('、')}</div>`;
+      }
+      return `<div class="cart-item">
+        ${qtyCtrl(key,val.qty)}
+        <div style="flex:1">
+          <div class="cart-item-name">${item.emoji} ${item.name}</div>
+          ${notesHtml}
+        </div>
+        <span class="cart-item-price">$${unitPrice*val.qty}</span>
+      </div>`;
+    } else {
+      const item=menu.find(i=>i.id==key);
+      return `<div class="cart-item">
+        ${qtyCtrl(key,val)}
+        <span class="cart-item-name">${item.emoji} ${item.name}</span>
+        <span class="cart-item-price">$${item.price*val}</span>
+      </div>`;
+    }
+  }).join('');
+}
+
+function changeCartQty(key, delta){
+  const val=cart[key];
+  if(typeof val==='object'){
+    val.qty+=delta; if(val.qty<=0) delete cart[key];
+  } else {
+    const next=val+delta; if(next<=0) delete cart[key]; else cart[key]=next;
+  }
+  renderCartItems(); updateBadge(); updateBottomBar(); updateSummary();
+}
+
+function selOpt(key,val,btn){
+  opts[key]=val;
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  updateSummary();
+}
+
+function selPickup(val,btn){
+  opts.pickup=val;
+  btn.closest('.opt-toggle').querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('delivery-hint').style.display=val==='delivery'?'block':'none';
+  updateSummary();
+}
+
+// ══════════════════════════════
+//  計算金額
+// ══════════════════════════════
+function calcSub(){
+  return Object.entries(cart).reduce((s,[key,val])=>{
+    if(typeof val==='object'){
+      const item=menu.find(i=>i.id===val.itemId);
+      return s+(item?(item.price+val.extraPrice)*val.qty:0);
+    }
+    const item=menu.find(i=>i.id==key);
+    return s+(item?item.price*val:0);
+  },0);
+}
+
+function calcTotal(){
+  const sub=calcSub();
+  return opts.pickup==='takeout' ? Math.round(sub*0.9) : sub;
 }
 
 function updateBadge(){
@@ -677,110 +698,8 @@ function updateBottomBar(){
   else { bar.style.display='none'; }
 }
 
-function calcSub(){
-  return Object.entries(cart).reduce((s,[key,val])=>{
-    if(typeof val==='object'){
-      const item=menu.find(i=>i.id===val.itemId);
-      return s+(item?(item.price+val.extraPrice)*val.qty:0);
-    } else {
-      const item=menu.find(i=>i.id==key);
-      return s+(item?item.price*val:0);
-    }
-  },0);
-}
-
-function calcTotal(){
-  const sub=calcSub();
-  return opts.pickup==='takeout' ? Math.round(sub*0.9) : sub;
-}
-
-// ══════════════════════════════
-//  CART
-// ══════════════════════════════
-function openCart(){ renderCartItems(); updateSummary(); document.getElementById('cart-overlay').classList.add('open'); }
-function overlayClick(e){ if(e.target===document.getElementById('cart-overlay')) closeCart(); }
-function closeCart(){ document.getElementById('cart-overlay').classList.remove('open'); }
-
-function clearCart(){
-  if(Object.keys(cart).length===0) return;
-  cart={};
-  renderCartItems(); updateBadge(); updateBottomBar(); updateSummary();
-}
-
-function qtyCtrl(key, qty){
-  return `<div class="qty-control">
-    <button class="qty-btn minus" onclick="changeCartQtyKey('${key}',-1)">−</button>
-    <span class="qty-num">${qty}</span>
-    <button class="qty-btn" onclick="changeCartQtyKey('${key}',1)">+</button>
-  </div>`;
-}
-
-function renderCartItems(){
-  const el=document.getElementById('cart-items');
-  const keys=Object.keys(cart);
-  if(keys.length===0){ el.innerHTML='<div class="empty-cart">🍜<br>還沒有選任何品項</div>'; return; }
-  el.innerHTML=keys.map(key=>{
-    const val=cart[key];
-    if(typeof val==='object'){
-      const item=menu.find(i=>i.id===val.itemId);
-      const unitPrice=item.price+val.extraPrice;
-      let notesDisplay='';
-      if(val.notes){
-        const parts=val.notes.split('、').map(n=>{
-          const ex=item.extras&&item.extras.find(e=>e.label===n);
-          return ex&&ex.price>0?`${n} +$${ex.price}`:n;
-        });
-        notesDisplay=`<div style="font-size:11px;color:#888;">${parts.join('、')}</div>`;
-      }
-      return `<div class="cart-item">
-        ${qtyCtrl(key,val.qty)}
-        <div style="flex:1">
-          <div class="cart-item-name">${item.emoji} ${item.name}</div>
-          ${notesDisplay}
-        </div>
-        <span class="cart-item-price">$${unitPrice*val.qty}</span>
-      </div>`;
-    } else {
-      const item=menu.find(i=>i.id==key);
-      return `<div class="cart-item">
-        ${qtyCtrl(key,val)}
-        <span class="cart-item-name">${item.emoji} ${item.name}</span>
-        <span class="cart-item-price">$${item.price*val}</span>
-      </div>`;
-    }
-  }).join('');
-}
-
-function changeCartQtyKey(key, delta){
-  const val = cart[key];
-  if(typeof val==='object'){
-    val.qty += delta;
-    if(val.qty <= 0) delete cart[key];
-  } else {
-    const next = val + delta;
-    if(next <= 0) delete cart[key]; else cart[key] = next;
-  }
-  renderCartItems(); updateBadge(); updateBottomBar(); updateSummary();
-}
-
-function selOpt(key,val,btn){
-  opts[key]=val;
-  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
-  updateSummary();
-}
-
-function selPickup(val,btn){
-  opts.pickup=val;
-  btn.closest('.opt-toggle').querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
-  document.getElementById('delivery-hint').style.display=(val==='delivery'?'block':'none');
-  updateSummary();
-}
-
 function updateSummary(){
-  const sub=calcSub();
-  const total=calcTotal();
+  const sub=calcSub(), total=calcTotal();
   const qty=Object.values(cart).reduce((s,v)=>s+(typeof v==='object'?v.qty:v),0);
   document.getElementById('sum-qty').textContent=qty+' 項';
   document.getElementById('sum-sub').textContent='$'+sub;
@@ -794,69 +713,74 @@ function updateSummary(){
   if(bp) bp.textContent='$'+total;
 }
 
+// ══════════════════════════════
+//  下單確認
+// ══════════════════════════════
+function buildItems(){
+  return Object.entries(cart).map(([key,val])=>{
+    if(typeof val==='object'){
+      const item=menu.find(i=>i.id===val.itemId);
+      return {name:item.name, notes:val.notes||'', qty:val.qty, price:item.price+val.extraPrice, emoji:item.emoji};
+    }
+    const item=menu.find(i=>i.id==key);
+    return {name:item.name, notes:'', qty:val, price:item.price, emoji:item.emoji};
+  });
+}
+
 function placeOrder(){
-  if(Object.keys(cart).length===0) return;
+  if(!Object.keys(cart).length) return;
   const items=buildItems();
-  const sub=calcSub();
-  const total=calcTotal();
+  const sub=calcSub(), total=calcTotal();
+  const note=document.getElementById('order-note').value.trim();
   const cutlery=opts.cutlery==='yes'?'需要':'不需要';
   const receipt=opts.receipt==='yes'?'需要':'不需要';
   const pickupLabel={takeout:'外帶自取（9折）',delivery:'外送'}[opts.pickup];
-  const note=document.getElementById('order-note').value.trim();
 
   document.getElementById('confirm-items').innerHTML=
     `<div>🛍 ${pickupLabel}</div><br>`+
-    items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`+
-      (i.notes?`<br>　<span style="color:#888;font-size:12px;">└ ${i.notes}</span>`:'')).join('<br>')+
-    (opts.pickup==='takeout'?`<br><span style="color:#c4390a;font-size:12px;">小計$${sub} × 9折 = $${total}</span>`:'')+
+    items.map(i=>{
+      const noteStr = i.notes
+        ? i.notes.split('、').map(n=>{
+            const ex=menu.find(m=>m.id===i.itemId)?.extras?.find(e=>e.label===n);
+            return (ex&&ex.price>0)?`${n} +$${ex.price}`:n;
+          }).join('、')
+        : '';
+      return `${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`+
+        (noteStr?`<br>　<span style="color:#888;font-size:13px;">└ ${noteStr}</span>`:'');
+    }).join('<br>')+
+    (opts.pickup==='takeout'?`<br><span style="color:#c4390a;font-size:13px;">小計$${sub} × 9折 = $${total}</span>`:'')+
     `<br><br>餐具：${cutlery}　收據：${receipt}`+
     (note?`<br>備註：${note}`:'');
   document.getElementById('confirm-total').textContent=`合計 $${total}（共 ${items.reduce((s,i)=>s+i.qty,0)} 項）`;
   document.getElementById('confirm-overlay').classList.add('open');
 }
 
-function buildItems(){
-  return Object.entries(cart).map(([key,val])=>{
-    if(typeof val==='object'){
-      const item=menu.find(i=>i.id===val.itemId);
-      return {name:item.name, notes:val.notes||'', qty:val.qty, price:item.price+val.extraPrice, emoji:item.emoji};
-    } else {
-      const item=menu.find(i=>i.id==key);
-      return {name:item.name, notes:'', qty:val, price:item.price, emoji:item.emoji};
-    }
-  });
-}
-
 function genOrderId(now){
   const mmdd=`${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
   const hhmm=`${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
-  const rand=String(Math.floor(Math.random()*900)+100);
-  return mmdd+hhmm+rand;
+  return mmdd+hhmm+String(Math.floor(Math.random()*900)+100);
 }
 
 function submitOrder(){
   document.getElementById('confirm-overlay').classList.remove('open');
-  const note=document.getElementById('order-note').value.trim();
   const items=buildItems();
-  const sub=calcSub();
-  const total=calcTotal();
-  const totalQty=items.reduce((s,i)=>s+i.qty,0);
+  const sub=calcSub(), total=calcTotal();
+  const note=document.getElementById('order-note').value.trim();
   const cutlery=opts.cutlery==='yes'?'需要':'不需要';
   const receipt=opts.receipt==='yes'?'需要':'不需要';
   const now=new Date();
   const timeStr=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   const orderId=genOrderId(now);
+  const pickupLabel=opts.pickup==='takeout'?'外帶自取（9折）':'外送';
+  const totalLine=opts.pickup==='takeout'&&sub!==total
+    ?`💰 合計：$${total}（原價 $${sub}）`
+    :`💰 合計：$${total}`;
 
   const itemLines=[];
   items.forEach(i=>{
     itemLines.push(`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`);
     if(i.notes) itemLines.push(`     └ ${i.notes}`);
   });
-
-  const pickupLabel=opts.pickup==='takeout'?'外帶自取（9折）':'外送';
-  const totalLine=opts.pickup==='takeout'&&sub!==total
-    ?`💰 合計：$${total}（原價 $${sub}）`
-    :`💰 合計：$${total}`;
 
   const msgText=[
     '🍱 香品小食堂｜新訂單通知',
@@ -867,7 +791,7 @@ function submitOrder(){
     '─────────────',
     ...itemLines,
     '',
-    `📦 共 ${totalQty} 項`,
+    `📦 共 ${items.reduce((s,i)=>s+i.qty,0)} 項`,
     totalLine,
     '─────────────',
     `🥢 免洗餐具：${cutlery}`,
@@ -881,16 +805,16 @@ function submitOrder(){
 
   if(!liff.isInClient()){ alert('請於 LINE App 內開啟'); return; }
   liff.sendMessages([{type:'text', text:msgText}])
-    .then(()=>{ liff.closeWindow(); })
+    .then(()=>liff.closeWindow())
     .catch(err=>{ console.error('sendMessages error:', err); alert('訊息傳送失敗，請重試。'); });
 }
 
 // ══════════════════════════════
-//  INIT
+//  初始化
 // ══════════════════════════════
 const LIFF_ID = '2009693763-bOg2whDg';
 
-// ★ 防快取：每次上傳後請更新 VER（格式：YYYYMMDD），確保所有客人看到最新版本
+// ★ 防快取：每次上傳後請更新 VER（格式：YYYYMMDD）
 (function(){
   const VER = '20250409';
   const url = new URL(location.href);
@@ -907,9 +831,9 @@ document.getElementById('order-note').placeholder = STORE_CONFIG.defaultNote;
 
 if(!STORE_CONFIG.isOpen){
   document.getElementById('closed-overlay').classList.add('open');
-} else if(STORE_CONFIG.popupLines && STORE_CONFIG.popupLines.length){
+} else if(STORE_CONFIG.popupLines&&STORE_CONFIG.popupLines.length){
   document.getElementById('popup-body').innerHTML =
-    STORE_CONFIG.popupLines.map(l => l === '' ? '<br>' : `<span>${l}</span><br>`).join('');
+    STORE_CONFIG.popupLines.map(l => l==='' ? '<br>' : `<span>${l}</span><br>`).join('');
   document.getElementById('popup-overlay').classList.add('open');
 }
 
