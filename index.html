@@ -235,7 +235,7 @@ button { touch-action:manipulation; }
             <!-- ║  把下面兩行文字換成你想要的內容就好                         ║ -->
             <!-- ║  <br> 代表換行，不要刪掉                                    ║ -->
             <!-- ╚══════════════════════════════════════════════════════════════╝ -->
-            3公里內/訂單金額滿$600（請先洽詢店家）<br>
+            🔺3公里內/訂單金額滿$600（請先洽詢店家）<br>
             <span style="color:#c4390a;font-weight:700;">*請於備註欄內填入外送地址</span>
             <!-- ▲▲▲ 外送說明到這裡結束 ▲▲▲ -->
           </div>
@@ -243,14 +243,14 @@ button { touch-action:manipulation; }
           <!-- ║  ★ 備註欄標題文字 — 改這裡！                               ║ -->
           <!-- ║  把下面 📝 後面的文字換成你要的標題文字                     ║ -->
           <!-- ╚══════════════════════════════════════════════════════════════╝ -->
-          <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（過敏、口味、外送地址...）</div>
+          <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（口味調整、其他需求、外送地址...）</div>
           <!-- ▲▲▲ 備註欄標題到這裡結束 ▲▲▲ -->
           <!-- ╔══════════════════════════════════════════════════════════════╗ -->
           <!-- ║  ★ 備註欄灰色提示字 (placeholder) — 有兩種改法：           ║ -->
           <!-- ║  方法①（推薦）→ 到最上方 STORE_CONFIG 改 defaultNote      ║ -->
           <!-- ║  方法②        → 直接改下面 placeholder=" " 裡面的文字     ║ -->
           <!-- ╚══════════════════════════════════════════════════════════════╝ -->
-          <textarea class="note-input" rows="2" id="order-note" placeholder="例：不要香菜、少辣 / 外送地址：..."></textarea>
+          <textarea class="note-input" rows="2" id="order-note" placeholder="例：少油少鹽、重鹹 / 外送地址：..."></textarea>
           <!-- ▲▲▲ 備註欄到這裡結束 ▲▲▲ -->
         </div>
       </div>
@@ -841,8 +841,8 @@ function submitOrder(){
   const sub=calcSub();
   const total=calcTotal();
   const totalQty=items.reduce((s,i)=>s+i.qty,0);
-  const cutlery=opts.cutlery==='yes'?'需要':'不需要';
-  const receipt=opts.receipt==='yes'?'需要':'不需要';
+  const cutlery=opts.cutlery==='yes'?'需要⭕':'不需要❌';
+  const receipt=opts.receipt==='yes'?'需要⭕':'不需要❌';
   const now=new Date();
   const timeStr=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   const orderId=genOrderId(now);
