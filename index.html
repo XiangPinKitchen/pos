@@ -841,8 +841,8 @@ function submitOrder(){
   const sub=calcSub();
   const total=calcTotal();
   const totalQty=items.reduce((s,i)=>s+i.qty,0);
-  const cutlery=opts.cutlery==='yes'?'⭕需要':'❌不需要';
-  const receipt=opts.receipt==='yes'?'⭕需要':'❌不需要';
+  const cutlery=opts.cutlery==='yes'?'需要':'不需要';
+  const receipt=opts.receipt==='yes'?'需要':'不需要';
   const now=new Date();
   const timeStr=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   const orderId=genOrderId(now);
