@@ -119,7 +119,7 @@ button { touch-action:manipulation; }
 .popup-card { background:white; border-radius:20px; padding:28px 22px; max-width:340px; width:88%; text-align:center; }
 .popup-icon { font-size:40px; margin-bottom:10px; }
 .popup-title { font-size:18px; font-weight:700; color:#1a2455; margin-bottom:10px; }
-.popup-body { font-size:14px; color:#555; line-height:1.7; white-space:pre-wrap; margin-bottom:20px; text-align:left; }
+.popup-body { font-size:14px; color:#555; line-height:1.9; margin-bottom:20px; text-align:left; }
 .popup-close { background:#1a2455; color:white; border:none; border-radius:10px; padding:11px 36px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
 
 /* ── CONFIRM MODAL ── */
@@ -276,10 +276,18 @@ const STORE_CONFIG = {
   isOpen: true,
 
   // 頂部跑馬燈公告
-  announcementText: '🧧 外帶自取享 9 折優惠！ 感謝您的訂購！😀',
+  announcementText: '📢外帶自取享９折優惠！3公里內/滿６００元即可外送！',
 
-  // 開啟彈窗公告（留空字串 '' 則不顯示彈窗）
-  popupText: '🍱 歡迎蒞臨香品小食堂｜⏳ 餐點現點現做，請耐心等候｜📞 量多建議提前預約以節省時間｜🛵 外送需求請先洽詢店家',
+  // 開啟彈窗公告 — 每行寫一條，留空陣列 [] 則不顯示彈窗
+  // ↓↓↓ 直接在這裡修改文字即可 ↓↓↓
+  popupLines: [
+    '🍱歡迎光臨【香品小食堂🍲】',
+    '堅持現點現做，完美滋味值得您耐心等待⏳',
+    '',
+    '💡貼心小提醒：',
+    '量多請提前預約，為您保留美味並節省時間📞',
+    '如有外送需求，請先洽詢店家安排🛵',
+  ],
 
   // 備註欄預設提示文字
   defaultNote: '例：口味調整、其他需求 / 外送地址：...',
@@ -854,8 +862,9 @@ document.getElementById('order-note').placeholder = STORE_CONFIG.defaultNote;
 
 if(!STORE_CONFIG.isOpen){
   document.getElementById('closed-overlay').classList.add('open');
-} else if(STORE_CONFIG.popupText){
-  document.getElementById('popup-body').textContent = STORE_CONFIG.popupText;
+} else if(STORE_CONFIG.popupLines && STORE_CONFIG.popupLines.length){
+  document.getElementById('popup-body').innerHTML =
+    STORE_CONFIG.popupLines.map(l => l === '' ? '<br>' : `<span>${l}</span><br>`).join('');
   document.getElementById('popup-overlay').classList.add('open');
 }
 
