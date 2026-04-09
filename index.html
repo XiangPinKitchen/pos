@@ -799,8 +799,8 @@ function placeOrder(){
   const items=buildItems();
   const sub=calcSub();
   const total=calcTotal();
-  const cutlery=opts.cutlery==='yes'?'⭕需要':'❌不需要';
-  const receipt=opts.receipt==='yes'?'⭕需要':'❌不需要';
+  const cutlery=opts.cutlery==='yes'?'需要':'不需要';
+  const receipt=opts.receipt==='yes'?'需要':'不需要';
   const pickupLabel={takeout:'外帶自取（9折）',delivery:'外送'}[opts.pickup];
   const note=document.getElementById('order-note').value.trim();
 
