@@ -2,138 +2,161 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>香品小食堂 點餐系統</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <style>
+/* ══ 重置 ══ */
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100vh; }
-button { touch-action:manipulation; }
 
-/* ── LAYOUT ── */
+/* ══ 根字級：1rem = 16px，老人放大字型後 rem 自動跟著放 ══ */
+html { font-size:16px; }
+body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100vh; -webkit-text-size-adjust:100%; }
+button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
+
+/* ══ LAYOUT ══ */
 .app { display:flex; justify-content:center; }
-.phone-wrap { width:100%; max-width:420px; min-height:100vh; background:#f5f0e8; }
+.phone-wrap { width:100%; max-width:480px; min-height:100vh; background:#f5f0e8; }
 
-/* ── HEADER ── */
-.header { background:#1a2455; color:white; padding:14px 16px 10px; position:sticky; top:0; z-index:100; }
-.header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-.logo-area { display:flex; align-items:center; gap:10px; }
-.shop-name { font-size:18px; font-weight:700; letter-spacing:1px; }
-.cart-btn { position:relative; background:rgba(255,255,255,0.15); border:none; border-radius:20px; padding:6px 14px; color:white; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:6px; font-family:'Noto Sans TC',sans-serif; }
-.cart-btn:hover { background:rgba(255,255,255,0.25); }
-.cart-badge { position:absolute; top:-4px; right:-4px; background:#e8a020; color:white; border-radius:10px; font-size:11px; font-weight:700; padding:1px 6px; min-width:18px; text-align:center; }
-.cat-tabs { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
+/* ══ HEADER ══ */
+.header { background:#1a2455; color:white; padding:.875rem 1rem .625rem; position:sticky; top:0; z-index:100; }
+.header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:.625rem; gap:.5rem; }
+.logo-area { display:flex; align-items:center; gap:.5rem; min-width:0; flex:1; }
+.shop-name { font-size:1.125rem; font-weight:700; letter-spacing:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* 購物車按鈕 — 加大觸控區域 */
+.cart-btn { position:relative; background:rgba(255,255,255,0.15); border:none; border-radius:1.25rem; padding:.5rem .875rem; color:white; cursor:pointer; font-size:.9375rem; display:flex; align-items:center; gap:.375rem; font-family:'Noto Sans TC',sans-serif; min-height:2.5rem; flex-shrink:0; }
+.cart-btn:active { background:rgba(255,255,255,0.3); }
+.cart-badge { position:absolute; top:-4px; right:-4px; background:#e8a020; color:white; border-radius:.625rem; font-size:.75rem; font-weight:700; padding:2px 6px; min-width:1.25rem; text-align:center; }
+
+/* 分類 Tab */
+.cat-tabs { display:flex; gap:.375rem; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
 .cat-tabs::-webkit-scrollbar { display:none; }
-.cat-tab { flex-shrink:0; padding:4px 14px; border-radius:14px; border:none; font-size:13px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
+.cat-tab { flex-shrink:0; padding:.375rem .875rem; border-radius:.875rem; border:none; font-size:.875rem; cursor:pointer; font-family:'Noto Sans TC',sans-serif; min-height:2.25rem; }
 .cat-tab.active { background:#e8a020; color:white; font-weight:700; }
-.cat-tab:not(.active) { background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.85); }
+.cat-tab:not(.active) { background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.9); }
 
-/* ── ANNOUNCE ── */
-.announce { background:#fef3d0; border-left:3px solid #e8a020; margin:12px 12px 0; border-radius:6px; padding:8px 12px; font-size:12px; color:#7a5200; }
+/* ══ 公告 ══ */
+.announce { background:#fef3d0; border-left:3px solid #e8a020; margin:.75rem .75rem 0; border-radius:.375rem; padding:.5rem .75rem; font-size:.8125rem; color:#7a5200; line-height:1.5; word-break:break-all; }
 
-/* ── SECTION TITLE ── */
-.section-title { padding:14px 14px 6px; font-size:14px; font-weight:700; color:#1a2455; }
+/* ══ SECTION TITLE ══ */
+.section-title { padding:.875rem .875rem .375rem; font-size:.9375rem; font-weight:700; color:#1a2455; }
 
-/* ── MENU LIST ── */
-.menu-list { padding:0 10px 120px; display:flex; flex-direction:column; gap:8px; }
-.menu-item { background:white; border-radius:12px; display:flex; align-items:center; padding:10px 12px; gap:12px; border:1.5px solid transparent; }
+/* ══ MENU LIST ══ */
+.menu-list { padding:0 .625rem 8rem; display:flex; flex-direction:column; gap:.5rem; }
+.menu-item { background:white; border-radius:.75rem; display:flex; align-items:center; padding:.75rem; gap:.75rem; border:1.5px solid transparent; min-height:5rem; }
 .menu-item.popular { border-color:#e8a020; }
-.menu-item.soldout { opacity:0.5; }
-.item-emoji { width:56px; height:56px; border-radius:10px; background:#f5f0e8; display:flex; align-items:center; justify-content:center; font-size:30px; flex-shrink:0; }
-.item-info { flex:1; }
-.item-name-row { display:flex; align-items:center; gap:6px; margin-bottom:2px; flex-wrap:wrap; }
-.item-name { font-size:15px; font-weight:700; color:#1a2455; }
-.popular-tag { background:#fff3d0; color:#b87800; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
-.sold-tag { background:#ffe8e8; color:#c4390a; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
-.new-tag { background:#e0f0ff; color:#1060cc; font-size:10px; font-weight:700; padding:1px 6px; border-radius:8px; }
-.item-price { font-size:16px; font-weight:700; color:#c4390a; }
-.add-btn { width:32px; height:32px; border-radius:50%; background:#1a2455; border:none; color:white; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Noto Sans TC',sans-serif; }
-.sold-btn { width:32px; height:32px; border-radius:50%; background:#ccc; border:none; color:white; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; cursor:not-allowed; }
-.qty-control { display:flex; align-items:center; gap:6px; }
-.qty-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:'Noto Sans TC',sans-serif; }
+.menu-item.soldout { opacity:.5; }
+.item-emoji { width:3.5rem; height:3.5rem; border-radius:.625rem; background:#f5f0e8; display:flex; align-items:center; justify-content:center; font-size:1.875rem; flex-shrink:0; }
+.item-info { flex:1; min-width:0; }
+.item-name-row { display:flex; align-items:center; gap:.375rem; margin-bottom:.125rem; flex-wrap:wrap; }
+.item-name { font-size:1rem; font-weight:700; color:#1a2455; word-break:break-all; }
+.popular-tag { background:#fff3d0; color:#b87800; font-size:.6875rem; font-weight:700; padding:2px 6px; border-radius:.5rem; white-space:nowrap; }
+.sold-tag { background:#ffe8e8; color:#c4390a; font-size:.6875rem; font-weight:700; padding:2px 6px; border-radius:.5rem; white-space:nowrap; }
+.new-tag { background:#e0f0ff; color:#1060cc; font-size:.6875rem; font-weight:700; padding:2px 6px; border-radius:.5rem; white-space:nowrap; }
+.item-price { font-size:1rem; font-weight:700; color:#c4390a; }
+
+/* 加入按鈕 — 至少 44×44 觸控 */
+.add-btn { width:2.75rem; height:2.75rem; border-radius:50%; background:#1a2455; border:none; color:white; font-size:1.5rem; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Noto Sans TC',sans-serif; }
+.add-btn:active { opacity:.8; }
+.sold-btn { width:2.75rem; height:2.75rem; border-radius:50%; background:#ccc; border:none; color:white; font-size:.875rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; cursor:not-allowed; }
+.qty-control { display:flex; align-items:center; gap:.375rem; flex-shrink:0; }
+.qty-btn { width:2.25rem; height:2.25rem; border-radius:50%; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:1.25rem; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:'Noto Sans TC',sans-serif; }
 .qty-btn.minus { color:#c4390a; border-color:#c4390a; }
-.qty-num { font-size:16px; font-weight:700; color:#1a2455; min-width:20px; text-align:center; }
+.qty-num { font-size:1rem; font-weight:700; color:#1a2455; min-width:1.375rem; text-align:center; }
 
-/* ── CLOSED OVERLAY ── */
-.closed-overlay { display:none; position:fixed; inset:0; background:rgba(20,20,20,0.92); z-index:150; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px; }
+/* ══ CLOSED OVERLAY ══ */
+.closed-overlay { display:none; position:fixed; inset:0; background:rgba(20,20,20,0.93); z-index:150; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem; }
 .closed-overlay.open { display:flex; }
-.closed-icon { font-size:64px; margin-bottom:16px; }
-.closed-title { font-size:24px; font-weight:700; color:white; margin-bottom:10px; }
-.closed-msg { font-size:15px; color:rgba(255,255,255,0.7); line-height:1.8; }
+.closed-icon { font-size:4rem; margin-bottom:1rem; }
+.closed-title { font-size:1.5rem; font-weight:700; color:white; margin-bottom:.625rem; }
+.closed-msg { font-size:1rem; color:rgba(255,255,255,.8); line-height:1.9; }
 
-/* ── BOTTOM BAR ── */
-.bottom-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:420px; background:white; border-top:1px solid #e0e0e0; padding:8px 14px 14px; z-index:50; display:none; align-items:center; justify-content:space-between; }
-.bottom-total { font-size:13px; color:#666; }
-.bottom-total span { font-size:18px; font-weight:700; color:#c4390a; }
-.bottom-order-btn { background:#1a2455; color:white; border:none; border-radius:10px; padding:10px 20px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
+/* ══ BOTTOM BAR ══ */
+.bottom-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; background:white; border-top:1px solid #e0e0e0; padding:.5rem .875rem max(.875rem, env(safe-area-inset-bottom)); z-index:50; display:none; align-items:center; justify-content:space-between; gap:.5rem; }
+.bottom-total { font-size:.875rem; color:#666; white-space:nowrap; }
+.bottom-total span { font-size:1.125rem; font-weight:700; color:#c4390a; }
+.bottom-order-btn { background:#1a2455; color:white; border:none; border-radius:.625rem; padding:.625rem 1.25rem; font-size:1rem; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; min-height:2.75rem; white-space:nowrap; }
 
-/* ── OPTIONS MODAL ── */
+/* ══ SHEET 底部安全距離 ══ */
+.sheet-safe { padding-bottom:max(1.25rem, env(safe-area-inset-bottom)); }
+
+/* ══ OPTIONS MODAL ══ */
 .options-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:flex-end; flex-direction:column; align-items:center; }
 .options-overlay.open { display:flex; }
-.options-sheet { background:white; border-radius:20px 20px 0 0; width:100%; max-width:420px; }
-.options-header { padding:4px 16px 14px; border-bottom:1px solid #eee; }
-.options-title { font-size:17px; font-weight:700; color:#1a2455; }
-.options-price { font-size:14px; color:#c4390a; font-weight:700; margin-top:2px; }
-.options-section { padding:14px 16px 0; }
-.options-section-title { font-size:13px; font-weight:700; color:#888; margin-bottom:10px; }
-.option-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #f5f5f5; }
-.option-label { font-size:15px; color:#333; }
-.option-price-tag { font-size:13px; color:#c4390a; font-weight:700; margin-left:6px; }
-.option-checkbox { width:22px; height:22px; accent-color:#1a2455; cursor:pointer; }
-.sauce-btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
-.sauce-btn { padding:7px 18px; border-radius:20px; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:14px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; transition:all 0.15s; }
+.options-sheet { background:white; border-radius:1.25rem 1.25rem 0 0; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; }
+.options-header { padding:.25rem 1rem .875rem; border-bottom:1px solid #eee; }
+.options-title { font-size:1.0625rem; font-weight:700; color:#1a2455; line-height:1.4; }
+.options-price { font-size:.9375rem; color:#c4390a; font-weight:700; margin-top:2px; }
+.options-section { padding:.875rem 1rem 0; }
+.options-section-title { font-size:.875rem; font-weight:700; color:#888; margin-bottom:.625rem; }
+.option-row { display:flex; align-items:center; justify-content:space-between; padding:.75rem 0; border-bottom:1px solid #f5f5f5; min-height:3rem; }
+.option-label { font-size:1rem; color:#333; flex:1; margin-right:.5rem; }
+.option-price-tag { font-size:.875rem; color:#c4390a; font-weight:700; margin-left:.375rem; white-space:nowrap; }
+/* checkbox 加大 */
+.option-checkbox { width:1.625rem; height:1.625rem; accent-color:#1a2455; cursor:pointer; flex-shrink:0; }
+.sauce-btns { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.25rem; }
+.sauce-btn { padding:.5rem 1.125rem; border-radius:1.25rem; border:1.5px solid #1a2455; background:white; color:#1a2455; font-size:.9375rem; cursor:pointer; font-family:'Noto Sans TC',sans-serif; min-height:2.5rem; transition:all .15s; }
 .sauce-btn.sel { background:#1a2455; color:white; font-weight:700; }
 
-/* ── CART SHEET ── */
+/* ══ CART SHEET ══ */
 .cart-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:flex-end; flex-direction:column; align-items:center; }
 .cart-overlay.open { display:flex; }
-.cart-sheet { background:white; border-radius:20px 20px 0 0; max-height:92vh; display:flex; flex-direction:column; width:100%; max-width:420px; overflow:hidden; }
-.cart-handle { text-align:center; padding:10px; }
-.cart-handle-bar { width:40px; height:4px; background:#ddd; border-radius:2px; display:inline-block; }
-.cart-header { padding:0 16px 12px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee; flex-shrink:0; }
-.cart-title { font-size:18px; font-weight:700; color:#1a2455; }
-.clear-btn { font-size:13px; color:#c4390a; background:none; border:none; cursor:pointer; padding:4px 8px; font-family:'Noto Sans TC',sans-serif; }
-.cart-body { overflow-y:auto; flex:1; }
-.cart-items { padding:10px 16px; }
-.cart-item { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #f0f0f0; }
-.cart-item-name { flex:1; font-size:14px; font-weight:500; color:#1a2455; }
-.cart-item-price { font-size:14px; font-weight:700; color:#c4390a; min-width:52px; text-align:right; }
-.cart-item-notes { font-size:11px; color:#888; }
-.empty-cart { text-align:center; padding:30px; color:#aaa; font-size:14px; }
-.cart-options { padding:12px 16px 8px; border-top:1px solid #eee; }
-.opt-title { font-size:13px; font-weight:700; color:#555; margin-bottom:10px; }
-.opt-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-.opt-label { font-size:14px; color:#333; }
-.opt-toggle { display:flex; border:1.5px solid #1a2455; border-radius:8px; overflow:hidden; }
-.opt-toggle button { padding:4px 12px; border:none; font-size:13px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; background:white; color:#1a2455; }
+.cart-sheet { background:white; border-radius:1.25rem 1.25rem 0 0; max-height:92vh; display:flex; flex-direction:column; width:100%; max-width:480px; overflow:hidden; }
+.cart-handle { text-align:center; padding:.625rem; cursor:pointer; }
+.cart-handle-bar { width:2.5rem; height:4px; background:#ddd; border-radius:2px; display:inline-block; }
+.cart-header { padding:0 1rem .75rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee; flex-shrink:0; }
+.cart-title { font-size:1.125rem; font-weight:700; color:#1a2455; }
+.clear-btn { font-size:.875rem; color:#c4390a; background:none; border:none; cursor:pointer; padding:.375rem .5rem; font-family:'Noto Sans TC',sans-serif; min-height:2.25rem; }
+.cart-body { overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch; }
+.cart-items { padding:.625rem 1rem; }
+.cart-item { display:flex; align-items:center; gap:.625rem; padding:.625rem 0; border-bottom:1px solid #f0f0f0; }
+.cart-item-name { flex:1; font-size:.9375rem; font-weight:500; color:#1a2455; min-width:0; }
+.cart-item-price { font-size:.9375rem; font-weight:700; color:#c4390a; min-width:3.375rem; text-align:right; white-space:nowrap; }
+.cart-item-notes { font-size:.75rem; color:#888; }
+.empty-cart { text-align:center; padding:2rem; color:#aaa; font-size:.9375rem; }
+.cart-options { padding:.75rem 1rem .5rem; border-top:1px solid #eee; }
+.opt-title { font-size:.875rem; font-weight:700; color:#555; margin-bottom:.625rem; }
+.opt-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:.625rem; gap:.5rem; min-height:2.75rem; }
+.opt-label { font-size:.9375rem; color:#333; }
+.opt-toggle { display:flex; border:1.5px solid #1a2455; border-radius:.5rem; overflow:hidden; flex-shrink:0; }
+.opt-toggle button { padding:.375rem .75rem; border:none; font-size:.875rem; cursor:pointer; font-family:'Noto Sans TC',sans-serif; background:white; color:#1a2455; min-height:2.25rem; }
 .opt-toggle button.sel { background:#1a2455; color:white; font-weight:700; }
-.note-input { width:100%; border:1.5px solid #e0e0e0; border-radius:8px; padding:8px 10px; font-size:13px; font-family:'Noto Sans TC',sans-serif; color:#333; resize:none; margin-top:4px; }
+.note-input { width:100%; border:1.5px solid #e0e0e0; border-radius:.5rem; padding:.5rem .625rem; font-size:1rem; font-family:'Noto Sans TC',sans-serif; color:#333; resize:none; margin-top:.25rem; }
 .note-input:focus { outline:none; border-color:#1a2455; }
-.cart-summary { padding:10px 16px; background:#f9f9f9; border-top:1px solid #eee; flex-shrink:0; }
-.summary-row { display:flex; justify-content:space-between; font-size:13px; color:#666; margin-bottom:4px; }
-.summary-total { display:flex; justify-content:space-between; font-size:18px; font-weight:700; color:#1a2455; margin-top:8px; }
-.checkout-btn { flex-shrink:0; margin:12px 16px 20px; background:#1a2455; color:white; border:none; border-radius:12px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; width:calc(100% - 32px); font-family:'Noto Sans TC',sans-serif; }
+.cart-summary { padding:.625rem 1rem; background:#f9f9f9; border-top:1px solid #eee; flex-shrink:0; }
+.summary-row { display:flex; justify-content:space-between; font-size:.875rem; color:#666; margin-bottom:.25rem; }
+.summary-total { display:flex; justify-content:space-between; font-size:1.125rem; font-weight:700; color:#1a2455; margin-top:.5rem; }
+.checkout-btn { flex-shrink:0; margin:.75rem 1rem; background:#1a2455; color:white; border:none; border-radius:.75rem; padding:.875rem; font-size:1rem; font-weight:700; cursor:pointer; width:calc(100% - 2rem); font-family:'Noto Sans TC',sans-serif; min-height:3rem; }
+.checkout-btn:active { opacity:.85; }
 
-/* ── POPUP MODAL ── */
-.popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:center; justify-content:center; }
+/* ══ POPUP MODAL（公告彈窗）══
+   解決老人字大後無法關閉的問題：
+   - 卡片不限制固定高度，改用 max-height + overflow
+   - 關閉按鈕改成 full-width，超好點
+   - overlay 點擊背景也可關閉
+*/
+.popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:center; justify-content:center; padding:1rem; }
 .popup-overlay.open { display:flex; }
-.popup-card { background:white; border-radius:20px; padding:28px 22px; max-width:340px; width:88%; text-align:center; }
-.popup-icon { font-size:40px; margin-bottom:10px; }
-.popup-title { font-size:18px; font-weight:700; color:#1a2455; margin-bottom:10px; }
-.popup-body { font-size:14px; color:#555; line-height:1.9; margin-bottom:20px; text-align:left; }
-.popup-close { background:#1a2455; color:white; border:none; border-radius:10px; padding:11px 36px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
+.popup-card { background:white; border-radius:1.25rem; padding:1.5rem 1.25rem 1.25rem; width:100%; max-width:360px; max-height:85vh; display:flex; flex-direction:column; text-align:center; overflow:hidden; }
+.popup-icon { font-size:2.5rem; margin-bottom:.625rem; flex-shrink:0; }
+.popup-title { font-size:1.125rem; font-weight:700; color:#1a2455; margin-bottom:.625rem; flex-shrink:0; }
+.popup-body { font-size:.9375rem; color:#555; line-height:2; margin-bottom:1.25rem; text-align:left; overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch; }
+/* 關閉按鈕全寬，老人一定點得到 */
+.popup-close { background:#1a2455; color:white; border:none; border-radius:.75rem; padding:.875rem 1rem; font-size:1.0625rem; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; width:100%; min-height:3rem; flex-shrink:0; }
+.popup-close:active { opacity:.85; }
 
-/* ── CONFIRM MODAL ── */
-.confirm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:center; justify-content:center; }
+/* ══ CONFIRM MODAL ══ */
+.confirm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:center; justify-content:center; padding:1rem; }
 .confirm-overlay.open { display:flex; }
-.confirm-card { background:white; border-radius:20px; padding:28px 22px; max-width:340px; width:88%; }
-.confirm-title { font-size:17px; font-weight:700; color:#1a2455; margin-bottom:14px; text-align:center; }
-.confirm-items { font-size:13px; color:#555; line-height:1.9; margin-bottom:12px; max-height:200px; overflow-y:auto; }
-.confirm-total { font-size:16px; font-weight:700; color:#c4390a; text-align:right; margin-bottom:18px; }
-.confirm-btns { display:flex; gap:10px; }
-.confirm-cancel { flex:1; background:#f0ede6; color:#555; border:none; border-radius:10px; padding:12px; font-size:15px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
-.confirm-ok { flex:2; background:#1a2455; color:white; border:none; border-radius:10px; padding:12px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; }
+.confirm-card { background:white; border-radius:1.25rem; padding:1.5rem 1.25rem 1.25rem; width:100%; max-width:360px; max-height:85vh; display:flex; flex-direction:column; overflow:hidden; }
+.confirm-title { font-size:1.0625rem; font-weight:700; color:#1a2455; margin-bottom:.875rem; text-align:center; flex-shrink:0; }
+.confirm-items { font-size:.875rem; color:#555; line-height:2; margin-bottom:.75rem; overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch; }
+.confirm-total { font-size:1rem; font-weight:700; color:#c4390a; text-align:right; margin-bottom:1.125rem; flex-shrink:0; }
+.confirm-btns { display:flex; gap:.625rem; flex-shrink:0; }
+.confirm-cancel { flex:1; background:#f0ede6; color:#555; border:none; border-radius:.625rem; padding:.75rem; font-size:1rem; cursor:pointer; font-family:'Noto Sans TC',sans-serif; min-height:2.875rem; }
+.confirm-ok { flex:2; background:#1a2455; color:white; border:none; border-radius:.625rem; padding:.75rem; font-size:1rem; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; min-height:2.875rem; }
 </style>
 </head>
 <body>
@@ -172,17 +195,17 @@ button { touch-action:manipulation; }
 </div>
 
 <!-- 公告彈窗 -->
-<div class="popup-overlay" id="popup-overlay">
+<div class="popup-overlay" id="popup-overlay" onclick="if(event.target===this)document.getElementById('popup-overlay').classList.remove('open')">
   <div class="popup-card">
     <div class="popup-icon">📢</div>
     <div class="popup-title">店家公告</div>
     <div class="popup-body" id="popup-body"></div>
-    <button class="popup-close" onclick="document.getElementById('popup-overlay').classList.remove('open')">我知道了</button>
+    <button class="popup-close" onclick="document.getElementById('popup-overlay').classList.remove('open')">✓ 我知道了</button>
   </div>
 </div>
 
 <!-- 確認下單視窗 -->
-<div class="confirm-overlay" id="confirm-overlay">
+<div class="confirm-overlay" id="confirm-overlay" onclick="if(event.target===this)document.getElementById('confirm-overlay').classList.remove('open')">
   <div class="confirm-card">
     <div class="confirm-title">確認訂單</div>
     <div class="confirm-items" id="confirm-items"></div>
@@ -260,7 +283,7 @@ button { touch-action:manipulation; }
       <span id="modal-qty" style="font-size:20px;font-weight:700;color:#1a2455;min-width:28px;text-align:center;">1</span>
       <button class="qty-btn" onclick="changeQtyModal(1)">+</button>
     </div>
-    <div style="padding:0 16px 24px;">
+    <div style="padding:0 1rem max(1.5rem,env(safe-area-inset-bottom));">
       <button class="checkout-btn" style="margin:0;width:100%;" onclick="confirmAddToCart()">加入購物車</button>
     </div>
   </div>
