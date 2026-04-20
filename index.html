@@ -773,7 +773,7 @@ function placeOrder(){
     items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`+
       (i.notes?`<br>　<span style="color:#888;font-size:12px;">└ ${i.notes}</span>`:'')).join('<br>')+
     (opts.pickup==='takeout'?`<br><span style="color:#c4390a;font-size:12px;">小計$${sub} × 9折 = $${total}</span>`:'')+
-    `<br><br>餐具：${cutlery}　收據：${receipt}`+
+    `<br><br>餐具：${cutlery}　免用統一發票-收據：${receipt}`+
     (note?`<br>備註：${note}`:'');
   document.getElementById('confirm-total').textContent=`合計 $${total}（共 ${items.reduce((s,i)=>s+i.qty,0)} 項）`;
   document.getElementById('confirm-overlay').classList.add('open');
@@ -829,7 +829,7 @@ function submitOrder(){
 const LIFF_ID = '2009693763-bOg2whDg';
 
 (function(){
-  const VER='20250420';
+  const VER='20250420-1';
   const url=new URL(location.href);
   if(url.searchParams.get('v')!==VER){ url.searchParams.set('v',VER); location.replace(url.toString()); }
 })();
