@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>香品小食堂 點餐系統</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
@@ -106,8 +106,10 @@ button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
 .cart-sheet { background:white; border-radius:1.25rem 1.25rem 0 0; max-height:92vh; display:flex; flex-direction:column; width:100%; max-width:480px; overflow:hidden; }
 .cart-handle { text-align:center; padding:.625rem; cursor:pointer; }
 .cart-handle-bar { width:2.5rem; height:4px; background:#ddd; border-radius:2px; display:inline-block; }
-.cart-header { padding:0 1rem .75rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee; flex-shrink:0; }
-.cart-title { font-size:1.125rem; font-weight:700; color:#1a2455; }
+.cart-header { padding:0 1rem .75rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee; flex-shrink:0; gap:.5rem; }
+.cart-title { font-size:1.125rem; font-weight:700; color:#1a2455; flex:1; text-align:center; }
+.cart-back-btn { font-size:.875rem; color:#1a2455; background:none; border:1.5px solid #1a2455; border-radius:.5rem; cursor:pointer; padding:.375rem .625rem; font-family:'Noto Sans TC',sans-serif; min-height:2.25rem; display:flex; align-items:center; gap:.25rem; white-space:nowrap; }
+.cart-back-btn:active { background:#f0ede6; }
 .clear-btn { font-size:.875rem; color:#c4390a; background:none; border:none; cursor:pointer; padding:.375rem .5rem; font-family:'Noto Sans TC',sans-serif; min-height:2.25rem; }
 .cart-body { overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch; }
 .cart-items { padding:.625rem 1rem; }
@@ -237,6 +239,7 @@ button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
   <div class="cart-sheet">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
     <div class="cart-header">
+      <button class="cart-back-btn" onclick="closeCart()">◀ 繼續點餐</button>
       <span class="cart-title">我的訂單</span>
       <button class="clear-btn" onclick="clearCart()">清空</button>
     </div>
@@ -938,7 +941,7 @@ function submitOrder(){
 const LIFF_ID = '2009693763-bOg2whDg';
 
 (function(){
-  const VER='20250422';
+  const VER='20250420';
   const url=new URL(location.href);
   if(url.searchParams.get('v')!==VER){ url.searchParams.set('v',VER); location.replace(url.toString()); }
 })();
