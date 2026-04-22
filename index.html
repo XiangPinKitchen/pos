@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>香品小食堂 點餐系統</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
@@ -12,12 +12,12 @@
 
 /* ══ 根字級：1rem = 16px，老人放大字型後 rem 自動跟著放 ══ */
 html { font-size:16px; }
-body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100vh; -webkit-text-size-adjust:100%; }
+body { font-family:'Noto Sans TC',sans-serif; background:#f5f0e8; min-height:100vh; -webkit-text-size-adjust:none; text-size-adjust:none; overflow-x:hidden; }
 button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
 
 /* ══ LAYOUT ══ */
 .app { display:flex; justify-content:center; }
-.phone-wrap { width:100%; max-width:480px; min-height:100vh; background:#f5f0e8; }
+.phone-wrap { width:100%; max-width:480px; min-height:100vh; background:#f5f0e8; overflow-x:hidden; }
 
 /* ══ HEADER ══ */
 .header { background:#1a2455; color:white; padding:.875rem 1rem .625rem; position:sticky; top:0; z-index:100; }
@@ -139,7 +139,7 @@ button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
 */
 .popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:center; justify-content:center; padding:1rem; }
 .popup-overlay.open { display:flex; }
-.popup-card { background:white; border-radius:1.25rem; padding:1.5rem 1.25rem 1.25rem; width:100%; max-width:360px; max-height:85vh; display:flex; flex-direction:column; text-align:center; overflow:hidden; }
+.popup-card { background:white; border-radius:1.25rem; padding:1.5rem 1.25rem 1.25rem; width:100%; max-width:360px; max-height:85vh; display:flex; flex-direction:column; text-align:center; overflow:hidden; word-break:break-all; }
 .popup-icon { font-size:2.5rem; margin-bottom:.625rem; flex-shrink:0; }
 .popup-title { font-size:1.125rem; font-weight:700; color:#1a2455; margin-bottom:.625rem; flex-shrink:0; }
 .popup-body { font-size:.9375rem; color:#555; line-height:2; margin-bottom:1.25rem; text-align:left; overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch; }
@@ -150,13 +150,28 @@ button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
 /* ══ CONFIRM MODAL ══ */
 .confirm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:center; justify-content:center; padding:1rem; }
 .confirm-overlay.open { display:flex; }
-.confirm-card { background:white; border-radius:1.25rem; padding:1.5rem 1.25rem 1.25rem; width:100%; max-width:360px; max-height:85vh; display:flex; flex-direction:column; overflow:hidden; }
+.confirm-card { background:white; border-radius:1.25rem; padding:1.5rem 1.25rem 1.25rem; width:100%; max-width:360px; max-height:85vh; display:flex; flex-direction:column; overflow:hidden; word-break:break-all; }
 .confirm-title { font-size:1.0625rem; font-weight:700; color:#1a2455; margin-bottom:.875rem; text-align:center; flex-shrink:0; }
 .confirm-items { font-size:.875rem; color:#555; line-height:2; margin-bottom:.75rem; overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch; }
 .confirm-total { font-size:1rem; font-weight:700; color:#c4390a; text-align:right; margin-bottom:1.125rem; flex-shrink:0; }
 .confirm-btns { display:flex; gap:.625rem; flex-shrink:0; }
 .confirm-cancel { flex:1; background:#f0ede6; color:#555; border:none; border-radius:.625rem; padding:.75rem; font-size:1rem; cursor:pointer; font-family:'Noto Sans TC',sans-serif; min-height:2.875rem; }
 .confirm-ok { flex:2; background:#1a2455; color:white; border:none; border-radius:.625rem; padding:.75rem; font-size:1rem; font-weight:700; cursor:pointer; font-family:'Noto Sans TC',sans-serif; min-height:2.875rem; }
+
+/* ══ 外送資訊欄位 ══ */
+.delivery-fields { background:#fff0f0; border-radius:.625rem; padding:.75rem; margin-top:.5rem; display:none; }
+.delivery-fields.show { display:block; }
+.delivery-field-row { margin-bottom:.625rem; }
+.delivery-field-row:last-child { margin-bottom:0; }
+.delivery-field-label { font-size:.8125rem; color:#555; margin-bottom:.25rem; }
+.delivery-field-label span { color:#c4390a; font-weight:700; }
+.delivery-field-input { width:100%; border:1.5px solid #e0e0e0; border-radius:.5rem; padding:.5rem .625rem; font-size:1rem; font-family:'Noto Sans TC',sans-serif; color:#333; }
+.delivery-field-input:focus { outline:none; border-color:#1a2455; }
+.delivery-field-input.error { border-color:#c4390a !important; background:#fff5f5; }
+
+/* ══ 統一編號欄位 ══ */
+.receipt-tax-row { margin-top:.375rem; display:none; }
+.receipt-tax-row.show { display:block; }
 </style>
 </head>
 <body>
@@ -247,6 +262,11 @@ button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
             <button class="sel" onclick="selOpt('receipt','no',this)">不需要</button>
           </div>
         </div>
+        <!-- 統一編號（選收據需要後才顯示）-->
+        <div class="receipt-tax-row" id="receipt-tax-row">
+          <div class="delivery-field-label">🏢 統一編號 <span>*必填</span></div>
+          <input class="delivery-field-input" type="text" id="receipt-tax-id" inputmode="numeric" maxlength="8" placeholder="請輸入 8 位統一編號">
+        </div>
         <div style="margin-top:8px">
           <div style="font-size:13px;color:#666;margin-bottom:6px;">🛍 取餐方式 <span style="color:#c4390a;font-weight:700;">*必填</span></div>
           <div class="opt-toggle" style="margin-bottom:8px;width:100%;">
@@ -257,7 +277,18 @@ button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
             <span id="delivery-hint-line1"></span><br>
             <span id="delivery-hint-line2" style="color:#c4390a;font-weight:700;"></span>
           </div>
-          <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（口味調整、其他需求、外送地址...）</div>
+          <!-- 外送地址 & 電話（選外送後才顯示）-->
+          <div class="delivery-fields" id="delivery-fields">
+            <div class="delivery-field-row">
+              <div class="delivery-field-label">📍 外送地址 <span>*必填</span></div>
+              <input class="delivery-field-input" type="text" id="delivery-address" placeholder="請輸入完整外送地址">
+            </div>
+            <div class="delivery-field-row">
+              <div class="delivery-field-label">📞 聯絡電話 <span>*必填</span></div>
+              <input class="delivery-field-input" type="tel" id="delivery-phone" inputmode="tel" placeholder="請輸入聯絡電話">
+            </div>
+          </div>
+          <div style="font-size:13px;color:#666;margin-bottom:4px;">📝 備註（口味調整、其他需求）</div>
           <textarea class="note-input" rows="2" id="order-note"></textarea>
         </div>
       </div>
@@ -296,32 +327,51 @@ button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
 // ║              🍱 香品小食堂 點餐系統 ── 新手修改教學                ║
 // ╠══════════════════════════════════════════════════════════════════════╣
 // ║                                                                      ║
-// ║  這份檔案分成三個區塊，照順序往下找：                               ║
+// ║  ★ 只需要改這裡的三個區塊，其他程式碼不用動 ★                    ║
 // ║                                                                      ║
-// ║  【區塊 1】STORE_CONFIG  → 營業狀態、公告文字、外送說明             ║
-// ║  【區塊 2】MENU_DATA     → 所有菜單品項                             ║
-// ║  【區塊 3】VER 版本號    → 每次改完都要更新，否則客人看到舊畫面    ║
+// ║  【區塊 1】STORE_CONFIG  → 營業狀態、公告、外送說明               ║
+// ║  【區塊 2】MENU_DATA     → 所有菜單品項（新增、刪除、上下架）     ║
+// ║  【區塊 3】VER 版本號    → 每次改完都要 +1，否則客人看到舊畫面   ║
 // ║                                                                      ║
-// ║  ⚠️  改完存檔後，記得到【區塊 3】把版本號 +1，再上傳到 LINE        ║
+// ║  ⚠️  儲存後記得到【區塊 3】把版本號 +1，再上傳到 LINE             ║
 // ║                                                                      ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 
 // ══════════════════════════════════════════════════════════════════════
 //  【區塊 1】營運參數
+//  ─────────────────────────────────────────────────────────────────
+//  ✏️  可修改的項目：
+//
+//  isOpen            營業開關
+//                    • true  = 開放點餐
+//                    • false = 顯示「目前休息中」，不能點餐
+//
+//  announcementText  頂部跑馬燈文字（黃色橫幅）
+//                    • 換成任何公告內容即可
+//
+//  popupLines        開啟頁面時的彈窗公告（每行一個字串）
+//                    • ''（空字串）= 空一行
+//                    • popupLines: [] = 關掉彈窗不顯示
+//
+//  defaultNote       備註欄的灰色提示文字（客人還沒打字時顯示）
+//
+//  deliveryHintLine1 選「外送」後，粉紅框的第一行說明文字
+//  deliveryHintLine2 選「外送」後，粉紅框的第二行紅字警示文字
 // ══════════════════════════════════════════════════════════════════════
 const STORE_CONFIG = {
 
   // ── 營業狀態 ──────────────────────────────────────────────────────
+  // ✏️ 改這裡開關營業
   // true  = 營業中（客人可以正常點餐）
   // false = 休息中（客人看到「目前休息中」畫面，無法點餐）
   isOpen: true,
 
-  // ── 頂部跑馬燈公告 ────────────────────────────────────────────────
-  // 把單引號裡的文字換成你要的公告即可
+  // ── 頂部跑馬燈公告（黃色橫幅）────────────────────────────────────
+  // ✏️ 把單引號裡的文字換成你要的公告即可
   announcementText: '📢外帶自取享９折優惠❗3公里內/訂單金額滿$600 即可外送🛵',
 
   // ── 開啟時彈窗公告 ────────────────────────────────────────────────
-  // 每一個 '文字' 就是彈窗裡的一行
+  // ✏️ 每一個 '文字' 就是彈窗裡的一行
   // • 空字串 '' = 空一行（當分隔用）
   // • 完全不要彈窗 → 改成：popupLines: [],
   popupLines: [
@@ -334,46 +384,47 @@ const STORE_CONFIG = {
   ],
 
   // ── 備註欄灰色提示文字 ────────────────────────────────────────────
-  // 客人還沒打字時，備註欄裡顯示的淡灰色文字
-  defaultNote: '例：口味調整、其他需求 / 外送地址：...',
+  // ✏️ 客人還沒打字時，備註欄裡顯示的淡灰色提示
+  defaultNote: '例：口味調整、不加辣、其他需求...',
 
   // ── 外送說明框（客人選「外送」後出現的粉紅色說明框）────────────
-  // Line1 = 第一行，一般說明
-  // Line2 = 第二行，紅字警示
+  // ✏️ Line1 = 第一行，一般說明；Line2 = 第二行，紅字警示
   deliveryHintLine1: '🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）',
-  deliveryHintLine2: '*請於下方備註欄內填入外送地址/聯絡電話',
+  deliveryHintLine2: '*請於下方填入外送地址與聯絡電話',
 };
 
 // ══════════════════════════════════════════════════════════════════════
 //  【區塊 2】菜單資料
-// ══════════════════════════════════════════════════════════════════════
+//  ─────────────────────────────────────────────────────────────────
+//  每道菜一行，欄位說明：
 //
-//  每道菜一行，欄位說明如下：
-//
-//  id          唯一編號，不可重複。新增請從 201 開始往上加
+//  id          唯一編號，不可重複。✏️ 新增請從 201 開始往上加
 //  cat         分類名稱（要與頁籤一致）
 //  name        菜名
 //  price       售價（純數字，不加 $）
 //  emoji       圖示（🍚炒飯 🍝炒麵 🍜湯麵 🥣粥湯 🍳熱炒 🥬蔬菜 🟡酥炸）
 //
-//  popular     🔥熱銷標籤   true = 顯示橘色「熱銷」＋金色外框 ／ false = 不顯示
-//  isSoldOut   ✕完售        true = 顯示紅色「已售完」，客人無法加入購物車 ／ false = 正常販售
-//  isNew       🆕新品標籤   true = 顯示藍色「新品」 ／ false = 不顯示
-//  isHidden    👁下架        true = 菜單上完全看不見 ／ false = 正常顯示
+//  popular     🔥熱銷標籤   true = 顯示橘色「熱銷」＋金色外框
+//  isSoldOut   ✕完售        true = 顯示「已售完」，客人無法加入購物車
+//  isNew       🆕新品標籤   true = 顯示藍色「新品」
+//  isHidden    👁下架        true = 菜單上完全看不見（暫時下架用）
 //
-//  extras      加購選項（結帳前彈窗讓客人勾選）
+//  extras      加購選項（彈窗讓客人勾選）
 //              格式：[{label:'選項名稱', price:加價金額}]
 //              免費 → price:0　　不需要 → []
-//  sauce       醬料選擇（結帳前彈窗讓客人選）
+//  sauce       醬料選擇（彈窗讓客人單選）
 //              格式：['醬料A', '醬料B']　　不需要 → []
 //
-//  ── 新增一道菜：複製下面這行，貼到對應分類最後一道後面 ──────────
+//  ✏️ 新增一道菜：複製下面這行，貼到對應分類最後一道後面
 //  { id:201, cat:'熱炒類', name:'新菜名', price:180, emoji:'🍳',
 //    popular:false, isSoldOut:false, isNew:true, isHidden:false,
 //    extras:[{label:'加辣🌶️',price:0}], sauce:[] },
 //
-//  ── 刪除一道菜：把整行選起來刪掉即可 ────────────────────────────
-//  ── 暫時下架：把 isHidden:false 改成 isHidden:true ───────────────
+//  ✏️ 刪除一道菜：把整行選起來刪掉即可
+//  ✏️ 暫時下架：把 isHidden:false 改成 isHidden:true
+//  ✏️ 標熱銷：把 popular:false 改成 popular:true
+//  ✏️ 標售完：把 isSoldOut:false 改成 isSoldOut:true
+//  ✏️ 標新品：把 isNew:false 改成 isNew:true
 // ══════════════════════════════════════════════════════════════════════
 const MENU_DATA = [
   // ── 炒飯（新增品項請貼在「咖哩羊肉炒飯」後面）──
@@ -688,6 +739,12 @@ function selOpt(key,val,btn){
   opts[key]=val;
   btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
+  // 收據選「需要」時顯示統一編號欄位
+  if(key==='receipt'){
+    const taxRow = document.getElementById('receipt-tax-row');
+    taxRow.classList.toggle('show', val==='yes');
+    if(val!=='yes') document.getElementById('receipt-tax-id').classList.remove('error');
+  }
   updateSummary();
 }
 
@@ -695,7 +752,14 @@ function selPickup(val,btn){
   opts.pickup=val;
   btn.closest('.opt-toggle').querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
-  document.getElementById('delivery-hint').style.display=val==='delivery'?'block':'none';
+  const isDelivery = val==='delivery';
+  document.getElementById('delivery-hint').style.display=isDelivery?'block':'none';
+  document.getElementById('delivery-fields').classList.toggle('show', isDelivery);
+  // 清除外送欄位錯誤樣式
+  if(!isDelivery){
+    document.getElementById('delivery-address').classList.remove('error');
+    document.getElementById('delivery-phone').classList.remove('error');
+  }
   updateSummary();
 }
 
@@ -763,18 +827,46 @@ function buildItems(){
 
 function placeOrder(){
   if(!Object.keys(cart).length) return;
+
+  // ── 外送必填防呆 ──
+  if(opts.pickup==='delivery'){
+    const addrEl = document.getElementById('delivery-address');
+    const phoneEl = document.getElementById('delivery-phone');
+    let hasError = false;
+    if(!addrEl.value.trim()){ addrEl.classList.add('error'); hasError=true; } else { addrEl.classList.remove('error'); }
+    if(!phoneEl.value.trim()){ phoneEl.classList.add('error'); hasError=true; } else { phoneEl.classList.remove('error'); }
+    if(hasError){ addrEl.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  }
+
+  // ── 統一編號必填防呆 ──
+  if(opts.receipt==='yes'){
+    const taxEl = document.getElementById('receipt-tax-id');
+    if(!taxEl.value.trim()){ taxEl.classList.add('error'); taxEl.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    taxEl.classList.remove('error');
+  }
+
   const items=buildItems(), sub=calcSub(), total=calcTotal();
   const note=document.getElementById('order-note').value.trim();
   const cutlery=opts.cutlery==='yes'?'需要':'不需要';
   const receipt=opts.receipt==='yes'?'需要':'不需要';
   const pickupLabel={takeout:'外帶自取（9折）',delivery:'外送'}[opts.pickup];
-  document.getElementById('confirm-items').innerHTML=
-    `<div>🛍 ${pickupLabel}</div><br>`+
-    items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`+
-      (i.notes?`<br>　<span style="color:#888;font-size:12px;">└ ${i.notes}</span>`:'')).join('<br>')+
-    (opts.pickup==='takeout'?`<br><span style="color:#c4390a;font-size:12px;">小計$${sub} × 9折 = $${total}</span>`:'')+
-    `<br><br>餐具：${cutlery}　收據：${receipt}`+
-    (note?`<br>備註：${note}`:'');
+  const deliveryAddr = opts.pickup==='delivery' ? document.getElementById('delivery-address').value.trim() : '';
+  const deliveryPhone = opts.pickup==='delivery' ? document.getElementById('delivery-phone').value.trim() : '';
+  const taxId = opts.receipt==='yes' ? document.getElementById('receipt-tax-id').value.trim() : '';
+
+  let confirmHtml = `<div>🛍 ${pickupLabel}</div>`;
+  if(deliveryAddr) confirmHtml += `<div>📍 地址：${deliveryAddr}</div>`;
+  if(deliveryPhone) confirmHtml += `<div>📞 電話：${deliveryPhone}</div>`;
+  confirmHtml += '<br>';
+  confirmHtml += items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`+
+    (i.notes?`<br>　<span style="color:#888;font-size:12px;">└ ${i.notes}</span>`:'')).join('<br>');
+  if(opts.pickup==='takeout' && sub>0)
+    confirmHtml += `<br><span style="color:#c4390a;font-size:12px;">小計$${sub} × 9折 = $${total}</span>`;
+  confirmHtml += `<br><br>餐具：${cutlery}　收據：${receipt}`;
+  if(taxId) confirmHtml += `<br>統一編號：${taxId}`;
+  if(note) confirmHtml += `<br>備註：${note}`;
+
+  document.getElementById('confirm-items').innerHTML = confirmHtml;
   document.getElementById('confirm-total').textContent=`合計 $${total}（共 ${items.reduce((s,i)=>s+i.qty,0)} 項）`;
   document.getElementById('confirm-overlay').classList.add('open');
 }
@@ -795,6 +887,9 @@ function submitOrder(){
   const timeStr=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   const orderId=genOrderId(now);
   const pickupLabel=opts.pickup==='takeout'?'外帶自取（9折）':'外送';
+  const deliveryAddr = opts.pickup==='delivery' ? document.getElementById('delivery-address').value.trim() : '';
+  const deliveryPhone = opts.pickup==='delivery' ? document.getElementById('delivery-phone').value.trim() : '';
+  const taxId = opts.receipt==='yes' ? document.getElementById('receipt-tax-id').value.trim() : '';
   const totalLine=opts.pickup==='takeout'&&sub!==total
     ?`💰 合計：$${total}（原價 $${sub}）`:`💰 合計：$${total}`;
   const itemLines=[];
@@ -802,16 +897,28 @@ function submitOrder(){
     itemLines.push(`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`);
     if(i.notes) itemLines.push(`     └ ${i.notes}`);
   });
-  const msgText=[
+  const msgLines=[
     '🍱 香品小食堂｜新訂單通知','─────────────',
     `💡 訂單編號：${orderId}`,`⏰ 訂餐時間：${timeStr}`,`🛍 取餐方式：${pickupLabel}`,
-    '─────────────',...itemLines,'',
-    `📦 共 ${items.reduce((s,i)=>s+i.qty,0)} 項`,totalLine,
-    '─────────────',`🥢 免洗餐具：${cutlery}`,`🧾 收據：${receipt}`,`💬 備註：${note||'無'}`,
-  ].join('\n');
+  ];
+  if(deliveryAddr) msgLines.push(`📍 外送地址：${deliveryAddr}`);
+  if(deliveryPhone) msgLines.push(`📞 聯絡電話：${deliveryPhone}`);
+  msgLines.push('─────────────');
+  msgLines.push(...itemLines, '');
+  msgLines.push(`📦 共 ${items.reduce((s,i)=>s+i.qty,0)} 項`, totalLine);
+  msgLines.push('─────────────');
+  msgLines.push(`🥢 免洗餐具：${cutlery}`);
+  msgLines.push(`🧾 收據：${receipt}`);
+  if(taxId) msgLines.push(`🏢 統一編號：${taxId}`);
+  msgLines.push(`💬 備註：${note||'無'}`);
+  const msgText = msgLines.join('\n');
+
   cart={};
   updateBadge(); updateBottomBar(); closeCart();
   document.getElementById('order-note').value='';
+  document.getElementById('delivery-address').value='';
+  document.getElementById('delivery-phone').value='';
+  document.getElementById('receipt-tax-id').value='';
   if(!liff.isInClient()){ alert('請於 LINE App 內開啟'); return; }
   liff.sendMessages([{type:'text', text:msgText}])
     .then(()=>liff.closeWindow())
@@ -822,9 +929,11 @@ function submitOrder(){
 //  初始化
 // ══════════════════════════════
 // ══════════════════════════════════════════════════════════════════════
-//  【區塊 3】版本號 ── ⚠️ 每次改完上傳前，把數字 +1 就好
+//  【區塊 3】版本號
+//  ─────────────────────────────────────────────────────────────────
+//  ✏️ 每次改完存檔後，把數字 +1（任何數字都可以，只要跟上次不同）
 //  作用：讓 LINE 強制重新載入，客人才會看到最新菜單
-//  格式：YYYYMMDD，但只要跟上次不同即可，不一定要是今天的日期
+//  格式建議用今天的日期，例如 '20250501'
 // ══════════════════════════════════════════════════════════════════════
 const LIFF_ID = '2009693763-bOg2whDg';
 
