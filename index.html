@@ -598,6 +598,7 @@ function renderItem(item){
 let pendingItem=null, pendingExtras={}, pendingSauce=null, pendingQty=1;
 
 function changeQty(id, delta){
+  if(document.getElementById('closed-overlay').classList.contains('open')) return;
   const item = menu.find(i=>i.id===id);
   if(!item || item.isSoldOut) return;
   if(delta>0 && ((item.extras&&item.extras.length)||(item.sauce&&item.sauce.length))){
@@ -829,6 +830,9 @@ function buildItems(){
 }
 
 function placeOrder(){
+  if(document.getElementById('closed-overlay').classList.contains('open')){
+    alert('目前店家休息中，無法送出訂單。'); return;
+  }
   if(!Object.keys(cart).length) return;
 
   // ── 外送必填防呆 ──
@@ -881,6 +885,9 @@ function genOrderId(now){
 }
 
 function submitOrder(){
+  if(document.getElementById('closed-overlay').classList.contains('open')){
+    alert('目前店家休息中，無法送出訂單。'); return;
+  }
   document.getElementById('confirm-overlay').classList.remove('open');
   const items=buildItems(), sub=calcSub(), total=calcTotal();
   const note=document.getElementById('order-note').value.trim();
