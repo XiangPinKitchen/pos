@@ -953,13 +953,62 @@ document.getElementById('order-note').placeholder=STORE_CONFIG.defaultNote;
 document.getElementById('delivery-hint-line1').textContent=STORE_CONFIG.deliveryHintLine1;
 document.getElementById('delivery-hint-line2').textContent=STORE_CONFIG.deliveryHintLine2;
 
-if(!STORE_CONFIG.isOpen){
-  document.getElementById('closed-overlay').classList.add('open');
-} else if(STORE_CONFIG.popupLines&&STORE_CONFIG.popupLines.length){
-  document.getElementById('popup-body').innerHTML=
-    STORE_CONFIG.popupLines.map(l=>l===''?'<br>':`<span>${l}</span><br>`).join('');
-  document.getElementById('popup-overlay').classList.add('open');
+// ══════════════════════════════════════════════════════════════════════
+//  【區塊 4】Google 試算表連動營業狀態
+//  ─────────────────────────────────────────────────────────────────
+//
+//  ✅ 這裡已幫你設定好，一般情況不需要修改
+//
+//  📋 日常使用方式（只需操作 Google 試算表）：
+//     1. 開啟你的 Google 試算表
+//     2. 找到 B1 格
+//     3. 填入 TRUE  → 正常營業，客人可以點餐
+//        填入 FALSE → 公休，客人看到「目前休息中」無法點餐
+//     4. 存檔後，客人重新整理頁面就會自動套用，不需要改這個 HTML！
+//
+//  🔗 試算表 API 網址（不要隨意更動）：
+//     如果你重新部署 Apps Script，才需要把下面網址換成新的
+//
+//  ⚠️ 備用開關：
+//     萬一試算表讀取失敗（網路問題等），
+//     系統會自動改用上方 STORE_CONFIG 裡的 isOpen 設定
+//     平常把 isOpen 保持 true 就好，緊急時可以改 false 強制關閉
+// ══════════════════════════════════════════════════════════════════════
+
+// 🔗 Google 試算表 API 網址（這是你的專屬網址，不要分享給別人）
+const SHEET_API = 'https://script.google.com/macros/s/AKfycbwyxuMZZpjOwQ9-k5Bo7Rm5-PCRYt8HnDRI-_5mHJ9cKkxGMuKIBKlK85aa48o6_UXL/exec';
+
+// 顯示彈窗公告的函式（獨立出來，方便重複呼叫）
+function showPopupIfNeeded(){
+  if(STORE_CONFIG.popupLines && STORE_CONFIG.popupLines.length){
+    document.getElementById('popup-body').innerHTML=
+      STORE_CONFIG.popupLines.map(l=>l===''?'<br>':`<span>${l}</span><br>`).join('');
+    document.getElementById('popup-overlay').classList.add('open');
+  }
 }
+
+// 從 Google 試算表讀取營業狀態
+fetch(SHEET_API)
+  .then(r => r.json())
+  .then(data => {
+    // ✅ 成功讀取試算表
+    if(!data.isOpen){
+      // 試算表 B1 = FALSE → 顯示公休畫面
+      document.getElementById('closed-overlay').classList.add('open');
+    } else {
+      // 試算表 B1 = TRUE → 正常營業，顯示彈窗公告（如果有設定的話）
+      showPopupIfNeeded();
+    }
+  })
+  .catch(() => {
+    // ⚠️ 試算表讀取失敗（網路異常等）→ 改用 HTML 裡的備用開關
+    console.warn('試算表讀取失敗，改用本地 STORE_CONFIG.isOpen 設定');
+    if(!STORE_CONFIG.isOpen){
+      document.getElementById('closed-overlay').classList.add('open');
+    } else {
+      showPopupIfNeeded();
+    }
+  });
 
 liff.init({liffId:LIFF_ID})
   .then(()=>{ if(!liff.isLoggedIn()) liff.login(); })
