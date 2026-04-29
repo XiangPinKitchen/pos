@@ -181,6 +181,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .adm-tab.active,.adm-tab:hover{background:#e8a020;border-color:#e8a020;color:white;font-weight:700}
 .adm-close-btn{padding:.375rem .75rem;border-radius:.625rem;border:1.5px solid rgba(255,255,255,.4);background:transparent;color:rgba(255,255,255,.8);font-size:.8125rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap}
 .adm-dl-btn{padding:.375rem .875rem;border-radius:.625rem;border:none;background:#27ae60;color:white;font-size:.875rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap}
+.adm-save-btn{padding:.375rem .875rem;border-radius:.625rem;border:none;background:#27ae60;color:white;font-size:.875rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap}
 
 /* 後台頁面捲動區 */
 .adm-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:.875rem .875rem 4rem}
@@ -291,13 +292,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <button class="cart-btn" onclick="openCart()">
         🛒 購物車
-        <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+        <span class="cart-badge" id="cart-badge" style="display: none;">0</span>
       </button>
     </div>
-    <div class="cat-tabs" id="cat-tabs"><button class="cat-tab active" onclick="selCategory('全部')">全部</button><button class="cat-tab active" onclick="selCategory('全部')">全部</button><button class="cat-tab" onclick="selCategory('炒飯')">炒飯</button><button class="cat-tab" onclick="selCategory('炒麵')">炒麵</button><button class="cat-tab" onclick="selCategory('炒烏龍麵')">炒烏龍麵</button><button class="cat-tab" onclick="selCategory('烏龍湯麵')">烏龍湯麵</button><button class="cat-tab" onclick="selCategory('粥品')">粥品</button><button class="cat-tab" onclick="selCategory('熱炒類')">熱炒類</button><button class="cat-tab" onclick="selCategory('時蔬類')">時蔬類</button><button class="cat-tab" onclick="selCategory('酥炸類')">酥炸類</button><button class="cat-tab" onclick="selCategory('湯品')">湯品</button></div>
+    <div class="cat-tabs" id="cat-tabs"><button class="cat-tab active" onclick="selCategory('全部')">全部</button><button class="cat-tab" onclick="selCategory('炒飯')">炒飯</button><button class="cat-tab" onclick="selCategory('炒麵')">炒麵</button><button class="cat-tab" onclick="selCategory('炒烏龍麵')">炒烏龍麵</button><button class="cat-tab" onclick="selCategory('烏龍湯麵')">烏龍湯麵</button><button class="cat-tab" onclick="selCategory('粥品')">粥品</button><button class="cat-tab" onclick="selCategory('熱炒類')">熱炒類</button><button class="cat-tab" onclick="selCategory('時蔬類')">時蔬類</button><button class="cat-tab" onclick="selCategory('酥炸類')">酥炸類</button><button class="cat-tab" onclick="selCategory('湯品')">湯品</button></div>
   </div>
 
-  <div class="announce" id="announce-bar">📢外帶自取享９折優惠❗3公里內/訂單金額滿$600 即可外送🛵</div>
+  <div class="announce" id="announce-bar">📢外帶自取享９折優惠❗訂單滿600元、距離3公里內可外送🛵</div>
   <div id="menu-content"><div class="menu-list"><div class="section-title">炒飯</div><div class="menu-item">
     <div class="item-emoji">🍚</div>
     <div class="item-info">
@@ -974,7 +975,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="item-name-row">
         <span class="item-name">招牌黃金豆腐</span>
         
-        <span class="new-tag">新品</span>
+        
         
       </div>
       <div class="item-price">$170</div>
@@ -1110,7 +1111,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="item-price">$70</div>
     </div><button class="add-btn" onclick="changeQty(81,1)">+</button></div></div></div>
 
-  <div class="bottom-bar" id="bottom-bar">
+  <div class="bottom-bar" id="bottom-bar" style="display: none;">
     <div class="bottom-total">已選 <span id="bottom-price">$0</span></div>
     <button class="bottom-order-btn" onclick="openCart()">查看訂單</button>
   </div>
@@ -1158,7 +1159,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <button class="clear-btn" onclick="clearCart()">清空</button>
     </div>
     <div class="cart-body">
-      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-items" id="cart-items"><div class="empty-cart">🍜<br>還沒有選任何品項</div></div>
       <div class="cart-options">
         <div class="opt-title">訂單選項</div>
         <div class="opt-row">
@@ -1168,18 +1169,18 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="opt-row">
           <span class="opt-label">🥢 免洗餐具</span>
           <div class="opt-toggle">
-            <button onclick="selOpt('cutlery','yes',this)">需要</button>
-            <button class="sel" onclick="selOpt('cutlery','no',this)">不需要</button>
+            <button onclick="selOpt('cutlery','yes',this)" class="sel">需要</button>
+            <button class="" onclick="selOpt('cutlery','no',this)">不需要</button>
           </div>
         </div>
         <div class="opt-row">
           <span class="opt-label">🧾 收據</span>
           <div class="opt-toggle">
-            <button onclick="selOpt('receipt','yes',this)">需要</button>
-            <button class="sel" onclick="selOpt('receipt','no',this)">不需要</button>
+            <button onclick="selOpt('receipt','yes',this)" class="sel">需要</button>
+            <button class="" onclick="selOpt('receipt','no',this)">不需要</button>
           </div>
         </div>
-        <div class="receipt-tax-row" id="receipt-tax-row">
+        <div class="receipt-tax-row show" id="receipt-tax-row">
           <div class="delivery-field-label">🏢 統一編號 <span>*必填</span></div>
           <input class="delivery-field-input" type="text" id="receipt-tax-id" inputmode="numeric" maxlength="8" placeholder="請輸入 8 位統一編號">
         </div>
@@ -1187,9 +1188,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           <div style="font-size:13px;color:#666;margin-bottom:6px">🛍 取餐方式 <span style="color:#c4390a;font-weight:700">*必填</span></div>
           <div class="opt-toggle" style="margin-bottom:8px;width:100%">
             <button class="sel" onclick="selPickup('takeout',this)" style="flex:1">外帶自取 9折</button>
-            <button onclick="selPickup('delivery',this)" style="flex:1">外送</button>
+            <button onclick="selPickup('delivery',this)" style="flex:1" class="">外送</button>
           </div>
-          <div id="delivery-hint" style="display:none;background:#fff0f0;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;margin-bottom:8px;line-height:1.8">
+          <div id="delivery-hint" style="display: none; background: rgb(255, 240, 240); border-radius: 8px; padding: 10px 12px; font-size: 12px; color: rgb(85, 85, 85); margin-bottom: 8px; line-height: 1.8;">
             <span id="delivery-hint-line1">🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）</span><br>
             <span id="delivery-hint-line2" style="color:#c4390a;font-weight:700">*請於下方填入外送地址與聯絡電話</span>
           </div>
@@ -1211,7 +1212,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div class="cart-summary">
       <div class="summary-row"><span>總數量</span><span id="sum-qty">0 項</span></div>
       <div class="summary-row"><span>小計</span><span id="sum-sub">$0</span></div>
-      <div id="sum-disc" style="display:none;justify-content:space-between;font-size:13px;color:#c4390a;margin-bottom:4px"><span>外帶自取 9折</span><span id="sum-disc-val"></span></div>
+      <div id="sum-disc" style="display: none; justify-content: space-between; font-size: 13px; color: rgb(196, 57, 10); margin-bottom: 4px;"><span>外帶自取 9折</span><span id="sum-disc-val">-$71</span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$0</span></div>
     </div>
     <button class="checkout-btn" onclick="placeOrder()">確認下單</button>
@@ -1222,8 +1223,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 <div class="options-overlay" id="options-overlay" onclick="if(event.target===this)closeOptionsModal()">
   <div class="options-sheet">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
-    <div class="options-header" id="options-header"></div>
-    <div class="options-body" id="options-body"></div>
+    <div class="options-header" id="options-header"><div class="options-title">🍜 沙茶豬肉烏龍湯麵</div><div class="options-price">$110</div></div>
+    <div class="options-body" id="options-body"><div class="options-section"><div class="options-section-title">加購選項</div><div class="option-row"><span class="option-label">加麵<span class="option-price-tag">+$20</span></span><input type="checkbox" class="option-checkbox" id="ex-0" onchange="toggleExtra(0)"></div><div class="option-row"><span class="option-label">加辣🌶️<span class="option-price-tag" style="color:#888">免費</span></span><input type="checkbox" class="option-checkbox" id="ex-1" onchange="toggleExtra(1)"></div></div></div>
     <div style="padding:12px 16px 8px;display:flex;align-items:center;justify-content:center;gap:16px">
       <button class="qty-btn minus" onclick="changeQtyModal(-1)">−</button>
       <span id="modal-qty" style="font-size:20px;font-weight:700;color:#1a2455;min-width:28px;text-align:center">1</span>
@@ -1238,6 +1239,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 <!-- ════════════════════════════════════════
      管理後台（密碼保護，客人看不到）
 ════════════════════════════════════════ -->
+
+<!-- 後台入口按鈕（僅在點餐頁顯示） -->
+<button id="adm-fab" onclick="admOpenPw()" title="管理後台" style="position: fixed; bottom: max(1.25rem,calc(env(safe-area-inset-bottom)+0.5rem)); right: 1rem; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: rgb(26, 36, 85); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: white; font-size: 1.125rem; cursor: pointer; z-index: 80; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 10px; display: none; align-items: center; justify-content: center; opacity: 0.55; transition: opacity 0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.55'" ontouchstart="this.style.opacity='1'" ontouchend="this.style.opacity='0.55'">⚙️</button>
 
 <!-- 密碼輸入遮罩 -->
 <div class="adm-pw-overlay" id="adm-pw-overlay">
@@ -1255,20 +1259,19 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
   <!-- 後台頂部導覽 -->
   <div class="adm-topbar">
-    <div class="adm-topbar-title">🍱 香品小食堂 管理後台</div>
+    <div class="adm-topbar-title">🍱 管理後台</div>
     <div class="adm-tabs">
-      <button class="adm-tab" onclick="admShowPage('store',this)">🏪 店家</button>
-      <button class="adm-tab" onclick="admShowPage('menu',this)">📋 菜單</button>
-      <button class="adm-tab active" onclick="admShowPage('ver',this)">🔖 版本</button>
+      <button class="adm-tab active" id="adm-tab-store" onclick="admShowPage('store',this)">🏪 店家</button>
+      <button class="adm-tab" id="adm-tab-menu" onclick="admShowPage('menu',this)">📋 菜單</button>
     </div>
-    <button class="adm-dl-btn" onclick="admDownload()">⬇ 下載</button>
+    <button class="adm-save-btn" onclick="admSaveAndDownload()">💾 存檔</button>
     <button class="adm-close-btn" onclick="admClose()">✕ 關閉</button>
   </div>
 
   <div class="adm-body">
 
     <!-- ── 店家設定頁 ── -->
-    <div class="adm-page" id="adm-page-store">
+    <div class="adm-page active" id="adm-page-store">
 
       <div class="adm-card">
         <div class="adm-card-title">⚡ 營業狀態 <span class="adm-card-sub">（最常修改）</span></div>
@@ -1314,9 +1317,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
       <div class="adm-card">
         <div class="adm-card-title">🔑 LINE LIFF ID</div>
-        <div class="adm-tip">✏️ LINE Developers 後台取得的 LIFF ID，一般不需改動。</div>
-        <label class="adm-label">LIFF ID</label>
-        <input class="adm-input" type="text" id="f-liffId">
+        <div class="adm-tip">✏️ LINE Developers 後台取得的 LIFF ID，一般不需改動。若需更換，請直接修改 HTML 原始碼中的 <code>const LIFF_ID</code>。</div>
+        <div style="font-size:.875rem;color:#555;background:#f8f8f8;border-radius:.5rem;padding:.625rem .75rem;font-family:monospace;word-break:break-all" id="adm-liff-display">2009693763-bOg2whDg</div>
       </div>
 
     </div><!-- /store -->
@@ -1330,10 +1332,14 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           ✏️ 點「編輯」可修改所有欄位。快速操作按鈕可一鍵切換狀態，不用進入編輯頁。<br>
           <strong>隱藏</strong>：菜單上完全看不到。<strong>售完</strong>：顯示「已售完」無法加入購物車。
         </div>
-        <div class="adm-filter-row" id="adm-cat-filter-row"><button class="adm-filter-btn active" onclick="admSetCatFilter('全部')">全部</button><button class="adm-filter-btn active" onclick="admSetCatFilter('全部')">全部</button><button class="adm-filter-btn active" onclick="admSetCatFilter('全部')">全部</button><button class="adm-filter-btn" onclick="admSetCatFilter('炒飯')">炒飯</button><button class="adm-filter-btn" onclick="admSetCatFilter('炒麵')">炒麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('炒烏龍麵')">炒烏龍麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('烏龍湯麵')">烏龍湯麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('粥品')">粥品</button><button class="adm-filter-btn" onclick="admSetCatFilter('熱炒類')">熱炒類</button><button class="adm-filter-btn" onclick="admSetCatFilter('時蔬類')">時蔬類</button><button class="adm-filter-btn" onclick="admSetCatFilter('酥炸類')">酥炸類</button><button class="adm-filter-btn" onclick="admSetCatFilter('湯品')">湯品</button></div>
+        <div class="adm-filter-row" id="adm-cat-filter-row"><button class="adm-filter-btn active" onclick="admSetCatFilter('全部')">全部</button><button class="adm-filter-btn" onclick="admSetCatFilter('炒飯')">炒飯</button><button class="adm-filter-btn" onclick="admSetCatFilter('炒麵')">炒麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('炒烏龍麵')">炒烏龍麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('烏龍湯麵')">烏龍湯麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('粥品')">粥品</button><button class="adm-filter-btn" onclick="admSetCatFilter('熱炒類')">熱炒類</button><button class="adm-filter-btn" onclick="admSetCatFilter('時蔬類')">時蔬類</button><button class="adm-filter-btn" onclick="admSetCatFilter('酥炸類')">酥炸類</button><button class="adm-filter-btn" onclick="admSetCatFilter('湯品')">湯品</button></div>
         <button class="adm-btn-save" style="width:100%;margin-bottom:.875rem;border-radius:.625rem;padding:.625rem;font-size:.9375rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif" onclick="admOpenAddModal()">＋ 新增品項</button>
         <div id="adm-menu-list"><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button disabled="" style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #ddd;background:#f9f9f9;color:#ccc;font-size:.875rem;cursor:default;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(0,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(0,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">香腸炒飯</div>
         <div class="adm-item-price">$105</div>
@@ -1348,6 +1354,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(1,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(1,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">豬肉炒飯</div>
         <div class="adm-item-price">$105</div>
@@ -1362,6 +1372,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(2,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(2,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">牛肉炒飯</div>
         <div class="adm-item-price">$110</div>
@@ -1376,6 +1390,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(3,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(3,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">羊肉炒飯</div>
         <div class="adm-item-price">$110</div>
@@ -1390,6 +1408,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(4,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(4,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">蝦仁炒飯</div>
         <div class="adm-item-price">$115</div>
@@ -1404,6 +1426,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(5,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(5,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">鮭魚炒飯</div>
         <div class="adm-item-price">$160</div>
@@ -1418,6 +1444,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(6,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(6,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">咖哩豬肉炒飯</div>
         <div class="adm-item-price">$115</div>
@@ -1432,6 +1462,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(7,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(7,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">咖哩牛肉炒飯</div>
         <div class="adm-item-price">$120</div>
@@ -1446,6 +1480,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(8,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(8,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">咖哩羊肉炒飯</div>
         <div class="adm-item-price">$120</div>
@@ -1460,6 +1498,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(9,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(9,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">豬肉炒麵</div>
         <div class="adm-item-price">$105</div>
@@ -1474,6 +1516,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(10,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(10,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">牛肉炒麵</div>
         <div class="adm-item-price">$110</div>
@@ -1488,6 +1534,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(11,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(11,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">羊肉炒麵</div>
         <div class="adm-item-price">$110</div>
@@ -1502,6 +1552,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(12,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(12,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">海鮮炒麵</div>
         <div class="adm-item-price">$125</div>
@@ -1516,6 +1570,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(13,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(13,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩豬肉炒麵</div>
         <div class="adm-item-price">$115</div>
@@ -1530,6 +1588,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(14,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(14,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩牛肉炒麵</div>
         <div class="adm-item-price">$120</div>
@@ -1544,6 +1606,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(15,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(15,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩羊肉炒麵</div>
         <div class="adm-item-price">$120</div>
@@ -1558,6 +1624,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(16,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(16,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩海鮮炒麵</div>
         <div class="adm-item-price">$135</div>
@@ -1572,6 +1642,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(17,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(17,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">豬肉炒烏龍麵</div>
         <div class="adm-item-price">$105</div>
@@ -1586,6 +1660,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(18,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(18,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">牛肉炒烏龍麵</div>
         <div class="adm-item-price">$110</div>
@@ -1600,6 +1678,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(19,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(19,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">羊肉炒烏龍麵</div>
         <div class="adm-item-price">$110</div>
@@ -1614,6 +1696,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(20,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(20,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">海鮮炒烏龍麵</div>
         <div class="adm-item-price">$125</div>
@@ -1628,6 +1714,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(21,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(21,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩豬肉炒烏龍麵</div>
         <div class="adm-item-price">$115</div>
@@ -1642,6 +1732,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(22,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(22,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩牛肉炒烏龍麵</div>
         <div class="adm-item-price">$120</div>
@@ -1656,6 +1750,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(23,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(23,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩羊肉炒烏龍麵</div>
         <div class="adm-item-price">$120</div>
@@ -1670,6 +1768,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(24,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(24,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩海鮮炒烏龍麵</div>
         <div class="adm-item-price">$135</div>
@@ -1684,6 +1786,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(25,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(25,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍜</div>
         <div class="adm-item-name">沙茶豬肉烏龍湯麵</div>
         <div class="adm-item-price">$110</div>
@@ -1698,6 +1804,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(26,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(26,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍜</div>
         <div class="adm-item-name">沙茶牛肉烏龍湯麵</div>
         <div class="adm-item-price">$115</div>
@@ -1712,6 +1822,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(27,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(27,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍜</div>
         <div class="adm-item-name">沙茶羊肉烏龍湯麵</div>
         <div class="adm-item-price">$115</div>
@@ -1726,6 +1840,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(28,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(28,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍜</div>
         <div class="adm-item-name">海鮮烏龍湯麵</div>
         <div class="adm-item-price">$130</div>
@@ -1740,6 +1858,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(29,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(29,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">玉米瘦肉粥</div>
         <div class="adm-item-price">$105</div>
@@ -1754,6 +1876,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(30,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(30,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">滑蛋牛肉粥</div>
         <div class="adm-item-price">$110</div>
@@ -1768,6 +1894,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(31,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(31,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">皮蛋瘦肉粥</div>
         <div class="adm-item-price">$115</div>
@@ -1782,6 +1912,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(32,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(32,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">海鮮總匯粥</div>
         <div class="adm-item-price">$120</div>
@@ -1796,6 +1930,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(33,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(33,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">虱目魚肚粥</div>
         <div class="adm-item-price">$135</div>
@@ -1810,6 +1948,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(34,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(34,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">白飯</div>
         <div class="adm-item-price">$20</div>
@@ -1824,6 +1966,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(35,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(35,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">塔香烘蛋</div>
         <div class="adm-item-price">$135</div>
@@ -1838,6 +1984,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(36,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(36,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">青蔥烘蛋</div>
         <div class="adm-item-price">$135</div>
@@ -1852,6 +2002,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(37,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(37,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">菜脯蛋</div>
         <div class="adm-item-price">$135</div>
@@ -1866,6 +2020,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(38,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(38,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">蚵仔煎蛋</div>
         <div class="adm-item-price">$160</div>
@@ -1880,6 +2038,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(39,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(39,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">番茄炒蛋</div>
         <div class="adm-item-price">$180</div>
@@ -1894,6 +2056,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(40,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(40,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">麻婆豆腐🌶️</div>
         <div class="adm-item-price">$180</div>
@@ -1908,6 +2074,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(41,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(41,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">豆豉鮮蚵</div>
         <div class="adm-item-price">$180</div>
@@ -1922,6 +2092,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(42,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(42,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">豆豉排骨</div>
         <div class="adm-item-price">$195</div>
@@ -1936,6 +2110,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(43,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(43,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">蠔油雞丁</div>
         <div class="adm-item-price">$180</div>
@@ -1950,6 +2128,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(44,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(44,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">宮保雞丁🌶️</div>
         <div class="adm-item-price">$180</div>
@@ -1964,6 +2146,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(45,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(45,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">宮保中卷🌶️</div>
         <div class="adm-item-price">$180</div>
@@ -1978,6 +2164,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(46,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(46,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">熱炒豬肉</div>
         <div class="adm-item-price">$180</div>
@@ -1992,6 +2182,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(47,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(47,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">熱炒牛肉</div>
         <div class="adm-item-price">$190</div>
@@ -2006,6 +2200,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(48,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(48,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">熱炒羊肉</div>
         <div class="adm-item-price">$190</div>
@@ -2020,6 +2218,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(49,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(49,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">蒜泥五花肉</div>
         <div class="adm-item-price">$185</div>
@@ -2034,6 +2236,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(50,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(50,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">炒蛤蜊</div>
         <div class="adm-item-price">$185</div>
@@ -2048,6 +2254,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(51,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(51,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">炒海瓜子</div>
         <div class="adm-item-price">$185</div>
@@ -2062,6 +2272,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(52,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(52,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">滑蛋牛肉</div>
         <div class="adm-item-price">$190</div>
@@ -2076,6 +2290,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(53,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(53,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">滑蛋蝦仁</div>
         <div class="adm-item-price">$190</div>
@@ -2090,6 +2308,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(54,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(54,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">川燙中卷</div>
         <div class="adm-item-price">$195</div>
@@ -2104,6 +2326,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(55,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(55,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">白灼蝦</div>
         <div class="adm-item-price">$195</div>
@@ -2118,6 +2344,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(56,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(56,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">糖醋雞丁</div>
         <div class="adm-item-price">$185</div>
@@ -2132,6 +2362,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(57,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(57,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">糖醋排骨</div>
         <div class="adm-item-price">$195</div>
@@ -2146,6 +2380,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(58,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(58,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">糖醋蝦球</div>
         <div class="adm-item-price">$195</div>
@@ -2160,6 +2398,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(59,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(59,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">金沙豆腐</div>
         <div class="adm-item-price">$190</div>
@@ -2174,6 +2416,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(60,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(60,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">金沙中卷</div>
         <div class="adm-item-price">$210</div>
@@ -2188,6 +2434,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(61,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(61,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🍳</div>
         <div class="adm-item-name">金沙蝦球</div>
         <div class="adm-item-price">$210</div>
@@ -2202,6 +2452,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card is-hidden">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(62,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(62,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥬</div>
         <div class="adm-item-name">炒菠菜</div>
         <div class="adm-item-price">$110</div>
@@ -2216,6 +2470,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(63,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(63,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥬</div>
         <div class="adm-item-name">炒地瓜葉</div>
         <div class="adm-item-price">$110</div>
@@ -2230,6 +2488,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(64,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(64,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥬</div>
         <div class="adm-item-name">炒空心菜</div>
         <div class="adm-item-price">$110</div>
@@ -2244,6 +2506,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(65,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(65,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥬</div>
         <div class="adm-item-name">炒高麗菜</div>
         <div class="adm-item-price">$110</div>
@@ -2258,6 +2524,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(66,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(66,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥬</div>
         <div class="adm-item-name">肉絲水蓮</div>
         <div class="adm-item-price">$150</div>
@@ -2272,6 +2542,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(67,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(67,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥬</div>
         <div class="adm-item-name">地瓜葉皮蛋</div>
         <div class="adm-item-price">$150</div>
@@ -2286,11 +2560,15 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(68,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(68,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🟡</div>
         <div class="adm-item-name">招牌黃金豆腐</div>
         <div class="adm-item-price">$170</div>
       </div>
-      <div class="adm-item-tags"><span class="adm-tag adm-tag-new">新品</span></div>
+      <div class="adm-item-tags"><span style="font-size:.7rem;color:#bbb">無標籤</span></div>
       <div class="adm-item-actions">
         <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(68)">✏️ 編輯</button>
         <button class="adm-act-btn adm-btn-hide" onclick="admToggle(68,'isHidden')">🙈 隱藏</button>
@@ -2300,6 +2578,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(69,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(69,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🟡</div>
         <div class="adm-item-name">招牌紅糟鰻</div>
         <div class="adm-item-price">$190</div>
@@ -2314,6 +2596,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(70,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(70,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🟡</div>
         <div class="adm-item-name">鹽酥鮮蚵</div>
         <div class="adm-item-price">$190</div>
@@ -2328,6 +2614,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(71,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(71,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🟡</div>
         <div class="adm-item-name">月亮蝦餅</div>
         <div class="adm-item-price">$190</div>
@@ -2342,6 +2632,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(72,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(72,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🟡</div>
         <div class="adm-item-name">椒鹽排骨</div>
         <div class="adm-item-price">$190</div>
@@ -2356,6 +2650,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(73,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(73,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🟡</div>
         <div class="adm-item-name">鹽酥蝦</div>
         <div class="adm-item-price">$190</div>
@@ -2370,6 +2668,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(74,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(74,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🟡</div>
         <div class="adm-item-name">椒鹽中卷</div>
         <div class="adm-item-price">$200</div>
@@ -2384,6 +2686,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(75,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(75,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🟡</div>
         <div class="adm-item-name">鳳梨蝦球</div>
         <div class="adm-item-price">$200</div>
@@ -2398,6 +2704,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(76,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(76,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">紫菜蛋花湯</div>
         <div class="adm-item-price">$50</div>
@@ -2412,6 +2722,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(77,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(77,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">貢丸湯</div>
         <div class="adm-item-price">$55</div>
@@ -2426,6 +2740,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(78,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(78,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">魚丸湯</div>
         <div class="adm-item-price">$55</div>
@@ -2440,6 +2758,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(79,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(79,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">番茄蛋花湯</div>
         <div class="adm-item-price">$65</div>
@@ -2454,6 +2776,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(80,-1)" title="上移">▲</button>
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(80,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">薑絲蛤蜊湯</div>
         <div class="adm-item-price">$65</div>
@@ -2468,6 +2794,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
     </div><div class="adm-item-card">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(81,-1)" title="上移">▲</button>
+          <button disabled="" style="width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid #ddd;background:#f9f9f9;color:#ccc;font-size:.875rem;cursor:default;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0" onclick="admMoveItem(81,1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">薑絲鮮蚵湯</div>
         <div class="adm-item-price">$70</div>
@@ -2484,40 +2814,59 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
 
       <div class="adm-card">
-        <div class="adm-card-title">🗂 分類列表順序 <span class="adm-card-sub">（每行一個，上方順序即頁籤順序）</span></div>
-        <div class="adm-tip">✏️ 直接修改文字方塊，每行一個分類名稱。品項的 <code>cat</code> 必須與此處名稱完全一致才會顯示。</div>
-        <textarea class="adm-textarea" id="adm-cats-textarea" rows="10"></textarea>
-        <button class="adm-btn-save" style="width:100%;border-radius:.625rem;padding:.625rem;font-size:.9375rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif" onclick="admSaveCats()">儲存分類順序</button>
+        <div class="adm-card-title">🗂 分類列表順序 <span class="adm-card-sub">（點箭頭調整順序，即頁籤順序）</span></div>
+        <div class="adm-tip">📌 用 ▲ ▼ 箭頭調整分類順序，品項的分類名稱必須與此處完全一致才會顯示。</div>
+        <div id="adm-cats-list" style="display:flex;flex-direction:column;gap:.375rem;margin-bottom:.75rem">
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">炒飯</span>
+      <button onclick="admMoveCat(0,-1)" disabled="" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #ddd;background:#f5f5f5;color:#bbb;font-size:1rem;cursor:default;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(0,1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">炒麵</span>
+      <button onclick="admMoveCat(1,-1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(1,1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">炒烏龍麵</span>
+      <button onclick="admMoveCat(2,-1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(2,1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">烏龍湯麵</span>
+      <button onclick="admMoveCat(3,-1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(3,1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">粥品</span>
+      <button onclick="admMoveCat(4,-1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(4,1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">熱炒類</span>
+      <button onclick="admMoveCat(5,-1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(5,1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">時蔬類</span>
+      <button onclick="admMoveCat(6,-1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(6,1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">酥炸類</span>
+      <button onclick="admMoveCat(7,-1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(7,1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">湯品</span>
+      <button onclick="admMoveCat(8,-1)" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(8,1)" disabled="" style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid #ddd;background:#f5f5f5;color:#bbb;font-size:1rem;cursor:default;display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div></div>
+        <button class="adm-btn-save" style="width:100%;border-radius:.625rem;padding:.625rem;font-size:.9375rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif" onclick="admSaveCats()">✅ 儲存分類順序</button>
       </div>
 
     </div><!-- /menu -->
 
-    <!-- ── 版本號頁 ── -->
-    <div class="adm-page active" id="adm-page-ver">
-
-      <div class="adm-card">
-        <div class="adm-card-title">🔖 版本號 VER</div>
-        <div class="adm-tip">
-          ⚠️ <strong>每次修改完都要更新版本號</strong>，才能強制 LINE 重新載入最新頁面。<br>
-          格式：<code>YYYYMMDD</code>（例：<code>20250501</code>）。忘記更新 → 客人可能還是看到舊菜單！
-        </div>
-        <label class="adm-label">版本號（格式：YYYYMMDD）</label>
-        <div class="adm-ver-row">
-          <input class="adm-input" type="text" id="f-version" maxlength="8">
-          <button class="adm-today-btn" onclick="admSetToday()">📅 填入今天</button>
-        </div>
-      </div>
-
-      <div class="adm-card">
-        <div class="adm-card-title">⬇ 下載 HTML 上傳 GitHub</div>
-        <div class="adm-tip">
-          改完所有設定後，點下方按鈕下載完整的 HTML 檔案，再上傳到 GitHub 即可生效。<br>
-          建議步驟：① 修改內容 → ② 更新版本號 → ③ 下載 HTML → ④ 上傳 GitHub
-        </div>
-        <button class="adm-btn-save" style="width:100%;border-radius:.75rem;padding:1rem;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif" onclick="admDownload()">⬇ 下載 HTML 檔案</button>
-      </div>
-
-    </div><!-- /ver -->
 
   </div><!-- /adm-body -->
 </div><!-- /adm-overlay -->
@@ -2525,10 +2874,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 <!-- 品項編輯 Modal -->
 <div class="adm-modal-overlay" id="adm-item-modal">
   <div class="adm-modal-card">
-    <div class="adm-modal-title" id="adm-modal-title">✏️ 編輯：金沙蝦球</div>
+    <div class="adm-modal-title" id="adm-modal-title">✏️ 編輯：招牌黃金豆腐</div>
 
     <label class="adm-label">分類 <span class="sub">（必須與分類列表名稱完全一致）</span></label>
-    <select class="adm-select" id="ef-cat"><option value="全部">全部</option><option value="全部">全部</option><option value="炒飯">炒飯</option><option value="炒麵">炒麵</option><option value="炒烏龍麵">炒烏龍麵</option><option value="烏龍湯麵">烏龍湯麵</option><option value="粥品">粥品</option><option value="熱炒類">熱炒類</option><option value="時蔬類">時蔬類</option><option value="酥炸類">酥炸類</option><option value="湯品">湯品</option></select>
+    <select class="adm-select" id="ef-cat"><option value="炒飯">炒飯</option><option value="炒麵">炒麵</option><option value="炒烏龍麵">炒烏龍麵</option><option value="烏龍湯麵">烏龍湯麵</option><option value="粥品">粥品</option><option value="熱炒類">熱炒類</option><option value="時蔬類">時蔬類</option><option value="酥炸類">酥炸類</option><option value="湯品">湯品</option></select>
 
     <label class="adm-label">菜名</label>
     <input class="adm-input" type="text" id="ef-name" placeholder="例：蒜泥白肉">
@@ -2575,7 +2924,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- Toast -->
-<div class="adm-toast" id="adm-toast">✅ 已更新「金沙蝦球」！</div>
+<div class="adm-toast" id="adm-toast"></div>
 
 <!-- ════════════════════════════════════════
      JavaScript
@@ -2584,8 +2933,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ╔══════════════════════════════════════════════════════════════════════╗
 // ║  🍱 香品小食堂 點餐系統                                             ║
 // ║                                                                      ║
-// ║  ★ 請使用頂部 Logo【長按 2 秒】進入管理後台修改                    ║
-// ║  ★ 不要直接在這裡手動改，用後台改完再下載覆蓋此檔案               ║
+// ║  ★ 進入後台：點右下角 ⚙️ 按鈕（或連點 Logo 三下）                ║
+// ║  ★ 改完後點右上角【💾 存檔】自動下載，上傳 GitHub 即生效         ║
+// ║  ★ 不要手動改這裡，用後台改完再存檔                               ║
 // ║                                                                      ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 
@@ -2601,7 +2951,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // └──────────────────────────────────────────────────────────────────────┘
 const STORE_CONFIG = {
   isOpen: true,
-  announcementText: "📢外帶自取享９折優惠❗訂單滿600元、距離3公里內即可外送🛵",
+  announcementText: "📢外帶自取享９折優惠❗訂單滿600元、距離3公里內可外送🛵",
   popupLines: [
   "🍱歡迎光臨【香品小食堂🍲】",
   "堅持現點現做，完美滋味值得您耐心等待⏳",
@@ -2701,7 +3051,7 @@ const MENU_DATA = [
   { id:65, cat:"時蔬類", name:"炒高麗菜", price:110, emoji:"🥬", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:66, cat:"時蔬類", name:"肉絲水蓮", price:150, emoji:"🥬", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:67, cat:"時蔬類", name:"地瓜葉皮蛋", price:150, emoji:"🥬", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:68, cat:"酥炸類", name:"招牌黃金豆腐", price:170, emoji:"🟡", popular:false, isSoldOut:false, isNew:true, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:68, cat:"酥炸類", name:"招牌黃金豆腐", price:170, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:69, cat:"酥炸類", name:"招牌紅糟鰻", price:190, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:70, cat:"酥炸類", name:"鹽酥鮮蚵", price:190, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:71, cat:"酥炸類", name:"月亮蝦餅", price:190, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
@@ -2726,7 +3076,7 @@ const MENU_DATA = [
 // └──────────────────────────────────────────────────────────────────────┘
 const LIFF_ID = '2009693763-bOg2whDg';
 (function(){
-  const VER = '20260429';
+  const VER = '20260430';
   const url = new URL(location.href);
   if(url.searchParams.get('v') !== VER){ url.searchParams.set('v', VER); location.replace(url.toString()); }
 })();
@@ -2736,10 +3086,10 @@ const LIFF_ID = '2009693763-bOg2whDg';
 // ════════════════════════════════════════════════
 const menu = MENU_DATA.filter(i => !i.isHidden);
 let cart = {}, opts = {cutlery:'no', receipt:'no', pickup:'takeout'}, selCat = '全部';
-const ALL_CATS = ["全部","全部","全部","炒飯","炒麵","炒烏龍麵","烏龍湯麵","粥品","熱炒類","時蔬類","酥炸類","湯品"];
+const ALL_CATS = ["炒飯","炒麵","炒烏龍麵","烏龍湯麵","粥品","熱炒類","時蔬類","酥炸類","湯品"];
 
 function renderTabs(){
-  document.getElementById('cat-tabs').innerHTML = ALL_CATS.map(c =>
+  document.getElementById('cat-tabs').innerHTML = ['全部',...ALL_CATS].map(c =>
     `<button class="cat-tab${c===selCat?' active':''}" onclick="selCategory('${c}')">${c}</button>`
   ).join('');
 }
@@ -2753,7 +3103,7 @@ function renderMenu(){
   if(selCat !== '全部'){
     html += items.length ? items.map(renderItem).join('') : '<div style="text-align:center;padding:40px 20px;color:#aaa;font-size:14px">此分類尚無品項</div>';
   } else {
-    ALL_CATS.filter(c=>c!=='全部').forEach(cat=>{
+    ALL_CATS.forEach(cat=>{
       const ci = byCat[cat]||[];
       if(!ci.length) return;
       html += `<div class="section-title">${cat}</div>` + ci.map(renderItem).join('');
@@ -3003,12 +3353,17 @@ liff.init({liffId:LIFF_ID})
 const ADM_PW = '233009';
 let admCatFilter = '全部', admEditingId = null;
 
-// ── Logo 長按 2 秒觸發 ──
-let logoTimer = null;
+// ── Logo 連按 3 下觸發後台登入 ──
+let logoTapCount = 0, logoTapTimer = null;
 const logoEl = document.getElementById('logo-img');
-logoEl.addEventListener('touchstart', e => { logoTimer = setTimeout(admOpenPw, 2000); }, {passive:true});
-logoEl.addEventListener('touchend', () => { clearTimeout(logoTimer); });
-logoEl.addEventListener('touchcancel', () => { clearTimeout(logoTimer); });
+logoEl.addEventListener('click', () => {
+  logoTapCount++;
+  clearTimeout(logoTapTimer);
+  if(logoTapCount >= 3){ logoTapCount=0; admOpenPw(); return; }
+  logoTapTimer = setTimeout(()=>{ logoTapCount=0; }, 800);
+});
+// 桌機：長按 2 秒也可進入（相容舊方式）
+let logoTimer = null;
 logoEl.addEventListener('mousedown', () => { logoTimer = setTimeout(admOpenPw, 2000); });
 logoEl.addEventListener('mouseup', () => { clearTimeout(logoTimer); });
 logoEl.addEventListener('mouseleave', () => { clearTimeout(logoTimer); });
@@ -3025,27 +3380,20 @@ function admLogin(){
     admClosePw();
     admInitStore();
     admInitMenu();
-    document.getElementById('f-version').value = getCurrentVersion();
+    // 預設顯示「店家」頁
+    document.querySelectorAll('.adm-page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.adm-tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById('adm-page-store').classList.add('active');
+    document.getElementById('adm-tab-store').classList.add('active');
     document.getElementById('adm-overlay').classList.add('open');
+    document.getElementById('adm-fab').style.display='none';
   } else {
     document.getElementById('adm-pw-error').textContent = '密碼錯誤，請重試';
     document.getElementById('adm-pw-input').value='';
     document.getElementById('adm-pw-input').focus();
   }
 }
-function admClose(){ document.getElementById('adm-overlay').classList.remove('open'); }
-
-// ── 從目前 HTML 讀取版本號 ──
-function getCurrentVersion(){
-  const m = document.currentScript ? '' : '';
-  // 從 LIFF init 的上方找版本號 (讀取 script 文字)
-  const scripts = document.querySelectorAll('script');
-  for(const s of scripts){
-    const match = s.textContent.match(/const\s+VER\s*=\s*['"]([^'"]+)['"]/);
-    if(match) return match[1];
-  }
-  const d=new Date(); return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
-}
+function admClose(){ document.getElementById('adm-overlay').classList.remove('open'); document.getElementById('adm-fab').style.display='flex'; }
 
 // ── 頁面切換 ──
 function admShowPage(id, btn){
@@ -3056,8 +3404,14 @@ function admShowPage(id, btn){
   if(id==='menu'){ admRenderCatFilter(); admRenderMenuList(); admRenderCatsTextarea(); }
 }
 
+// ── 存檔（自動填今日版本號 + 下載）──
+function admSaveAndDownload(){
+  admSetToday();
+  admDownload();
+}
+
 // ── Toast ──
-function admToast(msg='✅ 已儲存！記得到「版本」頁更新日期再下載'){
+function admToast(msg='✅ 已更新！改完所有設定後點【💾 存檔】'){
   const t=document.getElementById('adm-toast'); t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2800);
 }
@@ -3069,7 +3423,7 @@ function admInitStore(){
   document.getElementById('f-defaultNote').value = STORE_CONFIG.defaultNote;
   document.getElementById('f-deliveryHintLine1').value = STORE_CONFIG.deliveryHintLine1;
   document.getElementById('f-deliveryHintLine2').value = STORE_CONFIG.deliveryHintLine2;
-  document.getElementById('f-liffId').value = LIFF_ID;
+  document.getElementById('adm-liff-display').textContent = LIFF_ID;
   const wrap=document.getElementById('adm-popup-lines-wrap'); wrap.innerHTML='';
   STORE_CONFIG.popupLines.forEach(l=>admAddPopupLine(l,false));
 }
@@ -3101,15 +3455,25 @@ function admSetCatFilter(c){ admCatFilter=c; admRenderCatFilter(); admRenderMenu
 function admRenderMenuList(){
   const items = admCatFilter==='全部' ? MENU_DATA : MENU_DATA.filter(i=>i.cat===admCatFilter);
   if(!items.length){ document.getElementById('adm-menu-list').innerHTML='<div style="text-align:center;padding:2rem;color:#aaa">此分類無品項</div>'; return; }
-  document.getElementById('adm-menu-list').innerHTML = items.map(item=>{
+  // 取得在完整 MENU_DATA 中的 index（供排序用）
+  document.getElementById('adm-menu-list').innerHTML = items.map((item, localIdx)=>{
+    const globalIdx = MENU_DATA.findIndex(i=>i.id===item.id);
     const tags=[
       item.popular?'<span class="adm-tag adm-tag-popular">熱銷</span>':'',
       item.isNew?'<span class="adm-tag adm-tag-new">新品</span>':'',
       item.isSoldOut?'<span class="adm-tag adm-tag-soldout">已售完</span>':'',
       item.isHidden?'<span class="adm-tag adm-tag-hidden">已隱藏</span>':'',
     ].join('');
+    // 計算同分類中的上一筆/下一筆 globalIdx
+    const prevGlobal = localIdx > 0 ? MENU_DATA.findIndex(i=>i.id===items[localIdx-1].id) : -1;
+    const nextGlobal = localIdx < items.length-1 ? MENU_DATA.findIndex(i=>i.id===items[localIdx+1].id) : -1;
+    const btnStyle = (disabled, color) => `width:1.875rem;height:1.875rem;border-radius:.375rem;border:1.5px solid ${disabled?'#ddd':color};background:${disabled?'#f9f9f9':'white'};color:${disabled?'#ccc':color};font-size:.875rem;cursor:${disabled?'default':'pointer'};display:inline-flex;align-items:center;justify-content:center;flex-shrink:0`;
     return `<div class="adm-item-card${item.isHidden?' is-hidden':''}">
       <div class="adm-item-hd">
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-right:.375rem;flex-shrink:0">
+          <button ${prevGlobal<0?'disabled':''} style="${btnStyle(prevGlobal<0,'#1a2455')}" onclick="admMoveItem(${globalIdx},-1)" title="上移">▲</button>
+          <button ${nextGlobal<0?'disabled':''} style="${btnStyle(nextGlobal<0,'#1a2455')}" onclick="admMoveItem(${globalIdx},1)" title="下移">▼</button>
+        </div>
         <div class="adm-item-emoji">${item.emoji}</div>
         <div class="adm-item-name">${item.name}</div>
         <div class="adm-item-price">$${item.price}</div>
@@ -3125,10 +3489,30 @@ function admRenderMenuList(){
     </div>`;
   }).join('');
 }
-function admRenderCatsTextarea(){ document.getElementById('adm-cats-textarea').value = ALL_CATS.join('\n'); }
+function admMoveItem(globalIdx, dir){
+  const newIdx = globalIdx + dir;
+  if(newIdx < 0 || newIdx >= MENU_DATA.length) return;
+  // 若跨分類，仍允許交換（保持 MENU_DATA 順序）
+  const tmp = MENU_DATA[globalIdx]; MENU_DATA[globalIdx] = MENU_DATA[newIdx]; MENU_DATA[newIdx] = tmp;
+  admRenderMenuList();
+}
+function admRenderCatsTextarea(){
+  const list = document.getElementById('adm-cats-list');
+  if(!list) return;
+  list.innerHTML = ALL_CATS.map((cat, i) => `
+    <div style="display:flex;align-items:center;gap:.5rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .75rem;">
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500">${esc(cat)}</span>
+      <button onclick="admMoveCat(${i},-1)" ${i===0?'disabled':''} style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid ${i===0?'#ddd':'#1a2455'};background:${i===0?'#f5f5f5':'white'};color:${i===0?'#bbb':'#1a2455'};font-size:1rem;cursor:${i===0?'default':'pointer'};display:flex;align-items:center;justify-content:center;flex-shrink:0" title="上移">▲</button>
+      <button onclick="admMoveCat(${i},1)" ${i===ALL_CATS.length-1?'disabled':''} style="width:2rem;height:2rem;border-radius:.375rem;border:1.5px solid ${i===ALL_CATS.length-1?'#ddd':'#1a2455'};background:${i===ALL_CATS.length-1?'#f5f5f5':'white'};color:${i===ALL_CATS.length-1?'#bbb':'#1a2455'};font-size:1rem;cursor:${i===ALL_CATS.length-1?'default':'pointer'};display:flex;align-items:center;justify-content:center;flex-shrink:0" title="下移">▼</button>
+    </div>`).join('');
+}
+function admMoveCat(idx, dir){
+  const newIdx = idx + dir;
+  if(newIdx < 0 || newIdx >= ALL_CATS.length) return;
+  const tmp = ALL_CATS[idx]; ALL_CATS[idx] = ALL_CATS[newIdx]; ALL_CATS[newIdx] = tmp;
+  admRenderCatsTextarea();
+}
 function admSaveCats(){
-  const newCats = document.getElementById('adm-cats-textarea').value.split('\n').map(s=>s.trim()).filter(Boolean);
-  ALL_CATS.length=0; newCats.forEach(c=>ALL_CATS.push(c));
   admRenderCatFilter(); admToast('✅ 分類順序已儲存！');
 }
 function admPopulateCatSelect(){
@@ -3211,11 +3595,12 @@ function admSaveItem(){
   admCloseModal(); admRenderMenuList();
 }
 
-// ── 版本號 ──
+// ── 版本號（自動取今天日期）──
 function admSetToday(){
   const d=new Date();
-  document.getElementById('f-version').value=`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  admCurrentVer = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
 }
+let admCurrentVer = '';
 
 // ── 工具 ──
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -3225,8 +3610,8 @@ function js(s){ return JSON.stringify(s); }
 // ── 下載 HTML ──
 function admDownload(){
   admReadStore();
-  const ver = document.getElementById('f-version').value || getCurrentVersion();
-  const liffId = document.getElementById('f-liffId').value || LIFF_ID;
+  const ver = admCurrentVer || (()=>{const d=new Date();return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;})();
+  const liffId = LIFF_ID;
 
   const menuLines = MENU_DATA.map(item=>{
     const extras='['+item.extras.map(e=>`{label:${js(e.label)},price:${e.price}}`).join(',')+']';
@@ -3234,7 +3619,6 @@ function admDownload(){
     return `  { id:${item.id}, cat:${js(item.cat)}, name:${js(item.name)}, price:${item.price}, emoji:${js(item.emoji)}, popular:${jb(item.popular)}, isSoldOut:${jb(item.isSoldOut)}, isNew:${jb(item.isNew)}, isHidden:${jb(item.isHidden)}, extras:${extras}, sauce:${sauce} },`;
   }).join('\n');
 
-  const allCatsWithAll = JSON.stringify(['全部',...ALL_CATS]);
   const allCatsOnly = JSON.stringify(ALL_CATS);
   const popupStr = JSON.stringify(STORE_CONFIG.popupLines, null, 2);
 
@@ -3244,26 +3628,23 @@ function admDownload(){
   admEl.classList.remove('open');
   pwEl.classList.remove('open');
 
-  // 抓此時的乾淨 HTML（前台點餐畫面）
+  // 確保 toast 不被快照進去
+  const toastEl = document.getElementById('adm-toast');
+  toastEl.classList.remove('show');
+  toastEl.textContent = '';
+
+  // 抓此時的乾淨 HTML
   const currentHTML = document.documentElement.outerHTML;
 
-  // 抓完立刻恢復後台顯示，不影響操作
+  // 抓完立刻恢復後台顯示
   admEl.classList.add('open');
 
-  // 直接輸出完整當前頁面並替換資料
   let out = currentHTML;
 
   // 替換 STORE_CONFIG
   out = out.replace(
     /const STORE_CONFIG = \{[\s\S]*?\};/,
-    `const STORE_CONFIG = {
-  isOpen: ${jb(STORE_CONFIG.isOpen)},
-  announcementText: ${js(STORE_CONFIG.announcementText)},
-  popupLines: ${popupStr},
-  defaultNote: ${js(STORE_CONFIG.defaultNote)},
-  deliveryHintLine1: ${js(STORE_CONFIG.deliveryHintLine1)},
-  deliveryHintLine2: ${js(STORE_CONFIG.deliveryHintLine2)},
-};`
+    `const STORE_CONFIG = {\n  isOpen: ${jb(STORE_CONFIG.isOpen)},\n  announcementText: ${js(STORE_CONFIG.announcementText)},\n  popupLines: ${popupStr},\n  defaultNote: ${js(STORE_CONFIG.defaultNote)},\n  deliveryHintLine1: ${js(STORE_CONFIG.deliveryHintLine1)},\n  deliveryHintLine2: ${js(STORE_CONFIG.deliveryHintLine2)},\n};`
   );
 
   // 替換 MENU_DATA
@@ -3281,7 +3662,7 @@ function admDownload(){
   // 替換 ALL_CATS
   out = out.replace(
     /const ALL_CATS = \[[\s\S]*?\];/,
-    `const ALL_CATS = ${allCatsWithAll};`
+    `const ALL_CATS = ${allCatsOnly};`
   );
 
   const blob = new Blob([out], {type:'text/html;charset=utf-8'});
@@ -3289,7 +3670,7 @@ function admDownload(){
   const a = document.createElement('a');
   a.href=url; a.download='香品小食堂_點餐系統.html'; a.click();
   URL.revokeObjectURL(url);
-  admToast('⬇ 下載完成！請上傳到 GitHub');
+  admToast('⬇ 存檔完成！請上傳到 GitHub');
 }
 </script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script>
 
