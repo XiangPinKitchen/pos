@@ -109,7 +109,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .opt-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.625rem;gap:.5rem;min-height:2.75rem}
 .opt-label{font-size:.9375rem;color:#333}
 .opt-toggle{display:flex;border:1.5px solid #1a2455;border-radius:.5rem;overflow:hidden;flex-shrink:0}
-.opt-toggle button{padding:.375rem .75rem;border:none;font-size:.875rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;background:#eef0f5;color:#999;min-height:2.25rem}
+.opt-toggle button{padding:.375rem .75rem;border:none;font-size:.875rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;background:white;color:#1a2455;min-height:2.25rem}
 .opt-toggle button.sel{background:#1a2455;color:white;font-weight:700}
 .note-input{width:100%;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .625rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#333;resize:none;margin-top:.25rem}
 .note-input:focus{outline:none;border-color:#1a2455}
@@ -399,18 +399,18 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="opt-row">
           <span class="opt-label">🥢 免洗餐具</span>
           <div class="opt-toggle">
-            <button onclick="selOpt('cutlery','yes',this)" class="sel">需要</button>
-            <button class="" onclick="selOpt('cutlery','no',this)">不需要</button>
+            <button onclick="selOpt('cutlery','yes',this)">需要</button>
+            <button class="sel" onclick="selOpt('cutlery','no',this)">不需要</button>
           </div>
         </div>
         <div class="opt-row">
           <span class="opt-label">🧾 收據</span>
           <div class="opt-toggle">
-            <button onclick="selOpt('receipt','yes',this)" class="sel">需要</button>
-            <button class="" onclick="selOpt('receipt','no',this)">不需要</button>
+            <button onclick="selOpt('receipt','yes',this)">需要</button>
+            <button class="sel" onclick="selOpt('receipt','no',this)">不需要</button>
           </div>
         </div>
-        <div class="receipt-tax-row show" id="receipt-tax-row">
+        <div class="receipt-tax-row" id="receipt-tax-row">
           <div class="delivery-field-label">🏢 統一編號 <span>*必填</span></div>
           <input class="delivery-field-input" type="text" id="receipt-tax-id" inputmode="numeric" maxlength="8" placeholder="請輸入 8 位統一編號">
         </div>
