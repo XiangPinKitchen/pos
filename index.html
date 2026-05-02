@@ -1282,6 +1282,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
 
       <div class="adm-card">
+        <div class="adm-card-title">📅 指定公休日 <span class="adm-card-sub">（自動停止接單）</span></div>
+        <div class="adm-tip">✏️ 新增後，當天頁面載入會自動顯示「公休」遮罩，無需手動關閉營業開關。格式：<code>YYYY-MM-DD</code>，例如 <code>2025-12-25</code>。過去的日期不影響，可隨時清除。</div>
+        <div id="adm-closed-dates-wrap" style="display:flex;flex-direction:column;gap:.375rem;margin-bottom:.625rem"></div>
+        <button class="adm-add-row-btn" onclick="admAddClosedDateRow('')">＋ 新增公休日期</button>
+      </div>
+
+      <div class="adm-card">
         <div class="adm-card-title">📢 頂部黃色公告橫幅</div>
         <div class="adm-tip">✏️ 填入頁面最頂部黃色條狀的跑馬燈文字。</div>
         <label class="adm-label">公告文字</label>
@@ -2944,6 +2951,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // └──────────────────────────────────────────────────────────────────────┘
 const STORE_CONFIG = {
   isOpen: true,
+  closedDates: [],
   announcementText: "📢外帶自取享９折優惠❗訂單滿600元、距離3公里內可外送🛵",
   popupLines: [
   "🍱歡迎光臨【香品小食堂🍲】",
@@ -3077,6 +3085,18 @@ const LIFF_ID = '2009693763-bOg2whDg';
 // ════════════════════════════════════════════════
 //  以下為系統邏輯，不需修改
 // ════════════════════════════════════════════════
+
+// ── 自動公休日判斷 ──
+(function checkClosedDates(){
+  if(!STORE_CONFIG.isOpen) return; // 已手動設為公休，不再覆蓋
+  const today = new Date();
+  const ymd = today.getFullYear() + '-'
+    + String(today.getMonth()+1).padStart(2,'0') + '-'
+    + String(today.getDate()).padStart(2,'0');
+  if((STORE_CONFIG.closedDates||[]).includes(ymd)){
+    STORE_CONFIG.isOpen = false;
+  }
+})();
 const menu = MENU_DATA.filter(i => !i.isHidden);
 let cart = {}, opts = {cutlery:'no', receipt:'no', pickup:'takeout'}, selCat = '全部';
 const ALL_CATS = ["炒飯","炒麵","炒烏龍麵","烏龍湯麵","粥品","熱炒類","時蔬類","酥炸類","湯品"];
@@ -3419,6 +3439,8 @@ function admInitStore(){
   document.getElementById('adm-liff-display').textContent = LIFF_ID;
   const wrap=document.getElementById('adm-popup-lines-wrap'); wrap.innerHTML='';
   STORE_CONFIG.popupLines.forEach(l=>admAddPopupLine(l,false));
+  const cdWrap=document.getElementById('adm-closed-dates-wrap'); cdWrap.innerHTML='';
+  (STORE_CONFIG.closedDates||[]).forEach(d=>admAddClosedDateRow(d,false));
 }
 function admReadStore(){
   STORE_CONFIG.isOpen = document.getElementById('f-isOpen').checked;
@@ -3428,6 +3450,17 @@ function admReadStore(){
   STORE_CONFIG.deliveryHintLine2 = document.getElementById('f-deliveryHintLine2').value;
   STORE_CONFIG.popupLines = [];
   document.querySelectorAll('.adm-popup-line-input').forEach(inp=>STORE_CONFIG.popupLines.push(inp.value));
+  STORE_CONFIG.closedDates = [];
+  document.querySelectorAll('.adm-closed-date-input').forEach(inp=>{ const v=inp.value.trim(); if(v) STORE_CONFIG.closedDates.push(v); });
+}
+function admAddClosedDateRow(v='', save=true){
+  if(save) admReadStore();
+  const wrap=document.getElementById('adm-closed-dates-wrap');
+  const row=document.createElement('div'); row.className='popup-line-row';
+  const today=new Date(); const yyyy=today.getFullYear(), mm=String(today.getMonth()+1).padStart(2,'0'), dd=String(today.getDate()).padStart(2,'0');
+  row.innerHTML=`<input type="date" class="adm-input adm-closed-date-input" value="${esc(v)}" min="${yyyy}-01-01" style="flex:1;margin-bottom:0"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button>`;
+  wrap.appendChild(row);
+  if(!v){ const inp=row.querySelector('input'); inp.value=`${yyyy}-${mm}-${dd}`; }
 }
 function admAddPopupLine(v='', save=true){
   if(save) admReadStore();
@@ -3632,7 +3665,7 @@ function admDownload(){
   // 替換 STORE_CONFIG
   out = out.replace(
     /const STORE_CONFIG = \{[\s\S]*?\};/,
-    `const STORE_CONFIG = {\n  isOpen: ${jb(STORE_CONFIG.isOpen)},\n  announcementText: ${js(STORE_CONFIG.announcementText)},\n  popupLines: ${popupStr},\n  defaultNote: ${js(STORE_CONFIG.defaultNote)},\n  deliveryHintLine1: ${js(STORE_CONFIG.deliveryHintLine1)},\n  deliveryHintLine2: ${js(STORE_CONFIG.deliveryHintLine2)},\n};`
+    `const STORE_CONFIG = {\n  isOpen: ${jb(STORE_CONFIG.isOpen)},\n  closedDates: ${JSON.stringify(STORE_CONFIG.closedDates||[])},\n  announcementText: ${js(STORE_CONFIG.announcementText)},\n  popupLines: ${popupStr},\n  defaultNote: ${js(STORE_CONFIG.defaultNote)},\n  deliveryHintLine1: ${js(STORE_CONFIG.deliveryHintLine1)},\n  deliveryHintLine2: ${js(STORE_CONFIG.deliveryHintLine2)},\n};`
   );
 
   // 替換 MENU_DATA
