@@ -28,6 +28,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .cat-tab{flex-shrink:0;padding:.375rem .875rem;border-radius:.875rem;border:none;font-size:.875rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;min-height:2.25rem}
 .cat-tab.active{background:#e8a020;color:white;font-weight:700}
 .cat-tab:not(.active){background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9)}
+.cat-tabs-wrap{position:relative}
+.cat-fade-right{position:absolute;top:0;right:0;bottom:0;width:3rem;background:linear-gradient(to right,rgba(26,36,85,0),rgba(26,36,85,.95));pointer-events:none;display:flex;align-items:center;justify-content:flex-end;padding-right:.25rem;transition:opacity .2s;z-index:5}
+.cat-fade-right span{font-size:.75rem;color:rgba(255,255,255,.9);animation:pulseRight .85s infinite alternate;display:block}
+@keyframes pulseRight{0%{transform:translateX(0)}100%{transform:translateX(3px)}}
 
 /* 公告 */
 .announce{background:#fef3d0;border-left:3px solid #e8a020;margin:.75rem .75rem 0;border-radius:.375rem;padding:.5rem .75rem;font-size:.8125rem;color:#7a5200;line-height:1.5;word-break:break-all}
@@ -89,7 +93,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 /* 購物車 */
 .cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;justify-content:flex-end;flex-direction:column;align-items:center}
 .cart-overlay.open{display:flex}
-.cart-sheet{background:white;border-radius:1.25rem 1.25rem 0 0;max-height:92vh;display:flex;flex-direction:column;width:100%;max-width:480px;overflow:hidden}
+.cart-sheet{background:white;border-radius:1.25rem 1.25rem 0 0;max-height:92vh;display:flex;flex-direction:column;width:100%;max-width:480px;overflow:hidden;position:relative}
 .cart-handle{text-align:center;padding:.625rem;cursor:pointer}
 .cart-handle-bar{width:2.5rem;height:4px;background:#ddd;border-radius:2px;display:inline-block}
 .cart-header{padding:0 1rem .75rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;flex-shrink:0;gap:.5rem}
@@ -97,7 +101,11 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .cart-back-btn{font-size:.875rem;color:#1a2455;background:none;border:1.5px solid #1a2455;border-radius:.5rem;cursor:pointer;padding:.375rem .625rem;font-family:'Noto Sans TC',sans-serif;min-height:2.25rem;display:flex;align-items:center;gap:.25rem;white-space:nowrap}
 .cart-back-btn:active{background:#f0ede6}
 .clear-btn{font-size:.875rem;color:#c4390a;background:none;border:none;cursor:pointer;padding:.375rem .5rem;font-family:'Noto Sans TC',sans-serif;min-height:2.25rem}
-.cart-body{overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
+.cart-body{overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;position:relative}
+.cart-scroll-fade{position:absolute;bottom:0;left:0;right:0;height:4rem;background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,0.97));pointer-events:none;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.5rem;transition:opacity .25s;z-index:10}
+.cart-scroll-arrow{width:2rem;height:2rem;border-radius:50%;background:#1a2455;display:flex;align-items:center;justify-content:center;animation:bounceDown .9s infinite alternate;box-shadow:0 2px 8px rgba(26,36,85,.25)}
+.cart-scroll-arrow svg{width:1rem;height:1rem;fill:white}
+@keyframes bounceDown{0%{transform:translateY(0)}100%{transform:translateY(5px)}}
 .cart-items{padding:.625rem 1rem}
 .cart-item{display:flex;align-items:center;gap:.625rem;padding:.625rem 0;border-bottom:1px solid #f0f0f0}
 .cart-item-name{flex:1;font-size:.9375rem;font-weight:500;color:#1a2455;min-width:0}
@@ -291,7 +299,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="cart-badge" id="cart-badge" style="display: none;">0</span>
       </button>
     </div>
-    <div class="cat-tabs" id="cat-tabs"><button class="cat-tab active" onclick="selCategory('全部')">全部</button><button class="cat-tab" onclick="selCategory('炒飯')">炒飯</button><button class="cat-tab" onclick="selCategory('炒麵')">炒麵</button><button class="cat-tab" onclick="selCategory('炒烏龍麵')">炒烏龍麵</button><button class="cat-tab" onclick="selCategory('烏龍湯麵')">烏龍湯麵</button><button class="cat-tab" onclick="selCategory('粥品')">粥品</button><button class="cat-tab" onclick="selCategory('熱炒類')">熱炒類</button><button class="cat-tab" onclick="selCategory('時蔬類')">時蔬類</button><button class="cat-tab" onclick="selCategory('酥炸類')">酥炸類</button><button class="cat-tab" onclick="selCategory('湯品')">湯品</button></div>
+    <div class="cat-tabs-wrap">
+      <div class="cat-tabs" id="cat-tabs"><button class="cat-tab active" onclick="selCategory('全部')">全部</button><button class="cat-tab" onclick="selCategory('炒飯')">炒飯</button><button class="cat-tab" onclick="selCategory('炒麵')">炒麵</button><button class="cat-tab" onclick="selCategory('炒烏龍麵')">炒烏龍麵</button><button class="cat-tab" onclick="selCategory('烏龍湯麵')">烏龍湯麵</button><button class="cat-tab" onclick="selCategory('粥品')">粥品</button><button class="cat-tab" onclick="selCategory('熱炒類')">熱炒類</button><button class="cat-tab" onclick="selCategory('時蔬類')">時蔬類</button><button class="cat-tab" onclick="selCategory('酥炸類')">酥炸類</button><button class="cat-tab" onclick="selCategory('湯品')">湯品</button></div>
+      <div class="cat-fade-right" id="cat-fade-right"><span>▶</span></div>
+    </div>
   </div>
 
   <div class="announce" id="announce-bar">📢外帶自取享９折優惠❗訂單滿600元、距離3公里內可外送🛵</div>
@@ -1154,7 +1165,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <span class="cart-title">我的訂單</span>
       <button class="clear-btn" onclick="clearCart()">清空</button>
     </div>
-    <div class="cart-body">
+    <div class="cart-body" id="cart-body-scroll">
       <div class="cart-items" id="cart-items"><div class="cart-item"><div class="qty-control"><button class="qty-btn minus" onclick="changeCartQty('1',-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeCartQty('1',1)">+</button></div><div style="flex:1"><div class="cart-item-name">🍚 香腸炒飯</div></div><span class="cart-item-price">$105</span></div></div>
       <div class="cart-options">
         <div class="opt-title">訂單選項</div>
@@ -1204,6 +1215,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           <textarea class="note-input" rows="2" id="order-note" placeholder="例：口味調整、不加辣、其他需求..."></textarea>
         </div>
       </div>
+    </div><!-- end cart-body -->
+    <div class="cart-scroll-fade" id="cart-scroll-fade" style="display:none">
+      <div class="cart-scroll-arrow"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg></div>
     </div>
     <div class="cart-summary">
       <div class="summary-row"><span>總數量</span><span id="sum-qty">1 項</span></div>
@@ -3105,6 +3119,20 @@ function renderTabs(){
   document.getElementById('cat-tabs').innerHTML = ['全部',...ALL_CATS].map(c =>
     `<button class="cat-tab${c===selCat?' active':''}" onclick="selCategory('${c}')">${c}</button>`
   ).join('');
+  initCatFade();
+}
+function initCatFade(){
+  const tabs = document.getElementById('cat-tabs');
+  const fade = document.getElementById('cat-fade-right');
+  if(!tabs||!fade) return;
+  function checkCatScroll(){
+    const canScrollMore = tabs.scrollLeft + tabs.clientWidth < tabs.scrollWidth - 8;
+    fade.style.display = canScrollMore ? 'flex' : 'none';
+  }
+  tabs.removeEventListener('scroll', tabs._catScrollHandler||null);
+  tabs._catScrollHandler = checkCatScroll;
+  tabs.addEventListener('scroll', checkCatScroll);
+  setTimeout(checkCatScroll, 80);
 }
 function selCategory(c){ selCat=c; renderTabs(); renderMenu(); }
 
@@ -3202,7 +3230,20 @@ function confirmAddToCart(){
   closeOptionsModal(); renderMenu(); updateBadge(); updateBottomBar();
 }
 
-function openCart(){ renderCartItems(); updateSummary(); document.getElementById('cart-overlay').classList.add('open'); }
+function openCart(){
+  renderCartItems(); updateSummary();
+  document.getElementById('cart-overlay').classList.add('open');
+  const body = document.getElementById('cart-body-scroll');
+  const fade = document.getElementById('cart-scroll-fade');
+  function checkScroll(){
+    const canScrollMore = body.scrollTop + body.clientHeight < body.scrollHeight - 8;
+    fade.style.display = canScrollMore ? 'flex' : 'none';
+  }
+  body.removeEventListener('scroll', body._scrollHandler||null);
+  body._scrollHandler = checkScroll;
+  body.addEventListener('scroll', checkScroll);
+  setTimeout(checkScroll, 50);
+}
 function closeCart(){ document.getElementById('cart-overlay').classList.remove('open'); }
 function clearCart(){ if(!Object.keys(cart).length) return; cart={}; renderCartItems(); updateBadge(); updateBottomBar(); updateSummary(); }
 
@@ -3224,6 +3265,7 @@ function renderCartItems(){
       return `<div class="cart-item">${qtyCtrl(key,val)}<span class="cart-item-name">${item.emoji} ${item.name}</span><span class="cart-item-price">$${item.price*val}</span></div>`;
     }
   }).join('');
+  setTimeout(()=>{ const b=document.getElementById('cart-body-scroll'); const f=document.getElementById('cart-scroll-fade'); if(b&&f){ const can=b.scrollTop+b.clientHeight<b.scrollHeight-8; f.style.display=can?'flex':'none'; } },80);
 }
 function changeCartQty(key,delta){
   const val=cart[key];
