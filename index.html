@@ -278,6 +278,66 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 /* Toast */
 .adm-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:#1a2455;color:white;padding:.625rem 1.25rem;border-radius:2rem;font-size:.875rem;font-weight:700;z-index:999;transition:transform .3s ease;pointer-events:none;white-space:nowrap}
 .adm-toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ════════════════════════════════════════════════════
+   整理後移入的樣式（原本散落在 HTML inline style）
+════════════════════════════════════════════════════ */
+
+/* 外送提示區塊（選外送才顯示，由 JS 控制 display） */
+.delivery-hint {
+  display: none;                  /* 預設隱藏，JS 會設為 block */
+  background: #fff0f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 8px;
+  line-height: 1.8;
+}
+.delivery-hint.show { display: block; }
+
+/* 外送提示的紅色警示文字 */
+.delivery-hint-warn {
+  color: #c4390a;
+  font-weight: 700;
+}
+
+/* 折扣列（外帶9折才顯示，由 JS 控制 display） */
+.sum-disc-row {
+  display: none;                  /* 預設隱藏，JS 控制為 flex */
+  justify-content: space-between;
+  font-size: 13px;
+  color: #c4390a;
+  margin-bottom: 4px;
+}
+.sum-disc-row.show { display: flex; }
+
+/* 管理後台浮動按鈕（右下角齒輪） */
+.adm-fab {
+  position: fixed;
+  bottom: max(1.25rem, calc(env(safe-area-inset-bottom) + 0.5rem));
+  right: 1rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: #1a2455;
+  border: none;
+  color: white;
+  font-size: 1.125rem;
+  cursor: pointer;
+  z-index: 80;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  display: none;                  /* 預設隱藏 */
+  align-items: center;
+  justify-content: center;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+/* 登出後 JS 加上 active-fab → 顯示按鈕 */
+.adm-fab.active-fab { display: flex; }
+.adm-fab:hover,
+.adm-fab:active { opacity: 1; }
+
 </style>
 </head>
 <body>
@@ -301,11 +361,11 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
     <div class="cat-tabs-wrap">
       <div class="cat-tabs" id="cat-tabs"><button class="cat-tab active" onclick="selCategory('全部')">全部</button><button class="cat-tab" onclick="selCategory('炒飯')">炒飯</button><button class="cat-tab" onclick="selCategory('炒麵')">炒麵</button><button class="cat-tab" onclick="selCategory('炒烏龍麵')">炒烏龍麵</button><button class="cat-tab" onclick="selCategory('烏龍湯麵')">烏龍湯麵</button><button class="cat-tab" onclick="selCategory('粥品')">粥品</button><button class="cat-tab" onclick="selCategory('熱炒類')">熱炒類</button><button class="cat-tab" onclick="selCategory('時蔬類')">時蔬類</button><button class="cat-tab" onclick="selCategory('酥炸類')">酥炸類</button><button class="cat-tab" onclick="selCategory('湯品')">湯品</button></div>
-      <div class="cat-fade-right" id="cat-fade-right"><span>▶</span></div>
+      <div class="cat-fade-right" id="cat-fade-right" style="display: flex;"><span>▶</span></div>
     </div>
   </div>
 
-  <div class="announce" id="announce-bar">📢外帶自取享９折優惠❗訂單滿600元、距離3公里內可外送🛵</div>
+  <div class="announce" id="announce-bar">📢本店公休日不固定，下單前請先詢問店家，以免讓您白跑一趟🏃💨</div>
   <div id="menu-content"><div class="menu-list"><div class="section-title">炒飯</div><div class="menu-item">
     <div class="item-emoji">🍚</div>
     <div class="item-info">
@@ -1118,7 +1178,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="item-price">$70</div>
     </div><button class="add-btn" onclick="changeQty(81,1)">+</button></div></div></div>
 
-  <div class="bottom-bar" id="bottom-bar" style="display: none;">
+  <div class="bottom-bar" id="bottom-bar">
     <div class="bottom-total">已選 <span id="bottom-price">$95</span></div>
     <button class="bottom-order-btn" onclick="openCart()">查看訂單</button>
   </div>
@@ -1157,7 +1217,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- 購物車 -->
-<div class="cart-overlay" id="cart-overlay" onclick="if(event.target===this)closeCart()">
+<div class="cart-overlay" id="cart-overlay">
   <div class="cart-sheet">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
     <div class="cart-header">
@@ -1189,7 +1249,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         </div>
         <div class="receipt-tax-row" id="receipt-tax-row">
           <div class="delivery-field-label">🏢 統一編號 <span>*必填</span></div>
-          <input class="delivery-field-input" type="text" id="receipt-tax-id" inputmode="numeric" maxlength="8" placeholder="請輸入 8 位統一編號">
+          <input class="delivery-field-input" type="text" id="receipt-tax-id" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="請輸入 8 位數字統一編號">
         </div>
         <div style="margin-top:8px">
           <div style="font-size:13px;color:#666;margin-bottom:6px">🛍 取餐方式 <span style="color:#c4390a;font-weight:700">*必填</span></div>
@@ -1197,9 +1257,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
             <button class="sel" onclick="selPickup('takeout',this)" style="flex:1">外帶自取 9折</button>
             <button onclick="selPickup('delivery',this)" style="flex:1" class="">外送</button>
           </div>
-          <div id="delivery-hint" style="display: none; background: rgb(255, 240, 240); border-radius: 8px; padding: 10px 12px; font-size: 12px; color: rgb(85, 85, 85); margin-bottom: 8px; line-height: 1.8;">
+          <div class="delivery-hint" id="delivery-hint">
             <span id="delivery-hint-line1">🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）</span><br>
-            <span id="delivery-hint-line2" style="color:#c4390a;font-weight:700">*請於下方填入外送地址與聯絡電話</span>
+            <span class="delivery-hint-warn" id="delivery-hint-line2">*請於下方填入外送地址與聯絡電話</span>
           </div>
           <div class="delivery-fields" id="delivery-fields">
             <div class="delivery-field-row">
@@ -1208,7 +1268,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
             </div>
             <div class="delivery-field-row">
               <div class="delivery-field-label">📞 聯絡電話 <span>*必填</span></div>
-              <input class="delivery-field-input" type="tel" id="delivery-phone" inputmode="tel" placeholder="請輸入聯絡電話">
+              <input class="delivery-field-input" type="tel" id="delivery-phone" inputmode="tel" maxlength="10" pattern="09[0-9]{8}" placeholder="請輸入 10 碼手機（09xxxxxxxx）">
             </div>
           </div>
           <div style="font-size:13px;color:#666;margin-bottom:4px">📝 備註（口味調整、其他需求）</div>
@@ -1216,13 +1276,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         </div>
       </div>
     </div><!-- end cart-body -->
-    <div class="cart-scroll-fade" id="cart-scroll-fade" style="display:none">
-      <div class="cart-scroll-arrow"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg></div>
+    <div class="cart-scroll-fade" id="cart-scroll-fade">
+      <div class="cart-scroll-arrow"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path></svg></div>
     </div>
     <div class="cart-summary">
       <div class="summary-row"><span>總數量</span><span id="sum-qty">1 項</span></div>
       <div class="summary-row"><span>小計</span><span id="sum-sub">$105</span></div>
-      <div id="sum-disc" style="display: flex; justify-content: space-between; font-size: 13px; color: rgb(196, 57, 10); margin-bottom: 4px;"><span>外帶自取 9折</span><span id="sum-disc-val">-$10</span></div>
+      <div class="sum-disc-row" id="sum-disc"><span>外帶自取 9折</span><span id="sum-disc-val">-$10</span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$95</span></div>
     </div>
     <button class="checkout-btn" onclick="placeOrder()">確認下單</button>
@@ -1230,7 +1290,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- 加購選項 Modal -->
-<div class="options-overlay" id="options-overlay" onclick="if(event.target===this)closeOptionsModal()">
+<div class="options-overlay" id="options-overlay">
   <div class="options-sheet">
     <div class="cart-handle"><span class="cart-handle-bar"></span></div>
     <div class="options-header" id="options-header"><div class="options-title">🍚 香腸炒飯</div><div class="options-price">$105</div></div>
@@ -1251,7 +1311,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 ════════════════════════════════════════ -->
 
 <!-- 後台入口按鈕（僅在點餐頁顯示） -->
-<button id="adm-fab" onclick="admOpenPw()" title="管理後台" style="position: fixed; bottom: max(1.25rem,calc(env(safe-area-inset-bottom)+0.5rem)); right: 1rem; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: rgb(26, 36, 85); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: white; font-size: 1.125rem; cursor: pointer; z-index: 80; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 10px; display: none; align-items: center; justify-content: center; opacity: 0.55; transition: opacity 0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.55'" ontouchstart="this.style.opacity='1'" ontouchend="this.style.opacity='0.55'">⚙️</button>
+<button id="adm-fab" class="adm-fab" onclick="admOpenPw()" title="管理後台">⚙️</button>
 
 <!-- 密碼輸入遮罩 -->
 <div class="adm-pw-overlay" id="adm-pw-overlay">
@@ -2963,10 +3023,20 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // │  defaultNote     備註欄灰色提示文字                                 │
 // │  deliveryHintLine1/2 外送說明框兩行文字                            │
 // └──────────────────────────────────────────────────────────────────────┘
+// ════════════════════════════════════════════════════════════════
+//  🏪 店家設定（可在管理後台修改，修改完按「存檔下載」即生效）
+//  ─────────────────────────────────────────────────────────────
+//  isOpen         → true = 營業中 / false = 公休（顯示公休遮罩）
+//  closedDates    → 指定公休日期陣列，格式：["2025-01-01","2025-02-10"]
+//  announcementText → 頁面頂端公告文字
+//  popupLines     → 開啟時的公告彈窗，每行一個字串，空字串 = 空行
+//  defaultNote    → 備註欄的預設提示文字
+//  deliveryHintLine1/2 → 選外送時顯示的提示說明
+// ════════════════════════════════════════════════════════════════
 const STORE_CONFIG = {
   isOpen: true,
   closedDates: [],
-  announcementText: "📢本店公休日不固定，下單前請先詢問店家，以免讓您白跑一趟🏃💨",
+  announcementText: "📢【LINE限定】自取享９折‼️如需外送請提前訂購🙏",
   popupLines: [
   "🍱歡迎光臨【香品小食堂🍲】",
   "堅持現點現做，完美滋味值得您耐心等待⏳",
@@ -2997,6 +3067,22 @@ const STORE_CONFIG = {
 // │  extras    加購選項 [{label:'選項名',price:加價}]  不要→[]          │
 // │  sauce     醬料選擇 ['醬料A','醬料B']              不要→[]          │
 // └──────────────────────────────────────────────────────────────────────┘
+// ════════════════════════════════════════════════════════════════
+//  🍽️  菜單資料（可在管理後台直接新增/編輯/刪除，不需手動改這裡）
+//  ─────────────────────────────────────────────────────────────
+//  每個品項欄位說明：
+//  id        → 唯一編號（系統自動產生，不要手動改）
+//  cat       → 分類名稱，必須和 ALL_CATS 一致
+//  name      → 菜名
+//  price     → 售價（整數，單位：元）
+//  emoji     → 代表圖示（一個 emoji）
+//  popular   → true = 顯示「熱銷」標籤
+//  isNew     → true = 顯示「新品」標籤
+//  isSoldOut → true = 顯示「已售完」並無法點選
+//  isHidden  → true = 前台隱藏此品項
+//  extras    → 加購選項陣列，例：[{label:"加飯",price:20}]
+//  sauce     → 醬料選項陣列，例：["醬油","芥末"]
+// ════════════════════════════════════════════════════════════════
 const MENU_DATA = [
   { id:1, cat:"炒飯", name:"香腸炒飯", price:105, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
   { id:2, cat:"炒飯", name:"豬肉炒飯", price:105, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
@@ -3089,9 +3175,11 @@ const MENU_DATA = [
 // │  ⚠️ 忘記改版本號 → 客人可能還是看到舊菜單！                        │
 // │  ★ 按後台右上角【💾 存檔】→【⬇ 下載 HTML】會自動更新版本號      │
 // └──────────────────────────────────────────────────────────────────────┘
+// 🔗 LINE LIFF ID：到 LINE Developers 後台取得，格式為 xxxxxxxxxx-xxxxxxxx
 const LIFF_ID = '2009693763-bOg2whDg';
 (function(){
-  const VER = '20260502';
+  // 📅 版本號（存檔時自動更新為當天日期，不需手動修改）
+const VER = '20260504';
   const url = new URL(location.href);
   if(url.searchParams.get('v') !== VER){ url.searchParams.set('v', VER); location.replace(url.toString()); }
 })();
@@ -3113,6 +3201,7 @@ const LIFF_ID = '2009693763-bOg2whDg';
 })();
 const menu = MENU_DATA.filter(i => !i.isHidden);
 let cart = {}, opts = {cutlery:'no', receipt:'no', pickup:'takeout'}, selCat = '全部';
+// 📂 分類順序（可在管理後台「菜單分類」區塊修改）
 const ALL_CATS = ["炒飯","炒麵","炒烏龍麵","烏龍湯麵","粥品","熱炒類","時蔬類","酥炸類","湯品"];
 
 function renderTabs(){
@@ -3207,8 +3296,21 @@ function openOptionsModal(item){
     body += '</div></div>';
   }
   document.getElementById('options-body').innerHTML = body;
-  document.getElementById('options-overlay').classList.add('open');
+  const optOverlay = document.getElementById('options-overlay');
+  optOverlay.classList.add('open');
   document.getElementById('modal-qty').textContent = pendingQty;
+
+  // ── 安全的背景點擊關閉（防止滑動誤觸） ──
+  optOverlay.removeEventListener('pointerdown', optOverlay._pdHandler || null);
+  optOverlay.removeEventListener('pointerup',   optOverlay._puHandler || null);
+  let _ox = 0, _oy = 0;
+  optOverlay._pdHandler = function(e){ if(e.target !== optOverlay) return; _ox=e.clientX; _oy=e.clientY; };
+  optOverlay._puHandler = function(e){
+    if(e.target !== optOverlay) return;
+    if(Math.abs(e.clientX-_ox)<8 && Math.abs(e.clientY-_oy)<8) closeOptionsModal();
+  };
+  optOverlay.addEventListener('pointerdown', optOverlay._pdHandler);
+  optOverlay.addEventListener('pointerup',   optOverlay._puHandler);
 }
 function toggleExtra(i){ pendingExtras[i] = document.getElementById('ex-'+i).checked; }
 function selSauce(s,btn){
@@ -3231,18 +3333,41 @@ function confirmAddToCart(){
 }
 
 function openCart(){
-  renderCartItems(); updateSummary();
-  document.getElementById('cart-overlay').classList.add('open');
+  renderCartItems();
+  updateSummary();
+  const overlay = document.getElementById('cart-overlay');
+  overlay.classList.add('open');
+
+  // ── 捲動提示箭頭 ──
   const body = document.getElementById('cart-body-scroll');
   const fade = document.getElementById('cart-scroll-fade');
   function checkScroll(){
     const canScrollMore = body.scrollTop + body.clientHeight < body.scrollHeight - 8;
     fade.style.display = canScrollMore ? 'flex' : 'none';
   }
-  body.removeEventListener('scroll', body._scrollHandler||null);
+  body.removeEventListener('scroll', body._scrollHandler || null);
   body._scrollHandler = checkScroll;
   body.addEventListener('scroll', checkScroll);
   setTimeout(checkScroll, 50);
+
+  // ── 安全的背景點擊關閉（防止滑動誤觸） ──
+  // 記錄 pointerdown 的位置，若 pointerup 位移 < 8px 才算「點擊」
+  overlay.removeEventListener('pointerdown', overlay._pdHandler || null);
+  overlay.removeEventListener('pointerup',   overlay._puHandler || null);
+  let _startX = 0, _startY = 0;
+  overlay._pdHandler = function(e){
+    if(e.target !== overlay) return;   // 只在點到背景時才記錄
+    _startX = e.clientX;
+    _startY = e.clientY;
+  };
+  overlay._puHandler = function(e){
+    if(e.target !== overlay) return;   // 只在點到背景時才判斷
+    const dx = Math.abs(e.clientX - _startX);
+    const dy = Math.abs(e.clientY - _startY);
+    if(dx < 8 && dy < 8) closeCart();  // 位移夠小才算真正點擊背景
+  };
+  overlay.addEventListener('pointerdown', overlay._pdHandler);
+  overlay.addEventListener('pointerup',   overlay._puHandler);
 }
 function closeCart(){ document.getElementById('cart-overlay').classList.remove('open'); }
 function clearCart(){ if(!Object.keys(cart).length) return; cart={}; renderCartItems(); updateBadge(); updateBottomBar(); updateSummary(); }
@@ -3280,14 +3405,20 @@ function selOpt(key,val,btn){
   if(key==='receipt'){ document.getElementById('receipt-tax-row').classList.toggle('show',val==='yes'); if(val!=='yes') document.getElementById('receipt-tax-id').classList.remove('error'); }
   updateSummary();
 }
-function selPickup(val,btn){
-  opts.pickup=val;
-  btn.closest('.opt-toggle').querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
+function selPickup(val, btn){
+  opts.pickup = val;
+  // 切換按鈕選取狀態
+  btn.closest('.opt-toggle').querySelectorAll('button').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
-  const d=val==='delivery';
-  document.getElementById('delivery-hint').style.display=d?'block':'none';
-  document.getElementById('delivery-fields').classList.toggle('show',d);
-  if(!d){ document.getElementById('delivery-address').classList.remove('error'); document.getElementById('delivery-phone').classList.remove('error'); }
+  // 切換外送欄位顯示（用 class 控制，不用 inline style）
+  const isDelivery = (val === 'delivery');
+  document.getElementById('delivery-hint').classList.toggle('show', isDelivery);
+  document.getElementById('delivery-fields').classList.toggle('show', isDelivery);
+  // 清除外送欄位錯誤狀態
+  if(!isDelivery){
+    document.getElementById('delivery-address').classList.remove('error');
+    document.getElementById('delivery-phone').classList.remove('error');
+  }
   updateSummary();
 }
 function calcSub(){
@@ -3311,8 +3442,11 @@ function updateSummary(){
   const s=calcSub(),t=calcTotal(),qty=Object.values(cart).reduce((a,v)=>a+(typeof v==='object'?v.qty:v),0);
   document.getElementById('sum-qty').textContent=qty+' 項';
   document.getElementById('sum-sub').textContent='$'+s;
-  const de=document.getElementById('sum-disc');
-  if(opts.pickup==='takeout'&&s>0){ de.style.display='flex'; document.getElementById('sum-disc-val').textContent='-$'+(s-t); } else de.style.display='none';
+  // 折扣列：外帶9折才顯示
+  const de = document.getElementById('sum-disc');
+  const showDisc = (opts.pickup === 'takeout' && s > 0);
+  de.classList.toggle('show', showDisc);
+  if(showDisc) document.getElementById('sum-disc-val').textContent = '-$' + (s - t);
   document.getElementById('sum-total').textContent='$'+t;
   const bp=document.getElementById('bottom-price'); if(bp) bp.textContent='$'+t;
 }
@@ -3329,12 +3463,27 @@ function placeOrder(){
     const ae=document.getElementById('delivery-address'),pe=document.getElementById('delivery-phone');
     let err=false;
     if(!ae.value.trim()){ ae.classList.add('error'); err=true; } else ae.classList.remove('error');
-    if(!pe.value.trim()){ pe.classList.add('error'); err=true; } else pe.classList.remove('error');
-    if(err){ ae.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    const phoneVal=pe.value.trim();
+    if(!phoneVal||phoneVal.length!==10||!phoneVal.startsWith('09')||!/^\d{10}$/.test(phoneVal)){
+      pe.classList.add('error'); err=true;
+      if(!phoneVal) pe.placeholder='⚠ 請輸入手機號碼';
+    } else pe.classList.remove('error');
+    if(err){
+      // 手機格式錯誤時才彈提示（地址空白則無需額外提示，欄位紅框已夠明顯）
+      if(!phoneVal || phoneVal.length !== 10 || !phoneVal.startsWith('09')){
+        alert('手機號碼格式錯誤！\n請輸入 10 碼、09 開頭的手機號碼。');
+      }
+      ae.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
   }
   if(opts.receipt==='yes'){
     const te=document.getElementById('receipt-tax-id');
-    if(!te.value.trim()){ te.classList.add('error'); te.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    const taxVal=te.value.trim();
+    if(!taxVal||taxVal.length!==8||!/^\d{8}$/.test(taxVal)){
+      te.classList.add('error'); te.scrollIntoView({behavior:'smooth',block:'center'});
+      alert('統一編號格式錯誤！\n請輸入剛好 8 位數字的統一編號。'); return;
+    }
     te.classList.remove('error');
   }
   const items=buildItems(),s=calcSub(),t=calcTotal(),note=document.getElementById('order-note').value.trim();
@@ -3402,9 +3551,12 @@ liff.init({liffId:LIFF_ID})
   .then(()=>{ if(liff.isInClient() && !liff.isLoggedIn()) liff.login(); })
   .catch(e=>console.warn('LIFF init failed (非 LINE 環境，可正常使用管理後台):',e));
 
-// ════════════════════════════════════════════════
-//  管理後台邏輯（密碼：233009）
-// ════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+//  ✏️  管理後台邏輯
+// ────────────────────────────────────────────────────────────────
+//  🔑 後台密碼在這裡修改 → 改 ADM_PW 的值即可
+//     目前密碼：233009
+// ════════════════════════════════════════════════════════════════
 const ADM_PW = '233009';
 let admCatFilter = '全部', admEditingId = null;
 
@@ -3441,14 +3593,14 @@ function admLogin(){
     document.getElementById('adm-page-store').classList.add('active');
     document.getElementById('adm-tab-store').classList.add('active');
     document.getElementById('adm-overlay').classList.add('open');
-    document.getElementById('adm-fab').style.display='none';
+    document.getElementById('adm-fab').classList.remove('active-fab');
   } else {
     document.getElementById('adm-pw-error').textContent = '密碼錯誤，請重試';
     document.getElementById('adm-pw-input').value='';
     document.getElementById('adm-pw-input').focus();
   }
 }
-function admClose(){ document.getElementById('adm-overlay').classList.remove('open'); document.getElementById('adm-fab').style.display='flex'; }
+function admClose(){ document.getElementById('adm-overlay').classList.remove('open'); document.getElementById('adm-fab').classList.add('active-fab'); }
 
 // ── 頁面切換 ──
 function admShowPage(id, btn){
@@ -3735,7 +3887,6 @@ function admDownload(){
   URL.revokeObjectURL(url);
   admToast('⬇ 下載完成！請上傳到 GitHub');
 }
-</script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script>
+</script>
 
-
-</div></div><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script></body></html>
+</div></div><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script></body></html>
