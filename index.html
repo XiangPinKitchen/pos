@@ -1370,21 +1370,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           支援<strong>跨日設定</strong>，例如：5/5 22:00 ～ 5/6 10:00。<br>
           ⚠️ 所有時間均為<strong>台灣時間（GMT+8）</strong>，無需手動換算。
         </div>
-        <div id="adm-closed-dates-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row">
-    <div class="closed-range-row-title">
-      📅 公休時段
-      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
-      <input type="datetime-local" class="adm-input cr-start" value="2026-05-05T00:00" style="width:100%">
-      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
-      <input type="datetime-local" class="adm-input cr-end" value="2026-05-05T23:59" style="width:100%">
-      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 開始填 2025-05-05T22:00，結束填 2025-05-06T10:00</div>
-  </div></div>
+        <div id="adm-closed-dates-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"></div>
         <button class="adm-add-row-btn" onclick="admAddClosedDateRow()">＋ 新增公休時段</button>
       </div>
 
@@ -3039,7 +3025,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- Toast -->
-<div class="adm-toast" id="adm-toast">⬇ 已下載版本 20260505-01，請上傳到 GitHub</div>
+<div class="adm-toast" id="adm-toast"></div>
 
 <!-- ════════════════════════════════════════
      JavaScript
@@ -3084,13 +3070,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ════════════════════════════════════════════════════════════════
 const STORE_CONFIG = {
   isOpen: true,
-  closedRanges: [
-  {
-    "start": "2026-05-05T13:10",
-    "end": "2026-05-05T13:15",
-    "note": "測試！！！"
-  }
-],
+  closedRanges: [],
   announcementText: "📢【LINE限定】自取享９折‼️如需外送請提前訂購🙏",
   popupLines: [
   "🍱歡迎光臨【香品小食堂🍲】",
@@ -3240,7 +3220,7 @@ const LIFF_ID = '2009693763-bOg2whDg';
 //  存檔時自動更新，不需手動修改。
 //  格式：YYYYMMDD-NN（同一天第幾次存檔）
 // ════════════════════════════════════════════════════════════════
-const VER = '20260505-02';
+const VER = '20260505-01';
 
 // ════════════════════════════════════════════════════════════════
 //  🔄 自動更新偵測設定
@@ -3284,24 +3264,28 @@ const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/XiangPinKitchen/pos/re
     fetch(GITHUB_RAW_URL + '?_t=' + Date.now(), { cache: 'no-store' })
       .then(r => r.text())
       .then(html => {
-        // 從遠端 HTML 裡抓出 VER 值
         const m = html.match(/const VER = '([^']+)'/);
         if(!m) return;
         const remoteVer = m[1];
-        if(remoteVer !== VER) showUpdateBanner(remoteVer);
+        // 跳過條件：
+        // 1. 遠端版本與本地相同 → 不用更新
+        // 2. 客人已對這個版本按過「稍後再說」→ 本次開頁不再提示
+        if(remoteVer === VER) return;
+        if(sessionStorage.getItem('update-dismissed') === remoteVer) return;
+        showUpdateBanner(remoteVer);
       })
-      .catch(() => {}); // 網路失敗靜默，不影響點餐
+      .catch(() => {}); // 網路失敗靜默
   }
 
-  // 頁面載入 5 秒後第一次比對（避免干擾初始渲染）
+  // 頁面載入 5 秒後第一次比對
   setTimeout(fetchRemoteVer, 5000);
-  // 之後每 60 秒檢查一次
+  // 之後每 60 秒再比對一次
   setInterval(fetchRemoteVer, 60000);
 })();
 
 // ── 顯示「有新版本」提示條 ──
 function showUpdateBanner(remoteVer){
-  if(document.getElementById('update-banner')) return; // 已顯示中則不重複
+  if(document.getElementById('update-banner')) return; // 已顯示中不重複建立
   const banner = document.createElement('div');
   banner.id = 'update-banner';
   banner.style.cssText = [
@@ -3315,21 +3299,40 @@ function showUpdateBanner(remoteVer){
     'animation:slideUpBanner .3s ease'
   ].join(';');
   banner.innerHTML = `
-    <div style="font-size:.875rem;line-height:1.5">
-      🔄 <strong>菜單已更新</strong>（v${remoteVer}）<br>
-      <span style="font-size:.75rem;opacity:.8">點選右側按鈕取得最新版本</span>
+    <div style="font-size:.875rem;line-height:1.5;flex:1;min-width:0">
+      🔄 <strong>菜單已更新</strong><br>
+      <span style="font-size:.75rem;opacity:.8">按「更新」取得最新菜單</span>
     </div>
-    <button onclick="location.reload(true)" style="
+    <button onclick="doUpdate('${remoteVer}')" style="
       flex-shrink:0;background:#e8a020;color:white;border:none;border-radius:.5rem;
       padding:.5rem .875rem;font-size:.875rem;font-weight:700;cursor:pointer;
       font-family:'Noto Sans TC',sans-serif;white-space:nowrap;min-height:2.5rem
     ">立即更新</button>
+    <button onclick="dismissUpdate('${remoteVer}')" style="
+      flex-shrink:0;background:rgba(255,255,255,.15);color:white;border:none;border-radius:.5rem;
+      padding:.5rem .625rem;font-size:.8125rem;cursor:pointer;
+      font-family:'Noto Sans TC',sans-serif;white-space:nowrap;min-height:2.5rem
+    ">稍後</button>
   `;
-  // 動畫
   const style = document.createElement('style');
   style.textContent = '@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}';
   document.head.appendChild(style);
   document.body.appendChild(banner);
+}
+
+// ── 立即更新：強制重整（瀏覽器拿新版）──
+function doUpdate(remoteVer){
+  // 重整後 URL 的 ?v= 會換成新版號，瀏覽器必定拿新版
+  const url = new URL(location.href);
+  url.searchParams.set('v', remoteVer);
+  location.replace(url.toString());
+}
+
+// ── 稍後：記住這個版本已關閉，本次開頁不再彈出 ──
+function dismissUpdate(remoteVer){
+  try { sessionStorage.setItem('update-dismissed', remoteVer); } catch(e){}
+  const b = document.getElementById('update-banner');
+  if(b) b.remove();
 }
 
 // ════════════════════════════════════════════════
