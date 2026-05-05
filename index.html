@@ -36,6 +36,14 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 /* 公告 */
 .announce{background:#fef3d0;border-left:3px solid #e8a020;margin:.75rem .75rem 0;border-radius:.375rem;padding:.5rem .75rem;font-size:.8125rem;color:#7a5200;line-height:1.5;word-break:break-all}
 
+/* 公休時段設定 Row（後台用）*/
+.closed-range-row{background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.625rem;padding:.625rem .75rem;display:flex;flex-direction:column;gap:.375rem;position:relative}
+.closed-range-row-title{font-size:.75rem;font-weight:700;color:#888;display:flex;justify-content:space-between;align-items:center}
+.closed-range-fields{display:flex;flex-direction:column;gap:.375rem}
+.closed-range-label{font-size:.75rem;color:#555;margin-bottom:2px}
+.closed-range-time-row{display:flex;gap:.375rem;align-items:center}
+.closed-range-time-row span{font-size:.8125rem;color:#888;white-space:nowrap;flex-shrink:0}
+
 /* 分類標題 */
 .section-title{padding:.875rem .875rem .375rem;font-size:.9375rem;font-weight:700;color:#1a2455}
 
@@ -365,7 +373,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 
-  <div class="announce" id="announce-bar">📢本店公休日不固定，下單前請先詢問店家，以免讓您白跑一趟🏃💨</div>
+  <div class="announce" id="announce-bar">📢【LINE限定】自取享９折‼️如需外送請提前訂購🙏</div>
   <div id="menu-content"><div class="menu-list"><div class="section-title">炒飯</div><div class="menu-item">
     <div class="item-emoji">🍚</div>
     <div class="item-info">
@@ -1189,8 +1197,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 <!-- 公休遮罩 -->
 <div class="closed-overlay" id="closed-overlay">
   <div class="closed-icon">🔒</div>
-  <div class="closed-title">目前休息中</div>
-  <div class="closed-msg">感謝您的光臨，目前非營業時間。<br>請於營業時段再來訂餐，謝謝！</div>
+  <div class="closed-title">目前為公休時間</div>
+  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size:.875rem;opacity:.7;margin-top:.5rem;display:block"></span></div>
 </div>
 
 <!-- 公告彈窗 -->
@@ -1285,7 +1293,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="sum-disc-row" id="sum-disc"><span>外帶自取 9折</span><span id="sum-disc-val">-$10</span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$95</span></div>
     </div>
-    <button class="checkout-btn" onclick="placeOrder()">確認下單</button>
+    <button class="checkout-btn" id="checkout-main-btn" onclick="placeOrder()">確認下單</button>
   </div>
 </div>
 
@@ -1345,7 +1353,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
       <div class="adm-card">
         <div class="adm-card-title">⚡ 營業狀態 <span class="adm-card-sub">（最常修改）</span></div>
-        <div class="adm-tip">✏️ 公休時關閉，客人看到「目前休息中」並無法點餐。改完記得到「版本」頁更新日期再下載。</div>
+        <div class="adm-tip">✏️ 關閉時，客人看到「目前為公休時間」並無法點餐。<br>若只是特定時段公休，請改用下方「指定公休時段」設定，不需關閉此開關。</div>
         <div class="adm-toggle-row">
           <div class="adm-toggle-label">
             是否<strong>營業中</strong>
@@ -1356,10 +1364,28 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
 
       <div class="adm-card">
-        <div class="adm-card-title">📅 指定公休日 <span class="adm-card-sub">（自動停止接單）</span></div>
-        <div class="adm-tip">✏️ 新增後，當天頁面載入會自動顯示「公休」遮罩，無需手動關閉營業開關。格式：<code>YYYY-MM-DD</code>，例如 <code>2025-12-25</code>。過去的日期不影響，可隨時清除。</div>
-        <div id="adm-closed-dates-wrap" style="display:flex;flex-direction:column;gap:.375rem;margin-bottom:.625rem"></div>
-        <button class="adm-add-row-btn" onclick="admAddClosedDateRow('')">＋ 新增公休日期</button>
+        <div class="adm-card-title">📅 指定公休時段 <span class="adm-card-sub">（自動停止接單）</span></div>
+        <div class="adm-tip">
+          ✏️ 新增後，頁面每秒自動比對台灣時間，進入時段立即顯示「公休」遮罩並鎖定結帳。<br>
+          支援<strong>跨日設定</strong>，例如：5/5 22:00 ～ 5/6 10:00。<br>
+          ⚠️ 所有時間均為<strong>台灣時間（GMT+8）</strong>，無需手動換算。
+        </div>
+        <div id="adm-closed-dates-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row">
+    <div class="closed-range-row-title">
+      📅 公休時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
+      <input type="datetime-local" class="adm-input cr-start" value="2026-05-05T00:00" style="width:100%">
+      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
+      <input type="datetime-local" class="adm-input cr-end" value="2026-05-05T23:59" style="width:100%">
+      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 開始填 2025-05-05T22:00，結束填 2025-05-06T10:00</div>
+  </div></div>
+        <button class="adm-add-row-btn" onclick="admAddClosedDateRow()">＋ 新增公休時段</button>
       </div>
 
       <div class="adm-card">
@@ -3017,7 +3043,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // │  【區塊 A】店家設定                                                  │
 // │  ★ 建議用管理後台修改，不要手動改這裡                              │
 // │                                                                      │
-// │  isOpen          true=營業  false=公休                              │
+// │  isOpen          true=營業  false=公休（強制全日公休）              │
+// │  closedRanges    指定公休時段（支援跨日、精確到分鐘）               │
+// │                  格式：{start:"2025-05-05T22:00", end:"2025-05-06T10:00", note:"五一連假"}
 // │  announcementText 頂部黃色公告橫幅文字                              │
 // │  popupLines      進入頁面的彈窗公告（[] = 不顯示）                 │
 // │  defaultNote     備註欄灰色提示文字                                 │
@@ -3026,8 +3054,14 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ════════════════════════════════════════════════════════════════
 //  🏪 店家設定（可在管理後台修改，修改完按「存檔下載」即生效）
 //  ─────────────────────────────────────────────────────────────
-//  isOpen         → true = 營業中 / false = 公休（顯示公休遮罩）
-//  closedDates    → 指定公休日期陣列，格式：["2025-01-01","2025-02-10"]
+//  isOpen         → true = 營業中 / false = 公休（強制全日關閉）
+//
+//  closedRanges   → 指定公休時段陣列（台灣時間 GMT+8，支援跨日）
+//                   每筆格式：{ start: "YYYY-MM-DDTHH:MM", end: "YYYY-MM-DDTHH:MM", note: "說明（可空白）" }
+//                   範例（跨日）：{ start: "2025-05-05T22:00", end: "2025-05-06T10:00", note: "連假公休" }
+//                   範例（單日）：{ start: "2025-12-25T00:00", end: "2025-12-25T23:59", note: "聖誕節" }
+//                   ★ 系統每秒自動比對，進入區間立即鎖單
+//
 //  announcementText → 頁面頂端公告文字
 //  popupLines     → 開啟時的公告彈窗，每行一個字串，空字串 = 空行
 //  defaultNote    → 備註欄的預設提示文字
@@ -3035,7 +3069,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ════════════════════════════════════════════════════════════════
 const STORE_CONFIG = {
   isOpen: true,
-  closedDates: [],
+  closedRanges: [
+  {
+    "start": "2026-05-05T12:30",
+    "end": "2026-05-05T12:31",
+    "note": "測試！！"
+  }
+],
   announcementText: "📢【LINE限定】自取享９折‼️如需外送請提前訂購🙏",
   popupLines: [
   "🍱歡迎光臨【香品小食堂🍲】",
@@ -3179,7 +3219,7 @@ const MENU_DATA = [
 const LIFF_ID = '2009693763-bOg2whDg';
 (function(){
   // 📅 版本號（存檔時自動更新為當天日期，不需手動修改）
-const VER = '20260504';
+const VER = '20260505-01';
   const url = new URL(location.href);
   if(url.searchParams.get('v') !== VER){ url.searchParams.set('v', VER); location.replace(url.toString()); }
 })();
@@ -3457,7 +3497,8 @@ function buildItems(){
   });
 }
 function placeOrder(){
-  if(document.getElementById('closed-overlay').classList.contains('open')){ alert('目前店家休息中，無法送出訂單。'); return; }
+  // ── 後端二次校驗：送出前重新確認是否仍在公休時段內 ──
+  if(isClosedOnSubmit()) return;
   if(!Object.keys(cart).length) return;
   if(opts.pickup==='delivery'){
     const ae=document.getElementById('delivery-address'),pe=document.getElementById('delivery-phone');
@@ -3509,7 +3550,8 @@ function genOrderId(n){
   return mm+dd+String(n.getHours()).padStart(2,'0')+String(n.getMinutes()).padStart(2,'0')+String(Math.floor(Math.random()*900)+100);
 }
 function submitOrder(){
-  if(document.getElementById('closed-overlay').classList.contains('open')){ alert('目前店家休息中，無法送出訂單。'); return; }
+  // ── 後端二次校驗：最終送出前再確認（防止頁面開著跨越公休時段）──
+  if(isClosedOnSubmit()) return;
   document.getElementById('confirm-overlay').classList.remove('open');
   const items=buildItems(),s=calcSub(),t=calcTotal(),note=document.getElementById('order-note').value.trim();
   const cutlery=opts.cutlery==='yes'?'需要':'不需要',receipt=opts.receipt==='yes'?'需要':'不需要';
@@ -3532,17 +3574,124 @@ function submitOrder(){
   liff.sendMessages([{type:'text',text:ml.join('\n')}]).then(()=>liff.closeWindow()).catch(e=>{ console.error(e); alert('訊息傳送失敗，請重試。'); });
 }
 
+// ════════════════════════════════════════════════════════════════
+//  🕐 公休時段判斷（台灣時間 GMT+8，秒級即時監控）
+//  ─────────────────────────────────────────────────────────────
+//  getTaiwanNow()    → 取得台灣當下時間的 Date 物件
+//  isInClosedRange() → 判斷現在是否在任一公休時段內
+//  checkClosedStatus() → 每秒執行：自動顯示/隱藏公休遮罩、鎖定結帳按鈕
+// ════════════════════════════════════════════════════════════════
+
+// ── 取得台灣當地時間（GMT+8），不論使用者裝置在哪個時區都準確 ──
+function getTaiwanNow() {
+  // 使用 Intl.DateTimeFormat 轉換為台北時區，再重組為本地 Date 進行比對
+  const now = new Date();
+  // 取得台北各時間元件
+  const parts = new Intl.DateTimeFormat('zh-TW', {
+    timeZone: 'Asia/Taipei',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: false
+  }).formatToParts(now);
+  const p = {};
+  parts.forEach(({type, value}) => { p[type] = value; });
+  // 重組為 Date（以 UTC 方式建立，避免時區二次偏移）
+  return new Date(Date.UTC(
+    parseInt(p.year), parseInt(p.month) - 1, parseInt(p.day),
+    parseInt(p.hour), parseInt(p.minute), parseInt(p.second)
+  ));
+}
+
+// ── 判斷現在台灣時間是否落在任一公休區間內 ──
+// 傳入格式："YYYY-MM-DDTHH:MM"（視為台灣時間，轉為 UTC 毫秒比對）
+function isInClosedRange() {
+  if (!STORE_CONFIG.isOpen) return true; // 強制公休開關
+  const ranges = STORE_CONFIG.closedRanges || [];
+  if (!ranges.length) return false;
+
+  const twNow = getTaiwanNow(); // 台灣時間（以 UTC ms 表示）
+  const nowMs = twNow.getTime();
+
+  return ranges.some(r => {
+    if (!r.start || !r.end) return false;
+    // 將 "YYYY-MM-DDTHH:MM" 視為台灣時間，轉成 UTC 毫秒
+    const toUTCms = str => {
+      const [datePart, timePart] = str.split('T');
+      const [y, mo, d] = datePart.split('-').map(Number);
+      const [h, mi] = (timePart || '00:00').split(':').map(Number);
+      // 台灣 = UTC+8，所以減 8 小時轉成 UTC
+      return Date.UTC(y, mo - 1, d, h - 8, mi, 0);
+    };
+    const startMs = toUTCms(r.start);
+    const endMs   = toUTCms(r.end);
+    return nowMs >= startMs && nowMs <= endMs;
+  });
+}
+
+// ── 即時狀態切換：每秒檢查一次，進入公休立即鎖單 ──
+let _lastClosedState = null; // 快取上次狀態，避免每秒重繪 DOM
+function checkClosedStatus() {
+  const closed = isInClosedRange();
+  if (closed === _lastClosedState) return; // 狀態未變則跳過
+  _lastClosedState = closed;
+
+  const overlay      = document.getElementById('closed-overlay');
+  const checkoutBtn  = document.getElementById('checkout-main-btn');  // 購物車結帳按鈕
+  const bottomBtn    = document.querySelector('.bottom-order-btn');    // 底部查看訂單按鈕
+  const rangeHint    = document.getElementById('closed-range-hint');  // 公休時段提示文字
+
+  if (closed) {
+    // ── 進入公休：顯示遮罩、鎖按鈕、顯示時段說明 ──
+    overlay.classList.add('open');
+    if (checkoutBtn) { checkoutBtn.disabled = true; checkoutBtn.style.opacity = '0.45'; checkoutBtn.style.cursor = 'not-allowed'; }
+    if (bottomBtn)   { bottomBtn.disabled = true;   bottomBtn.style.opacity = '0.45';  bottomBtn.style.cursor = 'not-allowed'; }
+    // 找出目前命中的區間，顯示說明
+    if (rangeHint) {
+      const twNow = getTaiwanNow(); const nowMs = twNow.getTime();
+      const toUTCms = str => { const [dp, tp] = str.split('T'); const [y,mo,d] = dp.split('-').map(Number); const [h,mi] = (tp||'00:00').split(':').map(Number); return Date.UTC(y,mo-1,d,h-8,mi); };
+      const active = (STORE_CONFIG.closedRanges||[]).find(r => r.start && r.end && nowMs >= toUTCms(r.start) && nowMs <= toUTCms(r.end));
+      if (active) {
+        const fmt = s => s.replace('T',' ').slice(0,16);
+        rangeHint.textContent = `公休時段：${fmt(active.start)} ～ ${fmt(active.end)}${active.note ? '（'+active.note+'）' : ''}`;
+      } else if (!STORE_CONFIG.isOpen) {
+        rangeHint.textContent = '（店家設定全日公休）';
+      } else {
+        rangeHint.textContent = '';
+      }
+    }
+  } else {
+    // ── 離開公休：隱藏遮罩、解鎖按鈕 ──
+    overlay.classList.remove('open');
+    if (checkoutBtn) { checkoutBtn.disabled = false; checkoutBtn.style.opacity = ''; checkoutBtn.style.cursor = ''; }
+    if (bottomBtn)   { bottomBtn.disabled = false;   bottomBtn.style.opacity = '';  bottomBtn.style.cursor = ''; }
+    if (rangeHint)   { rangeHint.textContent = ''; }
+  }
+}
+
+// ── 後端二次校驗（送出前再確認一次，防止開著頁面跨越公休時段下單）──
+function isClosedOnSubmit() {
+  if (isInClosedRange()) {
+    alert('⚠️ 目前為公休時間，暫不開放點餐。\n請於營業時段再來，謝謝！');
+    return true;
+  }
+  return false;
+}
+
 // 初始化
 renderTabs(); renderMenu();
 document.getElementById('announce-bar').textContent = STORE_CONFIG.announcementText;
 document.getElementById('order-note').placeholder = STORE_CONFIG.defaultNote;
 document.getElementById('delivery-hint-line1').textContent = STORE_CONFIG.deliveryHintLine1;
 document.getElementById('delivery-hint-line2').textContent = STORE_CONFIG.deliveryHintLine2;
+
+// ── 啟動即時公休監控（每秒執行，秒級切換）──
+checkClosedStatus(); // 立即執行一次（不等 1 秒）
+setInterval(checkClosedStatus, 1000);
+
+// ── 首次顯示彈窗（非公休時才顯示公告）──
 (function(){
-  if(!STORE_CONFIG.isOpen){
-    document.getElementById('closed-overlay').classList.add('open');
-  } else if(STORE_CONFIG.popupLines&&STORE_CONFIG.popupLines.length){
-    document.getElementById('popup-body').innerHTML = STORE_CONFIG.popupLines.map(l=>l===''?'<br>':`<span>${l}</span><br>`).join('');
+  if (!isInClosedRange() && STORE_CONFIG.popupLines && STORE_CONFIG.popupLines.length) {
+    document.getElementById('popup-body').innerHTML = STORE_CONFIG.popupLines.map(l => l === '' ? '<br>' : `<span>${l}</span><br>`).join('');
     document.getElementById('popup-overlay').classList.add('open');
   }
 })();
@@ -3633,8 +3782,9 @@ function admInitStore(){
   document.getElementById('adm-liff-display').textContent = LIFF_ID;
   const wrap=document.getElementById('adm-popup-lines-wrap'); wrap.innerHTML='';
   STORE_CONFIG.popupLines.forEach(l=>admAddPopupLine(l,false));
+  // ── 載入公休時段（新格式）──
   const cdWrap=document.getElementById('adm-closed-dates-wrap'); cdWrap.innerHTML='';
-  (STORE_CONFIG.closedDates||[]).forEach(d=>admAddClosedDateRow(d,false));
+  (STORE_CONFIG.closedRanges||[]).forEach(r=>admAddClosedDateRow(r,false));
 }
 function admReadStore(){
   STORE_CONFIG.isOpen = document.getElementById('f-isOpen').checked;
@@ -3644,17 +3794,51 @@ function admReadStore(){
   STORE_CONFIG.deliveryHintLine2 = document.getElementById('f-deliveryHintLine2').value;
   STORE_CONFIG.popupLines = [];
   document.querySelectorAll('.adm-popup-line-input').forEach(inp=>STORE_CONFIG.popupLines.push(inp.value));
-  STORE_CONFIG.closedDates = [];
-  document.querySelectorAll('.adm-closed-date-input').forEach(inp=>{ const v=inp.value.trim(); if(v) STORE_CONFIG.closedDates.push(v); });
+  // ── 讀取公休時段（新格式）──
+  STORE_CONFIG.closedRanges = [];
+  document.querySelectorAll('.closed-range-row').forEach(row=>{
+    const start = row.querySelector('.cr-start').value.trim();
+    const end   = row.querySelector('.cr-end').value.trim();
+    const note  = row.querySelector('.cr-note').value.trim();
+    if(start && end) STORE_CONFIG.closedRanges.push({start, end, note});
+  });
 }
-function admAddClosedDateRow(v='', save=true){
+// ── 新增公休時段 Row（支援跨日、開始/結束時間、備註）──
+// r = { start:"YYYY-MM-DDTHH:MM", end:"YYYY-MM-DDTHH:MM", note:"..." } 或 undefined（新增空白列）
+function admAddClosedDateRow(r, save=true){
   if(save) admReadStore();
-  const wrap=document.getElementById('adm-closed-dates-wrap');
-  const row=document.createElement('div'); row.className='popup-line-row';
-  const today=new Date(); const yyyy=today.getFullYear(), mm=String(today.getMonth()+1).padStart(2,'0'), dd=String(today.getDate()).padStart(2,'0');
-  row.innerHTML=`<input type="date" class="adm-input adm-closed-date-input" value="${esc(v)}" min="${yyyy}-01-01" style="flex:1;margin-bottom:0"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button>`;
+  const wrap = document.getElementById('adm-closed-dates-wrap');
+  const row  = document.createElement('div');
+  row.className = 'closed-range-row';
+
+  // 預設值：今天 00:00 ～ 今天 23:59
+  const now = new Date();
+  const twStr = () => {
+    const p = new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
+    const o={}; p.forEach(({type,value})=>o[type]=value);
+    return `${o.year}-${o.month}-${o.day}`;
+  };
+  const todayStr = twStr();
+  const defStart = (r&&r.start) ? r.start : `${todayStr}T00:00`;
+  const defEnd   = (r&&r.end)   ? r.end   : `${todayStr}T23:59`;
+  const defNote  = (r&&r.note)  ? r.note  : '';
+
+  row.innerHTML = `
+    <div class="closed-range-row-title">
+      📅 公休時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
+      <input type="datetime-local" class="adm-input cr-start" value="${esc(defStart)}" style="width:100%">
+      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
+      <input type="datetime-local" class="adm-input cr-end" value="${esc(defEnd)}" style="width:100%">
+      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="${esc(defNote)}" style="width:100%">
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 開始填 2025-05-05T22:00，結束填 2025-05-06T10:00</div>
+  `;
   wrap.appendChild(row);
-  if(!v){ const inp=row.querySelector('input'); inp.value=`${yyyy}-${mm}-${dd}`; }
 }
 function admAddPopupLine(v='', save=true){
   if(save) admReadStore();
@@ -3815,10 +3999,18 @@ function admSaveItem(){
   admCloseModal(); admRenderMenuList();
 }
 
-// ── 版本號（自動取今天日期）──
+// ── 版本號（每次存檔自動遞增：日期 + 序號，例 20250505-01、-02…）──
 function admSetToday(){
-  const d=new Date();
-  admCurrentVer = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  // 格式：YYYYMMDD-NN（NN = 當天第幾次存檔，從 01 開始）
+  const d = new Date();
+  const dateStr = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  // 解析現有版本號，若是今天就遞增序號
+  const match = (admCurrentVer||'').match(/^(\d{8})-(\d+)$/);
+  if(match && match[1] === dateStr){
+    admCurrentVer = `${dateStr}-${String(parseInt(match[2])+1).padStart(2,'0')}`;
+  } else {
+    admCurrentVer = `${dateStr}-01`;
+  }
 }
 let admCurrentVer = '';
 
@@ -3830,7 +4022,7 @@ function js(s){ return JSON.stringify(s); }
 // ── 下載 HTML ──
 function admDownload(){
   admReadStore();
-  const ver = admCurrentVer || (()=>{const d=new Date();return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;})();
+  const ver = admCurrentVer || (()=>{const d=new Date();return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}-01`;})();
   const liffId = LIFF_ID;
 
   const menuLines = MENU_DATA.map(item=>{
@@ -3841,6 +4033,8 @@ function admDownload(){
 
   const allCatsOnly = JSON.stringify(ALL_CATS);
   const popupStr = JSON.stringify(STORE_CONFIG.popupLines, null, 2);
+  // ── 序列化公休時段（新格式）──
+  const closedRangesStr = JSON.stringify(STORE_CONFIG.closedRanges||[], null, 2);
 
   // 下載前先把後台、密碼框關掉，讓 DOM 回到純前台點餐狀態
   const admEl  = document.getElementById('adm-overlay');
@@ -3856,10 +4050,10 @@ function admDownload(){
 
   let out = currentHTML;
 
-  // 替換 STORE_CONFIG
+  // 替換 STORE_CONFIG（含新的 closedRanges）
   out = out.replace(
     /const STORE_CONFIG = \{[\s\S]*?\};/,
-    `const STORE_CONFIG = {\n  isOpen: ${jb(STORE_CONFIG.isOpen)},\n  closedDates: ${JSON.stringify(STORE_CONFIG.closedDates||[])},\n  announcementText: ${js(STORE_CONFIG.announcementText)},\n  popupLines: ${popupStr},\n  defaultNote: ${js(STORE_CONFIG.defaultNote)},\n  deliveryHintLine1: ${js(STORE_CONFIG.deliveryHintLine1)},\n  deliveryHintLine2: ${js(STORE_CONFIG.deliveryHintLine2)},\n};`
+    `const STORE_CONFIG = {\n  isOpen: ${jb(STORE_CONFIG.isOpen)},\n  closedRanges: ${closedRangesStr},\n  announcementText: ${js(STORE_CONFIG.announcementText)},\n  popupLines: ${popupStr},\n  defaultNote: ${js(STORE_CONFIG.defaultNote)},\n  deliveryHintLine1: ${js(STORE_CONFIG.deliveryHintLine1)},\n  deliveryHintLine2: ${js(STORE_CONFIG.deliveryHintLine2)},\n};`
   );
 
   // 替換 MENU_DATA
@@ -3883,10 +4077,10 @@ function admDownload(){
   const blob = new Blob([out], {type:'text/html;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href=url; a.download='香品小食堂_點餐系統.html'; a.click();
+  a.href=url; a.download=`香品小食堂_點餐系統_${ver}.html`; a.click();
   URL.revokeObjectURL(url);
-  admToast('⬇ 下載完成！請上傳到 GitHub');
+  admToast(`⬇ 已下載版本 ${ver}，請上傳到 GitHub`);
 }
 </script>
 
-</div></div><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script></body></html>
+</div></div><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script></body></html>
