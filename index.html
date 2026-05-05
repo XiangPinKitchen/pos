@@ -1424,6 +1424,21 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div style="font-size:.875rem;color:#555;background:#f8f8f8;border-radius:.5rem;padding:.625rem .75rem;font-family:monospace;word-break:break-all" id="adm-liff-display">2009693763-bOg2whDg</div>
       </div>
 
+      <div class="adm-card">
+        <div class="adm-card-title">🔄 自動更新偵測網址 <span class="adm-card-sub">（GitHub Raw URL）</span></div>
+        <div class="adm-tip">
+          ✏️ 填入後，客人開著頁面時每 60 秒自動比對版本，有新版本就會出現「立即更新」提示。<br><br>
+          <strong>怎麼取得網址？</strong><br>
+          1. 到 GitHub 你的 repo → 點進 HTML 檔案<br>
+          2. 點右上角 <strong>Raw</strong> 按鈕<br>
+          3. 複製網址貼到下方<br><br>
+          格式範例：<code>https://raw.githubusercontent.com/帳號/repo名稱/main/香品小食堂_點餐系統.html</code><br>
+          留空 = 關閉自動偵測。
+        </div>
+        <label class="adm-label">GitHub Raw 網址</label>
+        <input class="adm-input" type="url" id="f-githubRawUrl" placeholder="https://raw.githubusercontent.com/..." style="word-break:break-all">
+      </div>
+
     </div><!-- /store -->
 
     <!-- ── 菜單管理頁 ── -->
@@ -3071,9 +3086,9 @@ const STORE_CONFIG = {
   isOpen: true,
   closedRanges: [
   {
-    "start": "2026-05-05T12:37",
-    "end": "2026-05-05T12:40",
-    "note": "測試中"
+    "start": "2026-05-05T13:10",
+    "end": "2026-05-05T13:15",
+    "note": "測試！！！"
   }
 ],
   announcementText: "📢【LINE限定】自取享９折‼️如需外送請提前訂購🙏",
@@ -3216,13 +3231,106 @@ const MENU_DATA = [
 // │  ★ 按後台右上角【💾 存檔】→【⬇ 下載 HTML】會自動更新版本號      │
 // └──────────────────────────────────────────────────────────────────────┘
 // 🔗 LINE LIFF ID：到 LINE Developers 後台取得，格式為 xxxxxxxxxx-xxxxxxxx
+// 🔗 LINE LIFF ID
 const LIFF_ID = '2009693763-bOg2whDg';
-(function(){
-  // 📅 版本號（存檔時自動更新為當天日期，不需手動修改）
+
+// ════════════════════════════════════════════════════════════════
+//  📅 版本號
+//  ─────────────────────────────────────────────────────────────
+//  存檔時自動更新，不需手動修改。
+//  格式：YYYYMMDD-NN（同一天第幾次存檔）
+// ════════════════════════════════════════════════════════════════
 const VER = '20260505-01';
+
+// ════════════════════════════════════════════════════════════════
+//  🔄 自動更新偵測設定
+//  ─────────────────────────────────────────────────────────────
+//  GITHUB_RAW_URL → 填入你的 GitHub Raw 檔案網址
+//
+//  怎麼取得？
+//  1. 到 GitHub 你的 repo → 點進 HTML 檔案
+//  2. 點右上角「Raw」按鈕
+//  3. 複製網址列的網址，貼到下方引號內
+//
+//  範例網址格式：
+//  https://raw.githubusercontent.com/你的帳號/你的repo名稱/main/香品小食堂_點餐系統.html
+//
+//  留空字串 '' → 關閉自動更新偵測
+// ════════════════════════════════════════════════════════════════
+const GITHUB_RAW_URL = '';
+
+// ════════════════════════════════════════════════════════════════
+//  🔄 自動更新邏輯（不需修改以下程式碼）
+//  ─────────────────────────────────────────────────────────────
+//  ① 頁面載入時：URL 加上 ?v=版本號，強制瀏覽器跳過快取
+//  ② 每 60 秒：去 GitHub 偷偷比對版本號
+//     → 版本不同：右下角顯示「有新版本」提示條，客人點一下即重整
+//     → 版本相同：靜默，不打擾客人
+// ════════════════════════════════════════════════════════════════
+(function initVersionCheck(){
+  // ① 強制瀏覽器不吃快取（URL 附加版本號）
   const url = new URL(location.href);
-  if(url.searchParams.get('v') !== VER){ url.searchParams.set('v', VER); location.replace(url.toString()); }
+  if(url.searchParams.get('v') !== VER){
+    url.searchParams.set('v', VER);
+    location.replace(url.toString());
+    return; // replace 後頁面會重載，後面不再執行
+  }
+
+  // ② 定期從 GitHub Raw 比對版本號
+  if(!GITHUB_RAW_URL) return; // 未設定網址則略過
+
+  function fetchRemoteVer(){
+    // 每次加上時間戳，確保抓到最新版（不被 CDN 快取）
+    fetch(GITHUB_RAW_URL + '?_t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.text())
+      .then(html => {
+        // 從遠端 HTML 裡抓出 VER 值
+        const m = html.match(/const VER = '([^']+)'/);
+        if(!m) return;
+        const remoteVer = m[1];
+        if(remoteVer !== VER) showUpdateBanner(remoteVer);
+      })
+      .catch(() => {}); // 網路失敗靜默，不影響點餐
+  }
+
+  // 頁面載入 5 秒後第一次比對（避免干擾初始渲染）
+  setTimeout(fetchRemoteVer, 5000);
+  // 之後每 60 秒檢查一次
+  setInterval(fetchRemoteVer, 60000);
 })();
+
+// ── 顯示「有新版本」提示條 ──
+function showUpdateBanner(remoteVer){
+  if(document.getElementById('update-banner')) return; // 已顯示中則不重複
+  const banner = document.createElement('div');
+  banner.id = 'update-banner';
+  banner.style.cssText = [
+    'position:fixed','bottom:0','left:50%','transform:translateX(-50%)',
+    'width:100%','max-width:480px','z-index:9999',
+    'background:#1a2455','color:white',
+    'padding:.875rem 1rem',
+    'display:flex','align-items:center','justify-content:space-between','gap:.75rem',
+    'box-shadow:0 -2px 16px rgba(0,0,0,.25)',
+    'font-family:\'Noto Sans TC\',sans-serif',
+    'animation:slideUpBanner .3s ease'
+  ].join(';');
+  banner.innerHTML = `
+    <div style="font-size:.875rem;line-height:1.5">
+      🔄 <strong>菜單已更新</strong>（v${remoteVer}）<br>
+      <span style="font-size:.75rem;opacity:.8">點選右側按鈕取得最新版本</span>
+    </div>
+    <button onclick="location.reload(true)" style="
+      flex-shrink:0;background:#e8a020;color:white;border:none;border-radius:.5rem;
+      padding:.5rem .875rem;font-size:.875rem;font-weight:700;cursor:pointer;
+      font-family:'Noto Sans TC',sans-serif;white-space:nowrap;min-height:2.5rem
+    ">立即更新</button>
+  `;
+  // 動畫
+  const style = document.createElement('style');
+  style.textContent = '@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}';
+  document.head.appendChild(style);
+  document.body.appendChild(banner);
+}
 
 // ════════════════════════════════════════════════
 //  以下為系統邏輯，不需修改
@@ -3761,6 +3869,7 @@ function admInitStore(){
   document.getElementById('f-deliveryHintLine1').value = STORE_CONFIG.deliveryHintLine1;
   document.getElementById('f-deliveryHintLine2').value = STORE_CONFIG.deliveryHintLine2;
   document.getElementById('adm-liff-display').textContent = LIFF_ID;
+  document.getElementById('f-githubRawUrl').value = GITHUB_RAW_URL || '';
   const wrap=document.getElementById('adm-popup-lines-wrap'); wrap.innerHTML='';
   STORE_CONFIG.popupLines.forEach(l=>admAddPopupLine(l,false));
   // ── 載入公休時段（新格式）──
@@ -4005,6 +4114,7 @@ function admDownload(){
   admReadStore();
   const ver = admCurrentVer || (()=>{const d=new Date();return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}-01`;})();
   const liffId = LIFF_ID;
+  const githubRawUrl = document.getElementById('f-githubRawUrl').value.trim();
 
   const menuLines = MENU_DATA.map(item=>{
     const extras='['+item.extras.map(e=>`{label:${js(e.label)},price:${e.price}}`).join(',')+']';
@@ -4045,6 +4155,9 @@ function admDownload(){
 
   // 替換 LIFF_ID
   out = out.replace(/const LIFF_ID = '[^']*';/, `const LIFF_ID = '${liffId}';`);
+
+  // 替換 GITHUB_RAW_URL
+  out = out.replace(/const GITHUB_RAW_URL = '[^']*';/, `const GITHUB_RAW_URL = '${githubRawUrl}';`);
 
   // 替換版本號
   out = out.replace(/const VER = '[^']*';/, `const VER = '${ver}';`);
