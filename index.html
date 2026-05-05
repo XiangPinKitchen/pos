@@ -1380,25 +1380,11 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
     <div class="closed-range-fields">
       <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
-      <input type="datetime-local" class="adm-input cr-start" value="2026-05-05T16:00" style="width:100%">
+      <input type="datetime-local" class="adm-input cr-start" value="2026-05-23T00:00" style="width:100%">
       <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
-      <input type="datetime-local" class="adm-input cr-end" value="2026-05-05T23:59" style="width:100%">
+      <input type="datetime-local" class="adm-input cr-end" value="2026-05-30T23:59" style="width:100%">
       <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="【公告】5/5 (二) 營業至 16:00，造成不便請見諒。🙏" style="width:100%">
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 開始填 2025-05-05T22:00，結束填 2025-05-06T10:00</div>
-  </div><div class="closed-range-row">
-    <div class="closed-range-row-title">
-      📅 公休時段
-      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
-      <input type="datetime-local" class="adm-input cr-start" value="2026-05-05T00:00" style="width:100%">
-      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
-      <input type="datetime-local" class="adm-input cr-end" value="2026-05-05T23:59" style="width:100%">
-      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="老闆出國充充電，5/5 - 5/12 公休８日。我們約好 5/31 再見！🔋" style="width:100%">
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 開始填 2025-05-05T22:00，結束填 2025-05-06T10:00</div>
   </div></div>
@@ -3116,17 +3102,12 @@ const STORE_CONFIG = {
   isOpen: true,
   closedRanges: [
   {
-    "start": "2026-05-05T16:00",
-    "end": "2026-05-05T23:59",
-    "note": "【公告】5/5 (二) 營業至 16:00，造成不便請見諒。🙏"
-  },
-  {
     "start": "2026-05-23T00:00",
     "end": "2026-05-30T23:59",
     "note": "老闆出國充充電，5/5 - 5/12 公休８日。我們約好 5/31 再見！🔋"
   }
 ],
-  announcementText: "📢【LINE限定】自取享９折‼️如需外送請提前訂購🙏",
+  announcementText: "📢【LINE限定】自取享９折 ‼️ 如需外送服務請提前告知 🙏",
   popupLines: [
   "🍱歡迎光臨【香品小食堂🍲】",
   "堅持現點現做，完美滋味值得您耐心等待⏳",
@@ -3135,7 +3116,7 @@ const STORE_CONFIG = {
   "量多請提前預約，為您保留美味並節省時間⏰",
   "如有外送需求，請先洽詢店家🛵"
 ],
-  defaultNote: "例：口味調整、不加辣、其他需求...",
+  defaultNote: "例：口味調整、其他需求...",
   deliveryHintLine1: "🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）",
   deliveryHintLine2: "*請於下方填入外送地址與聯絡電話",
 };
@@ -4258,4 +4239,4 @@ function admDownload(){
 }
 </script>
 
-</div></div><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script></body></html>
+</div></div><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script><script src="https://static.line-scdn.net/liff/edge/2/non-ios-extensions_2_22_0.js" type="text/javascript"></script></body></html>
