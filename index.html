@@ -3071,9 +3071,9 @@ const STORE_CONFIG = {
   isOpen: true,
   closedRanges: [
   {
-    "start": "2026-05-05T12:30",
-    "end": "2026-05-05T12:31",
-    "note": "測試！！"
+    "start": "2026-05-05T12:37",
+    "end": "2026-05-05T12:40",
+    "note": "測試中"
   }
 ],
   announcementText: "📢【LINE限定】自取享９折‼️如需外送請提前訂購🙏",
@@ -3582,49 +3582,29 @@ function submitOrder(){
 //  checkClosedStatus() → 每秒執行：自動顯示/隱藏公休遮罩、鎖定結帳按鈕
 // ════════════════════════════════════════════════════════════════
 
-// ── 取得台灣當地時間（GMT+8），不論使用者裝置在哪個時區都準確 ──
-function getTaiwanNow() {
-  // 使用 Intl.DateTimeFormat 轉換為台北時區，再重組為本地 Date 進行比對
-  const now = new Date();
-  // 取得台北各時間元件
-  const parts = new Intl.DateTimeFormat('zh-TW', {
-    timeZone: 'Asia/Taipei',
-    year: 'numeric', month: '2-digit', day: '2-digit',
-    hour: '2-digit', minute: '2-digit', second: '2-digit',
-    hour12: false
-  }).formatToParts(now);
-  const p = {};
-  parts.forEach(({type, value}) => { p[type] = value; });
-  // 重組為 Date（以 UTC 方式建立，避免時區二次偏移）
-  return new Date(Date.UTC(
-    parseInt(p.year), parseInt(p.month) - 1, parseInt(p.day),
-    parseInt(p.hour), parseInt(p.minute), parseInt(p.second)
-  ));
+// ── 將「台灣時間字串 YYYY-MM-DDTHH:MM」轉為真實 UTC 毫秒 ──
+// 台灣 = UTC+8，後台輸入的是台灣時間，需減 8 小時才是真實 UTC
+// 例：台灣 2025-05-05T22:00 → UTC 14:00 → Date.UTC(2025,4,5,14,0)
+function twTimeToUTCms(str) {
+  const [datePart, timePart] = str.split('T');
+  const [y, mo, d] = datePart.split('-').map(Number);
+  const [h, mi]    = (timePart || '00:00').split(':').map(Number);
+  return Date.UTC(y, mo - 1, d, h - 8, mi, 0);
 }
 
-// ── 判斷現在台灣時間是否落在任一公休區間內 ──
-// 傳入格式："YYYY-MM-DDTHH:MM"（視為台灣時間，轉為 UTC 毫秒比對）
+// ── 判斷「現在」是否落在任一公休區間內 ──
+// 全程使用真實 UTC 毫秒（Date.now()），與客戶端時區設定完全無關
 function isInClosedRange() {
-  if (!STORE_CONFIG.isOpen) return true; // 強制公休開關
+  if (!STORE_CONFIG.isOpen) return true; // 強制全日公休
+
   const ranges = STORE_CONFIG.closedRanges || [];
   if (!ranges.length) return false;
 
-  const twNow = getTaiwanNow(); // 台灣時間（以 UTC ms 表示）
-  const nowMs = twNow.getTime();
+  const nowMs = Date.now(); // 真實 UTC 毫秒
 
   return ranges.some(r => {
     if (!r.start || !r.end) return false;
-    // 將 "YYYY-MM-DDTHH:MM" 視為台灣時間，轉成 UTC 毫秒
-    const toUTCms = str => {
-      const [datePart, timePart] = str.split('T');
-      const [y, mo, d] = datePart.split('-').map(Number);
-      const [h, mi] = (timePart || '00:00').split(':').map(Number);
-      // 台灣 = UTC+8，所以減 8 小時轉成 UTC
-      return Date.UTC(y, mo - 1, d, h - 8, mi, 0);
-    };
-    const startMs = toUTCms(r.start);
-    const endMs   = toUTCms(r.end);
-    return nowMs >= startMs && nowMs <= endMs;
+    return nowMs >= twTimeToUTCms(r.start) && nowMs <= twTimeToUTCms(r.end);
   });
 }
 
@@ -3647,9 +3627,10 @@ function checkClosedStatus() {
     if (bottomBtn)   { bottomBtn.disabled = true;   bottomBtn.style.opacity = '0.45';  bottomBtn.style.cursor = 'not-allowed'; }
     // 找出目前命中的區間，顯示說明
     if (rangeHint) {
-      const twNow = getTaiwanNow(); const nowMs = twNow.getTime();
-      const toUTCms = str => { const [dp, tp] = str.split('T'); const [y,mo,d] = dp.split('-').map(Number); const [h,mi] = (tp||'00:00').split(':').map(Number); return Date.UTC(y,mo-1,d,h-8,mi); };
-      const active = (STORE_CONFIG.closedRanges||[]).find(r => r.start && r.end && nowMs >= toUTCms(r.start) && nowMs <= toUTCms(r.end));
+      const nowMs = Date.now();
+      const active = (STORE_CONFIG.closedRanges||[]).find(r =>
+        r.start && r.end && nowMs >= twTimeToUTCms(r.start) && nowMs <= twTimeToUTCms(r.end)
+      );
       if (active) {
         const fmt = s => s.replace('T',' ').slice(0,16);
         rangeHint.textContent = `公休時段：${fmt(active.start)} ～ ${fmt(active.end)}${active.note ? '（'+active.note+'）' : ''}`;
