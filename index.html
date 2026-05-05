@@ -333,7 +333,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   color: white;
   font-size: 1.125rem;
   cursor: pointer;
-  z-index: 80;
+  z-index: 160;  /* 必須高於公休遮罩(150)，公休時仍可進後台 */
   box-shadow: 0 2px 10px rgba(0,0,0,.25);
   display: none;                  /* 預設隱藏 */
   align-items: center;
@@ -1197,7 +1197,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 <div class="closed-overlay" id="closed-overlay">
   <div class="closed-icon">🔒</div>
   <div class="closed-title">目前為公休時間</div>
-  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size:.875rem;opacity:.7;margin-top:.5rem;display:block"></span></div>
+  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size:.875rem;opacity:.7;margin-top:.5rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw"></span><span id="closed-range-note" style="font-size:.8125rem;opacity:.65;margin-top:.25rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw"></span></div>
+  <button onclick="admOpenPw()" style="margin-top:1.5rem;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.4);border-radius:.75rem;padding:.625rem 1.25rem;color:white;font-size:.9375rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;letter-spacing:.5px">⚙️ 管理後台</button>
 </div>
 
 <!-- 公告彈窗 -->
@@ -1415,6 +1416,19 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <input class="adm-input" type="text" id="f-deliveryHintLine1">
         <label class="adm-label">第二行 <span class="sub">（紅色粗體）</span></label>
         <input class="adm-input" type="text" id="f-deliveryHintLine2">
+      </div>
+
+      <div class="adm-card">
+        <div class="adm-card-title">🔒 後台登入密碼</div>
+        <div class="adm-tip">✏️ 修改後台登入密碼。改完後務必點【💾 存檔】，下次登入才會生效。<br>⚠️ 請記住新密碼，忘記密碼需手動修改 HTML 原始碼中的 <code>const ADM_PW</code>。</div>
+        <label class="adm-label">目前密碼（輸入後可修改）</label>
+        <input class="adm-input" type="password" id="f-pw-current" placeholder="請輸入目前密碼" maxlength="20" autocomplete="current-password">
+        <label class="adm-label" style="margin-top:.5rem">新密碼</label>
+        <input class="adm-input" type="password" id="f-pw-new" placeholder="請輸入新密碼（至少 4 位）" maxlength="20" autocomplete="new-password">
+        <label class="adm-label" style="margin-top:.5rem">確認新密碼</label>
+        <input class="adm-input" type="password" id="f-pw-confirm" placeholder="再次輸入新密碼" maxlength="20" autocomplete="new-password">
+        <button class="adm-add-row-btn" style="margin-top:.625rem;background:#1a2455;color:white;border:none" onclick="admChangePw()">🔑 確認修改密碼</button>
+        <div id="adm-pw-change-msg" style="font-size:.8125rem;margin-top:.375rem;min-height:1.2em"></div>
       </div>
 
       <div class="adm-card">
@@ -3087,7 +3101,7 @@ const STORE_CONFIG = {
   {
     "start": "2026-05-05T16:00",
     "end": "2026-05-05T23:59",
-    "note": "5/5 (二) 營業至下午16:00。造成不見 敬請見諒！"
+    "note": "【公告】5/5 (二) 營業至 16:00，造成不便請見諒。🙏"
   }
 ],
   announcementText: "📢【LINE限定】自取享９折‼️如需外送請提前訂購🙏",
@@ -3749,6 +3763,7 @@ function checkClosedStatus() {
   const checkoutBtn  = document.getElementById('checkout-main-btn');  // 購物車結帳按鈕
   const bottomBtn    = document.querySelector('.bottom-order-btn');    // 底部查看訂單按鈕
   const rangeHint    = document.getElementById('closed-range-hint');  // 公休時段提示文字
+  const rangeNote    = document.getElementById('closed-range-note');  // 公休備註文字
 
   if (closed) {
     // ── 進入公休：顯示遮罩、鎖按鈕、顯示時段說明 ──
@@ -3763,11 +3778,15 @@ function checkClosedStatus() {
       );
       if (active) {
         const fmt = s => s.replace('T',' ').slice(0,16);
-        rangeHint.textContent = `公休時段：${fmt(active.start)} ～ ${fmt(active.end)}${active.note ? '（'+active.note+'）' : ''}`;
+        rangeHint.style.whiteSpace = 'nowrap';
+        rangeHint.textContent = `公休時段：${fmt(active.start)} ～ ${fmt(active.end)}`;
+        if (rangeNote) { rangeNote.style.whiteSpace = 'nowrap'; rangeNote.textContent = active.note ? active.note : ''; }
       } else if (!STORE_CONFIG.isOpen) {
         rangeHint.textContent = '（店家設定全日公休）';
+        if (rangeNote) rangeNote.textContent = '';
       } else {
         rangeHint.textContent = '';
+        if (rangeNote) rangeNote.textContent = '';
       }
     }
   } else {
@@ -3776,6 +3795,7 @@ function checkClosedStatus() {
     if (checkoutBtn) { checkoutBtn.disabled = false; checkoutBtn.style.opacity = ''; checkoutBtn.style.cursor = ''; }
     if (bottomBtn)   { bottomBtn.disabled = false;   bottomBtn.style.opacity = '';  bottomBtn.style.cursor = ''; }
     if (rangeHint)   { rangeHint.textContent = ''; }
+    if (rangeNote)   { rangeNote.textContent = ''; }
   }
 }
 
@@ -3842,6 +3862,21 @@ function admOpenPw(){
   setTimeout(()=>document.getElementById('adm-pw-input').focus(), 100);
 }
 function admClosePw(){ document.getElementById('adm-pw-overlay').classList.remove('open'); }
+function admChangePw(){
+  const cur   = document.getElementById('f-pw-current').value;
+  const nw    = document.getElementById('f-pw-new').value;
+  const conf  = document.getElementById('f-pw-confirm').value;
+  const msgEl = document.getElementById('adm-pw-change-msg');
+  if(cur !== ADM_PW){ msgEl.style.color='#c4390a'; msgEl.textContent='❌ 目前密碼錯誤，請重新輸入。'; return; }
+  if(nw.length < 4){  msgEl.style.color='#c4390a'; msgEl.textContent='❌ 新密碼至少需要 4 位數。'; return; }
+  if(nw !== conf){    msgEl.style.color='#c4390a'; msgEl.textContent='❌ 兩次輸入的新密碼不一致。'; return; }
+  window._newAdmPw = nw;
+  msgEl.style.color='#27ae60';
+  msgEl.textContent='✅ 密碼已暫時更新！請點【💾 存檔】讓新密碼永久生效。';
+  document.getElementById('f-pw-current').value='';
+  document.getElementById('f-pw-new').value='';
+  document.getElementById('f-pw-confirm').value='';
+}
 function admLogin(){
   if(document.getElementById('adm-pw-input').value === ADM_PW){
     admClosePw();
@@ -4174,6 +4209,9 @@ function admDownload(){
     /const MENU_DATA = \[[\s\S]*?\];/,
     `const MENU_DATA = [\n${menuLines}\n];`
   );
+
+  // 替換 ADM_PW（如果後台有修改密碼）
+  if(window._newAdmPw){ out = out.replace(/const ADM_PW = '[^']*';/, `const ADM_PW = '${window._newAdmPw}';`); }
 
   // 替換 LIFF_ID
   out = out.replace(/const LIFF_ID = '[^']*';/, `const LIFF_ID = '${liffId}';`);
