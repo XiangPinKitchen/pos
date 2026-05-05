@@ -320,7 +320,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 }
 .sum-disc-row.show { display: flex; }
 
-/* 管理後台浮動按鈕（右下角齒輪） */
+/* 管理後台浮動按鈕（右下角齒輪，常駐顯示，z-index 高於公休遮罩） */
 .adm-fab {
   position: fixed;
   bottom: max(1.25rem, calc(env(safe-area-inset-bottom) + 0.5rem));
@@ -333,16 +333,14 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   color: white;
   font-size: 1.125rem;
   cursor: pointer;
-  z-index: 160;  /* 必須高於公休遮罩(150)，公休時仍可進後台 */
+  z-index: 160;
   box-shadow: 0 2px 10px rgba(0,0,0,.25);
-  display: none;                  /* 預設隱藏 */
+  display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0.55;
   transition: opacity 0.2s;
 }
-/* 登出後 JS 加上 active-fab → 顯示按鈕 */
-.adm-fab.active-fab { display: flex; }
 .adm-fab:hover,
 .adm-fab:active { opacity: 1; }
 
@@ -1187,18 +1185,17 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
   <div class="bottom-bar" id="bottom-bar">
     <div class="bottom-total">已選 <span id="bottom-price">$95</span></div>
-    <button class="bottom-order-btn" onclick="openCart()">查看訂單</button>
+    <button class="bottom-order-btn" onclick="openCart()" disabled="" style="opacity: 0.45; cursor: not-allowed;">查看訂單</button>
   </div>
 
 </div>
 </div>
 
 <!-- 公休遮罩 -->
-<div class="closed-overlay" id="closed-overlay">
+<div class="closed-overlay open" id="closed-overlay">
   <div class="closed-icon">🔒</div>
   <div class="closed-title">目前為公休時間</div>
-  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size:.875rem;opacity:.7;margin-top:.5rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw"></span><span id="closed-range-note" style="font-size:.8125rem;opacity:.65;margin-top:.25rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw"></span></div>
-  <button onclick="admOpenPw()" style="margin-top:1.5rem;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.4);border-radius:.75rem;padding:.625rem 1.25rem;color:white;font-size:.9375rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;letter-spacing:.5px">⚙️ 管理後台</button>
+  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size:.875rem;opacity:.7;margin-top:.5rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw">公休時段：2026-05-05 16:00 ～ 2026-05-05 23:59</span><span id="closed-range-note" style="font-size:.8125rem;opacity:.65;margin-top:.25rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw">【公告】5/5 (二) 營業至 16:00，造成不便請見諒。🙏</span></div>
 </div>
 
 <!-- 公告彈窗 -->
@@ -1293,7 +1290,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="sum-disc-row" id="sum-disc"><span>外帶自取 9折</span><span id="sum-disc-val">-$10</span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$95</span></div>
     </div>
-    <button class="checkout-btn" id="checkout-main-btn" onclick="placeOrder()">確認下單</button>
+    <button class="checkout-btn" id="checkout-main-btn" onclick="placeOrder()" disabled="" style="opacity: 0.45; cursor: not-allowed;">確認下單</button>
   </div>
 </div>
 
@@ -1371,6 +1368,20 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           ⚠️ 所有時間均為<strong>台灣時間（GMT+8）</strong>，無需手動換算。
         </div>
         <div id="adm-closed-dates-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row">
+    <div class="closed-range-row-title">
+      📅 公休時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
+      <input type="datetime-local" class="adm-input cr-start" value="2026-05-05T16:00" style="width:100%">
+      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
+      <input type="datetime-local" class="adm-input cr-end" value="2026-05-05T23:59" style="width:100%">
+      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="【公告】5/5 (二) 營業至 16:00，造成不便請見諒。🙏" style="width:100%">
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 開始填 2025-05-05T22:00，結束填 2025-05-06T10:00</div>
+  </div><div class="closed-range-row">
     <div class="closed-range-row-title">
       📅 公休時段
       <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
@@ -3102,6 +3113,11 @@ const STORE_CONFIG = {
     "start": "2026-05-05T16:00",
     "end": "2026-05-05T23:59",
     "note": "【公告】5/5 (二) 營業至 16:00，造成不便請見諒。🙏"
+  },
+  {
+    "start": "2026-05-23T00:00",
+    "end": "2026-05-30T23:59",
+    "note": "老闆出國充充電，5/5 - 5/12 公休８日。我們約好 5/31 再見！🔋"
   }
 ],
   announcementText: "📢【LINE限定】自取享９折‼️如需外送請提前訂購🙏",
@@ -3888,14 +3904,13 @@ function admLogin(){
     document.getElementById('adm-page-store').classList.add('active');
     document.getElementById('adm-tab-store').classList.add('active');
     document.getElementById('adm-overlay').classList.add('open');
-    document.getElementById('adm-fab').classList.remove('active-fab');
   } else {
     document.getElementById('adm-pw-error').textContent = '密碼錯誤，請重試';
     document.getElementById('adm-pw-input').value='';
     document.getElementById('adm-pw-input').focus();
   }
 }
-function admClose(){ document.getElementById('adm-overlay').classList.remove('open'); document.getElementById('adm-fab').classList.add('active-fab'); }
+function admClose(){ document.getElementById('adm-overlay').classList.remove('open'); }
 
 // ── 頁面切換 ──
 function admShowPage(id, btn){
