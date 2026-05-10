@@ -481,10 +481,11 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
               <div class="delivery-field-label">📍 外送地址 <span>*必填</span></div>
               <input class="delivery-field-input" type="text" id="delivery-address" placeholder="請輸入完整外送地址">
             </div>
-            <div class="delivery-field-row">
-              <div class="delivery-field-label">📞 聯絡電話 <span>*必填</span></div>
-              <input class="delivery-field-input" type="tel" id="delivery-phone" inputmode="tel" maxlength="10" pattern="09[0-9]{8}" placeholder="請輸入 10 碼手機（09xxxxxxxx）">
-            </div>
+          </div>
+          <!-- 聯絡電話：外帶＆外送皆必填 -->
+          <div class="delivery-field-row" style="margin-top:8px">
+            <div class="delivery-field-label">📞 聯絡電話 <span>*必填</span></div>
+            <input class="delivery-field-input" type="tel" id="delivery-phone" inputmode="tel" maxlength="10" pattern="09[0-9]{8}" placeholder="請輸入 10 碼手機（09xxxxxxxx）">
           </div>
           <div style="font-size:13px;color:#666;margin-bottom:4px">📝 備註（口味調整、其他需求）</div>
           <textarea class="note-input" rows="2" id="order-note" placeholder="例：口味調整、其他需求..."></textarea>
@@ -2731,7 +2732,6 @@ function selPickup(val, btn){
   // 清除外送欄位錯誤狀態
   if(!isDelivery){
     document.getElementById('delivery-address').classList.remove('error');
-    document.getElementById('delivery-phone').classList.remove('error');
   }
   // 取餐方式改變 → 重置時間狀態並重新產生選項
   pickupTime      = '';
@@ -2971,22 +2971,21 @@ function placeOrder(){
     }
   }
   if(opts.pickup==='delivery'){
-    const ae=document.getElementById('delivery-address'),pe=document.getElementById('delivery-phone');
-    let err=false;
-    if(!ae.value.trim()){ ae.classList.add('error'); err=true; } else ae.classList.remove('error');
+    const ae=document.getElementById('delivery-address');
+    if(!ae.value.trim()){ ae.classList.add('error'); ae.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    else ae.classList.remove('error');
+  }
+  // 電話：外帶＆外送皆必填
+  {
+    const pe=document.getElementById('delivery-phone');
     const phoneVal=pe.value.trim();
     if(!phoneVal||phoneVal.length!==10||!phoneVal.startsWith('09')||!/^\d{10}$/.test(phoneVal)){
-      pe.classList.add('error'); err=true;
+      pe.classList.add('error');
       if(!phoneVal) pe.placeholder='⚠ 請輸入手機號碼';
-    } else pe.classList.remove('error');
-    if(err){
-      // 手機格式錯誤時才彈提示（地址空白則無需額外提示，欄位紅框已夠明顯）
-      if(!phoneVal || phoneVal.length !== 10 || !phoneVal.startsWith('09')){
-        alert('手機號碼格式錯誤！\n請輸入 10 碼、09 開頭的手機號碼。');
-      }
-      ae.scrollIntoView({ behavior:'smooth', block:'center' });
+      alert('手機號碼格式錯誤！\n請輸入 10 碼、09 開頭的手機號碼。');
+      pe.scrollIntoView({behavior:'smooth',block:'center'});
       return;
-    }
+    } else pe.classList.remove('error');
   }
   if(opts.receipt==='yes'){
     const te=document.getElementById('receipt-tax-id');
@@ -3001,7 +3000,7 @@ function placeOrder(){
   const cutlery=opts.cutlery==='yes'?'需要':'不需要',receipt=opts.receipt==='yes'?'需要':'不需要';
   const pl={takeout:'外帶自取（9折）',delivery:'外送'}[opts.pickup];
   const da=opts.pickup==='delivery'?document.getElementById('delivery-address').value.trim():'';
-  const dp=opts.pickup==='delivery'?document.getElementById('delivery-phone').value.trim():'';
+  const dp=document.getElementById('delivery-phone').value.trim();
   const tid=opts.receipt==='yes'?document.getElementById('receipt-tax-id').value.trim():'';
   const ptDisplay = getPickupTimeDisplay();
   const ptLabelConfirm = opts.pickup === 'delivery' ? '⏰ 預計送達時間' : '⏰ 預計取餐時間';
@@ -3031,7 +3030,7 @@ function submitOrder(){
   const now=new Date(),timeStr=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
   const orderId=genOrderId(now),pl=opts.pickup==='takeout'?'外帶自取（9折）':'外送';
   const da=opts.pickup==='delivery'?document.getElementById('delivery-address').value.trim():'';
-  const dp=opts.pickup==='delivery'?document.getElementById('delivery-phone').value.trim():'';
+  const dp=document.getElementById('delivery-phone').value.trim();
   const tid=opts.receipt==='yes'?document.getElementById('receipt-tax-id').value.trim():'';
   const tl=opts.pickup==='takeout'&&s!==t?`💰 合計：$${t}（原價 $${s}）`:`💰 合計：$${t}`;
   const il=[]; items.forEach(i=>{ il.push(`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`); if(i.notes) il.push(`     └ ${i.notes}`); });
