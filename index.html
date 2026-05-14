@@ -201,13 +201,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .time-custom-note{font-size:.75rem;color:#c4390a;line-height:1.5;min-height:1em}
 
 /* ── 預約訂單模式 ── */
-.reserve-wrap{display:none;background:#eef2ff;border-radius:.625rem;padding:.75rem;border:1.5px solid #c8d4f0;margin-bottom:.5rem}
-.reserve-wrap.show{display:block}
+.reserve-wrap{display:none;background:#eef2ff;border-radius:.625rem;padding:.75rem;border:1.5px solid #c8d4f0;margin-bottom:.5rem;overflow:hidden;box-sizing:border-box}
+.reserve-wrap.show{display:block;overflow:hidden}
 .reserve-date-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.625rem}
 .reserve-date-label{font-size:.8125rem;color:#555;font-weight:600;white-space:nowrap}
 .reserve-date-val{font-size:.9375rem;color:#1a2455;font-weight:700;background:white;border:1.5px solid #1a2455;border-radius:.5rem;padding:.3rem .625rem;display:inline-block}
 .reserve-time-label{font-size:.8125rem;color:#555;font-weight:600;margin-bottom:.375rem}
-.reserve-time-input{width:100%;max-width:100%;box-sizing:border-box;border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .625rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;min-height:2.5rem;background:white}
+.reserve-time-input{width:100%;max-width:100%;box-sizing:border-box;border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .5rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;min-height:2.5rem;background:white;-webkit-appearance:none;appearance:none;overflow:hidden}
 .reserve-time-input:focus{outline:none;border-color:#e8a020}
 .reserve-time-input.error{border-color:#c4390a !important;background:#fff5f5}
 .reserve-date-btns{display:flex;gap:.375rem;flex-wrap:wrap;margin-bottom:.5rem}
