@@ -118,7 +118,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .cart-back-btn:active{background:#f0ede6}
 .clear-btn{font-size:.875rem;color:#c4390a;background:none;border:none;cursor:pointer;padding:.375rem .5rem;font-family:'Noto Sans TC',sans-serif;min-height:2.25rem}
 /* 右側橘色捲軸，與分類頁籤同色 */
-.cart-body{overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#e8a020 rgba(0,0,0,0.06)}
+.cart-body{overflow-y:auto;overflow-x:hidden;flex:1;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#e8a020 rgba(0,0,0,0.06)}
 .cart-body::-webkit-scrollbar{width:3px}
 .cart-body::-webkit-scrollbar-track{background:rgba(0,0,0,0.06);border-radius:2px}
 .cart-body::-webkit-scrollbar-thumb{background:#e8a020;border-radius:2px}
@@ -128,7 +128,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .cart-item-price{font-size:.9375rem;font-weight:700;color:#c4390a;min-width:3.375rem;text-align:right;white-space:nowrap}
 .cart-item-notes{font-size:.75rem;color:#888}
 .empty-cart{text-align:center;padding:2rem;color:#aaa;font-size:.9375rem}
-.cart-options{padding:.75rem 1rem .5rem;border-top:1px solid #eee}
+.cart-options{padding:.75rem 1rem .5rem;border-top:1px solid #eee;overflow-x:hidden}
 .opt-title{font-size:.875rem;font-weight:700;color:#555;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid #f0f0f0}
 .opt-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;gap:.5rem;min-height:2.5rem}
 .opt-section-divider{height:1px;background:#f0f0f0;margin:.625rem 0}
@@ -195,7 +195,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 /* 自訂時間展開區 */
 .time-custom-wrap{display:none;flex-direction:column;gap:.25rem;margin-top:.25rem;width:100%;overflow:hidden}
 .time-custom-wrap.show{display:flex;width:100%}
-.time-custom-input{border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .625rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;width:100%;max-width:100%;min-height:2.5rem;background:white;box-sizing:border-box}
+.time-custom-input{border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .5rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;width:100%;max-width:100%;min-height:2.5rem;background:white;box-sizing:border-box;-webkit-appearance:none;appearance:none;overflow:hidden;clip-path:inset(0)}
 .time-custom-input:focus{outline:none;border-color:#e8a020}
 .time-custom-input.error{border-color:#c4390a !important;background:#fff5f5}
 .time-custom-note{font-size:.75rem;color:#c4390a;line-height:1.5;min-height:1em}
@@ -207,7 +207,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .reserve-date-label{font-size:.8125rem;color:#555;font-weight:600;white-space:nowrap}
 .reserve-date-val{font-size:.9375rem;color:#1a2455;font-weight:700;background:white;border:1.5px solid #1a2455;border-radius:.5rem;padding:.3rem .625rem;display:inline-block}
 .reserve-time-label{font-size:.8125rem;color:#555;font-weight:600;margin-bottom:.375rem}
-.reserve-time-input{width:100%;max-width:100%;box-sizing:border-box;border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .5rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;min-height:2.5rem;background:white;-webkit-appearance:none;appearance:none;overflow:hidden}
+.reserve-time-input{display:block;width:100%;max-width:100%;box-sizing:border-box;border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .5rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;min-height:2.5rem;background:white;-webkit-appearance:none;appearance:none;overflow:hidden;clip-path:inset(0)}
 .reserve-time-input:focus{outline:none;border-color:#e8a020}
 .reserve-time-input.error{border-color:#c4390a !important;background:#fff5f5}
 .reserve-date-btns{display:flex;gap:.375rem;flex-wrap:wrap;margin-bottom:.5rem}
@@ -496,7 +496,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           <div class="time-slot-btns" id="time-slot-btns"></div>
           <!-- 自訂時間展開區（點「自訂…」才出現） -->
           <div class="time-custom-wrap" id="time-custom-wrap">
+            <div style="width:100%;overflow:hidden;box-sizing:border-box;">
             <input type="time" class="time-custom-input" id="time-custom-input" min="00:00" max="23:59" onchange="onCustomTimeChange(this)">
+            </div>
             <div class="time-custom-note" id="time-custom-note"></div>
           </div>
         </div>
@@ -506,7 +508,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           <div class="reserve-date-label" style="margin-bottom:.375rem">📆 選擇取餐日期 <span style="font-size:.75rem;color:#888;font-weight:400">（僅受理3日內預約）</span></div>
           <div class="reserve-date-btns" id="reserve-date-btns"></div>
           <div class="reserve-time-label">⏰ 預約取餐時間 <span style="font-size:.75rem;color:#888;font-weight:400">（09:00–00:00）</span></div>
+          <div style="width:100%;overflow:hidden;box-sizing:border-box;">
           <input type="time" class="reserve-time-input" id="reserve-time-input" min="09:00" max="23:59" value="12:00" onchange="onReserveTimeChange(this)">
+          </div>
           <div class="reserve-closed-warn" id="reserve-closed-warn">⚠️ 此日為公休日，無法預約。請選擇其他日期。</div>
         </div>
 
