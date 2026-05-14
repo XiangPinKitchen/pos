@@ -190,7 +190,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .time-slot-btns{display:flex;gap:.375rem;flex-wrap:wrap;margin-bottom:.375rem}
 .time-slot-btn{flex:1;min-width:0;padding:.5rem .25rem;border-radius:.5rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.9375rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;min-height:2.5rem;transition:all .15s;text-align:center;white-space:nowrap}
 .time-slot-btn.active{background:#1a2455;color:white}
-.time-slot-btn.custom-btn{border-color:#888;color:#888;font-size:.8125rem;font-weight:400;flex:0 0 auto;padding:.5rem .75rem}
+.time-slot-btn.custom-btn{border-color:#888;color:#888;font-size:.875rem;font-weight:400;flex:1}
 .time-slot-btn.custom-btn.active{background:#888;border-color:#888;color:white}
 /* 自訂時間展開區 */
 .time-custom-wrap{display:none;flex-direction:column;gap:.25rem;margin-top:.25rem}
@@ -207,11 +207,11 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .reserve-date-label{font-size:.8125rem;color:#555;font-weight:600;white-space:nowrap}
 .reserve-date-val{font-size:.9375rem;color:#1a2455;font-weight:700;background:white;border:1.5px solid #1a2455;border-radius:.5rem;padding:.3rem .625rem;display:inline-block}
 .reserve-time-label{font-size:.8125rem;color:#555;font-weight:600;margin-bottom:.375rem}
-.reserve-time-input{width:100%;border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .625rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;min-height:2.5rem;background:white}
+.reserve-time-input{width:100%;max-width:100%;box-sizing:border-box;border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .625rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;min-height:2.5rem;background:white}
 .reserve-time-input:focus{outline:none;border-color:#e8a020}
 .reserve-time-input.error{border-color:#c4390a !important;background:#fff5f5}
 .reserve-date-btns{display:flex;gap:.375rem;flex-wrap:wrap;margin-bottom:.5rem}
-.reserve-date-btn{flex:1;min-width:0;padding:.5rem .25rem;border-radius:.5rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.875rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;min-height:2.5rem;transition:all .15s;text-align:center;white-space:nowrap}
+.reserve-date-btn{flex:1;min-width:0;padding:.3rem .25rem;border-radius:.5rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.8125rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;min-height:2rem;transition:all .15s;text-align:center;white-space:nowrap}
 .reserve-date-btn.active{background:#1a2455;color:white}
 .reserve-date-btn.disabled{border-color:#ccc;color:#ccc;background:#f5f5f5;cursor:not-allowed;pointer-events:none}
 .reserve-closed-warn{display:none;font-size:.8125rem;color:#c4390a;font-weight:700;background:#fff0f0;border:1.5px solid #c4390a;border-radius:.5rem;padding:.5rem .625rem;margin-top:.5rem;line-height:1.6}
@@ -3099,7 +3099,7 @@ function renderTimeSlotBtns() {
     const isActive = (!pickupIsCustom && pickupTime === s.value);
     return `<button class="time-slot-btn${isActive?' active':''}" onclick="selectTimeSlot('${s.value}',this)">${s.label}</button>`;
   }).join('') +
-  `<button class="time-slot-btn custom-btn${pickupIsCustom?' active':''}" onclick="selectTimeSlotCustom(this)">自訂…</button>`;
+  `<button class="time-slot-btn custom-btn${pickupIsCustom?' active':''}" onclick="selectTimeSlotCustom(this)">其他時間</button>`;
 
   // 自訂時間展開區
   if (customEl) {
