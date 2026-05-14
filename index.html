@@ -185,16 +185,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .order-mode-btn:active{opacity:.8}
 
 /* ── 今日取餐模式：時段按鈕列 ── */
-.time-slots-wrap{margin-bottom:.5rem}
+.time-slots-wrap{margin-bottom:.5rem;width:100%;overflow:hidden}
 .time-slot-hint{font-size:.75rem;color:#e8a020;margin-bottom:.375rem;line-height:1.5}
-.time-slot-btns{display:flex;gap:.375rem;flex-wrap:wrap;margin-bottom:.375rem}
+.time-slot-btns{display:flex;gap:.375rem;flex-wrap:wrap;margin-bottom:.375rem;width:100%;overflow:hidden}
 .time-slot-btn{flex:1;min-width:0;padding:.5rem .25rem;border-radius:.5rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.9375rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;min-height:2.5rem;transition:all .15s;text-align:center;white-space:nowrap}
 .time-slot-btn.active{background:#1a2455;color:white}
 .time-slot-btn.custom-btn{border-color:#888;color:#888;font-size:.875rem;font-weight:400;flex:1}
 .time-slot-btn.custom-btn.active{background:#888;border-color:#888;color:white}
 /* 自訂時間展開區 */
-.time-custom-wrap{display:none;flex-direction:column;gap:.25rem;margin-top:.25rem}
-.time-custom-wrap.show{display:flex}
+.time-custom-wrap{display:none;flex-direction:column;gap:.25rem;margin-top:.25rem;width:100%;overflow:hidden}
+.time-custom-wrap.show{display:flex;width:100%}
 .time-custom-input{border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .625rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;width:100%;max-width:100%;min-height:2.5rem;background:white;box-sizing:border-box}
 .time-custom-input:focus{outline:none;border-color:#e8a020}
 .time-custom-input.error{border-color:#c4390a !important;background:#fff5f5}
